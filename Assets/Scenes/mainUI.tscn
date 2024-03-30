@@ -1,0 +1,351 @@
+[gd_scene load_steps=16 format=3 uid="uid://cm7ypqm5xo3sy"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/mainMenuUI.gd" id="1_wna4g"]
+[ext_resource type="FontFile" uid="uid://bevuvpoyfyh32" path="res://Assets/Graphics/Font/NHaasGroteskDSPro-65Md.otf" id="2_1g867"]
+[ext_resource type="Texture2D" uid="uid://ceuby7dsogavr" path="res://Assets/Graphics/UI/Ards_celek.png" id="2_n4erh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k01dd"]
+bg_color = Color(0.290196, 0.266667, 0.258824, 1)
+border_width_bottom = 5
+border_color = Color(0.15, 0.1368, 0.1335, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhywg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha8du"]
+bg_color = Color(0.85, 0.317333, 0.17, 1)
+border_width_bottom = 7
+border_color = Color(0.52, 0.194133, 0.104, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 3
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2o62l"]
+bg_color = Color(0.75, 0.28, 0.15, 1)
+border_width_bottom = 7
+border_color = Color(0.42, 0.1568, 0.084, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 3
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0akn"]
+bg_color = Color(0.55, 0.205333, 0.11, 1)
+border_width_bottom = 5
+border_color = Color(0.15, 0.056, 0.03, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Theme" id="Theme_ej72a"]
+Button/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+Button/colors/font_disabled_color = Color(0.87451, 0.87451, 0.87451, 0.501961)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(0.8, 0.8, 0.8, 1)
+Button/colors/font_pressed_color = Color(0.8, 0.8, 0.8, 1)
+Button/font_sizes/font_size = 31
+Button/fonts/font = ExtResource("2_1g867")
+Button/styles/disabled = SubResource("StyleBoxFlat_k01dd")
+Button/styles/focus = SubResource("StyleBoxFlat_bhywg")
+Button/styles/hover = SubResource("StyleBoxFlat_ha8du")
+Button/styles/normal = SubResource("StyleBoxFlat_2o62l")
+Button/styles/pressed = SubResource("StyleBoxFlat_g0akn")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_il0ie"]
+bg_color = Color(0.290196, 0.266667, 0.258824, 1)
+border_width_bottom = 5
+border_color = Color(0.15, 0.1368, 0.1335, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1rlgk"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxgis"]
+bg_color = Color(0.85, 0.317333, 0.17, 1)
+border_width_bottom = 7
+border_color = Color(0.52, 0.194133, 0.104, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 3
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7y5t"]
+bg_color = Color(0.75, 0.28, 0.15, 1)
+border_width_bottom = 7
+border_color = Color(0.42, 0.1568, 0.084, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 3
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2whc"]
+bg_color = Color(0.55, 0.205333, 0.11, 1)
+border_width_bottom = 5
+border_color = Color(0.15, 0.056, 0.03, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Theme" id="Theme_s0ppx"]
+Button/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+Button/colors/font_disabled_color = Color(0.87451, 0.87451, 0.87451, 0.501961)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(0.8, 0.8, 0.8, 1)
+Button/colors/font_pressed_color = Color(0.8, 0.8, 0.8, 1)
+Button/font_sizes/font_size = 31
+Button/fonts/font = ExtResource("2_1g867")
+Button/styles/disabled = SubResource("StyleBoxFlat_il0ie")
+Button/styles/focus = SubResource("StyleBoxFlat_1rlgk")
+Button/styles/hover = SubResource("StyleBoxFlat_oxgis")
+Button/styles/normal = SubResource("StyleBoxFlat_d7y5t")
+Button/styles/pressed = SubResource("StyleBoxFlat_m2whc")
+
+[node name="MainUI" type="CanvasLayer"]
+script = ExtResource("1_wna4g")
+
+[node name="Logo" type="Control" parent="."]
+layout_direction = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Logo"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 174.0
+offset_right = 1057.0
+offset_bottom = 463.0
+texture = ExtResource("2_n4erh")
+expand_mode = 2
+
+[node name="ManageDecks" type="Control" parent="."]
+light_mask = 0
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ManageDecks"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ManageDecks/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ManageDecks/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="createButton" type="Button" parent="ManageDecks/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_ej72a")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_1g867")
+text = "Create"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="backButton" type="Button" parent="ManageDecks/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_ej72a")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_1g867")
+text = "Back"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SettingMenu" type="Control" parent="."]
+light_mask = 0
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingMenu/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingMenu/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="backButton" type="Button" parent="SettingMenu/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_ej72a")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_1g867")
+text = "Back"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MainMenu" type="Control" parent="."]
+light_mask = 0
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="playButton" type="Button" parent="MainMenu/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_s0ppx")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_1g867")
+text = "Play"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="manageDeckButton" type="Button" parent="MainMenu/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_s0ppx")
+text = "Decks"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="settingButton" type="Button" parent="MainMenu/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_s0ppx")
+text = "Setting
+"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="exitButton" type="Button" parent="MainMenu/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_s0ppx")
+text = "Exit"
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="ManageDecks/MarginContainer/HBoxContainer/VBoxContainer/backButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="SettingMenu/MarginContainer/HBoxContainer/VBoxContainer/backButton" to="." method="_on_back_setting_button_pressed"]
+[connection signal="pressed" from="MainMenu/MarginContainer/HBoxContainer/VBoxContainer/playButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainMenu/MarginContainer/HBoxContainer/VBoxContainer/manageDeckButton" to="." method="_on_manage_deck_button_pressed"]
+[connection signal="pressed" from="MainMenu/MarginContainer/HBoxContainer/VBoxContainer/settingButton" to="." method="_on_setting_button_pressed"]
+[connection signal="pressed" from="MainMenu/MarginContainer/HBoxContainer/VBoxContainer/exitButton" to="." method="_on_exit_button_pressed"]

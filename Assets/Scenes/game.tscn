@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://vhw0b4ogu7a1"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Round_timer" type="Timer" parent="."]
+wait_time = 30.0
