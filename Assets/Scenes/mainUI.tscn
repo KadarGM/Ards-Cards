@@ -147,14 +147,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="TextureRect" type="TextureRect" parent="Logo"]
 layout_mode = 0
-offset_left = 480.0
-offset_top = 174.0
-offset_right = 1057.0
-offset_bottom = 463.0
+offset_left = 1343.0
+offset_top = 395.0
+offset_right = 1920.0
+offset_bottom = 684.0
+pivot_offset = Vector2(577, 144)
 texture = ExtResource("2_n4erh")
 expand_mode = 2
 
