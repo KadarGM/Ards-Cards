@@ -3,7 +3,7 @@ extends Node2D
 @onready var round_timer = $Round_timer
 
 var start_round = 0
-var player_turn = 0
+var player_turn
 
 var max_cards_hand = 7
 var max_cards_deck = 60
