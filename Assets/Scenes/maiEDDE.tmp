@@ -268,7 +268,6 @@ PopupMenu/styles/hover = SubResource("StyleBoxFlat_gk3v3")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_fgc40")
 
 [node name="MainUI" type="CanvasLayer"]
-follow_viewport_scale = 1.1
 script = ExtResource("1_wna4g")
 
 [node name="SettingSetup" type="MarginContainer" parent="."]
@@ -330,8 +329,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = SubResource("Theme_ej72a")
-min_value = 70.0
-max_value = 130.0
+min_value = 80.0
+max_value = 120.0
 step = 10.0
 value = 100.0
 rounded = true
@@ -482,7 +481,7 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="item_selected" from="SettingSetup/HBoxContainer/ChoiceVBox/ResolutionMenu" to="SettingSetup" method="_on_resolution_menu_item_selected"]
 [connection signal="item_selected" from="SettingSetup/HBoxContainer/ChoiceVBox/ScreenMenu" to="SettingSetup" method="_on_screen_menu_item_selected"]
-[connection signal="value_changed" from="SettingSetup/HBoxContainer/ChoiceVBox/HBoxContainer/UIScaler" to="." method="_on_ui_scaler_value_changed"]
+[connection signal="value_changed" from="SettingSetup/HBoxContainer/ChoiceVBox/HBoxContainer/UIScaler" to="SettingSetup" method="_on_ui_scaler_value_changed"]
 [connection signal="toggled" from="SettingSetup/HBoxContainer/ChoiceVBox/FullscreenBox" to="SettingSetup" method="_on_fullscreen_box_toggled"]
 [connection signal="toggled" from="SettingSetup/HBoxContainer/ChoiceVBox/BorderlessBox" to="SettingSetup" method="_on_borderless_box_toggled"]
 [connection signal="pressed" from="SettingSetup/HBoxContainer/ChoiceVBox/backButton" to="." method="_on_back_setting_button_pressed"]
