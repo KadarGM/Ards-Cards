@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b75g5u1pg6u8o"]
+[gd_scene load_steps=3 format=3 uid="uid://b75g5u1pg6u8o"]
 
+[ext_resource type="Script" path="res://Assets/Scripts/camera2D.gd" id="1_52vd8"]
 [ext_resource type="PackedScene" uid="uid://cm7ypqm5xo3sy" path="res://Assets/Scenes/mainUI.tscn" id="1_55amr"]
 
 [node name="Main" type="Node2D"]
@@ -11,30 +12,4 @@ texture_filter = 1
 anchor_mode = 0
 limit_smoothed = true
 position_smoothing_enabled = true
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
-
-[node name="Polygon2D2" type="Polygon2D" parent="."]
-position = Vector2(28, 399)
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
-
-[node name="Polygon2D3" type="Polygon2D" parent="."]
-position = Vector2(-900, -84)
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
-
-[node name="Polygon2D4" type="Polygon2D" parent="."]
-position = Vector2(833, 191)
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
-
-[node name="Polygon2D5" type="Polygon2D" parent="."]
-position = Vector2(-494, 742)
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
-
-[node name="Polygon2D6" type="Polygon2D" parent="."]
-position = Vector2(-926, 273)
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
-
-[node name="Polygon2D7" type="Polygon2D" parent="."]
-position = Vector2(928, 721)
-polygon = PackedVector2Array(1103, 123, 1045, 178, 1070, 299, 1166, 308, 1220, 199, 1177, 137)
+script = ExtResource("1_52vd8")
