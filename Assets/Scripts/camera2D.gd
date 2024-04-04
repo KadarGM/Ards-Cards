@@ -1,11 +1,11 @@
 extends Camera2D
 
-const DEAD_ZONE = 160
-const SPEED = 0.1
+const DEAD_ZONE = 300
+const SPEED = 1.0
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		var _target = event.position - get_viewport().size * SPEED
+		var _target = get_local_mouse_position()
 		if _target.length() < DEAD_ZONE:
 			self.position = Vector2(0,0)
 		else:

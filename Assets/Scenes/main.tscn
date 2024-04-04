@@ -1,15 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b75g5u1pg6u8o"]
+[gd_scene load_steps=2 format=3 uid="uid://b75g5u1pg6u8o"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/camera2D.gd" id="1_52vd8"]
 [ext_resource type="PackedScene" uid="uid://cm7ypqm5xo3sy" path="res://Assets/Scenes/mainUI.tscn" id="1_55amr"]
 
 [node name="Main" type="Node2D"]
 
 [node name="MainUI" parent="." instance=ExtResource("1_55amr")]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-texture_filter = 1
-anchor_mode = 0
-limit_smoothed = true
-position_smoothing_enabled = true
-script = ExtResource("1_52vd8")

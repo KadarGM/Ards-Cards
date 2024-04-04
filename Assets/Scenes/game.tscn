@@ -1,6 +1,27 @@
-[gd_scene format=3 uid="uid://vhw0b4ogu7a1"]
+[gd_scene load_steps=4 format=3 uid="uid://vhw0b4ogu7a1"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/game.gd" id="1_ooege"]
+[ext_resource type="Texture2D" uid="uid://b8wb74ldmke4o" path="res://Assets/Graphics/Board/BOARD.png" id="2_85cwf"]
+[ext_resource type="PackedScene" uid="uid://db8kmed63v1qa" path="res://Assets/Scenes/cardCharacter.tscn" id="2_dadxu"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_ooege")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+texture_filter = 1
+position_smoothing_speed = 1.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D"]
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(10, 10)
+texture = ExtResource("2_85cwf")
+metadata/_edit_lock_ = true
+
+[node name="cardCharacter" parent="Camera2D" instance=ExtResource("2_dadxu")]
+texture_filter = 2
+texture_repeat = 1
+position = Vector2(-326, 167)
 
 [node name="Round_timer" type="Timer" parent="."]
 wait_time = 30.0
