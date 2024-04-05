@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c84o4i47obnxo"
-path="res://.godot/imported/HEALTH.png-fef545f2c29ab5c32be48a60a5ac2561.ctex"
+uid="uid://bi5qwr8ojmxff"
+path="res://.godot/imported/CARD_BG_TEXT-1.png-09ad69aac48de36b2554380952aa2532.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Board/HEALTH.png"
-dest_files=["res://.godot/imported/HEALTH.png-fef545f2c29ab5c32be48a60a5ac2561.ctex"]
+source_file="res://Assets/Graphics/Export/CARD_BG_TEXT-1.png"
+dest_files=["res://.godot/imported/CARD_BG_TEXT-1.png-09ad69aac48de36b2554380952aa2532.ctex"]
 
 [params]
 

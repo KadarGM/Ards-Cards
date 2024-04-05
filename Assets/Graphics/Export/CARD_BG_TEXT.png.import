@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c81hbst1fp6of"
-path="res://.godot/imported/HERO.png-74292bc1df801237aea14652fac6e6a7.ctex"
+uid="uid://gm32rlj5oumd"
+path="res://.godot/imported/CARD_BG_TEXT.png-5f10ca6535b1a09509bd50841984487f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Board/HERO.png"
-dest_files=["res://.godot/imported/HERO.png-74292bc1df801237aea14652fac6e6a7.ctex"]
+source_file="res://Assets/Graphics/Export/CARD_BG_TEXT.png"
+dest_files=["res://.godot/imported/CARD_BG_TEXT.png-5f10ca6535b1a09509bd50841984487f.ctex"]
 
 [params]
 

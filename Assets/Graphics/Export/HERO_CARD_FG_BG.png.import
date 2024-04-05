@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqqxp7g4r3tqo"
-path="res://.godot/imported/CARD_FG.png-4858b0987c06870fe984f18fc2832f0e.ctex"
+uid="uid://ckmvciwuv2sxx"
+path="res://.godot/imported/HERO_CARD_FG_BG.png-d2fcc74bdeb33b4343cf1ece66d8063b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Board/CARD_FG.png"
-dest_files=["res://.godot/imported/CARD_FG.png-4858b0987c06870fe984f18fc2832f0e.ctex"]
+source_file="res://Assets/Graphics/Export/HERO_CARD_FG_BG.png"
+dest_files=["res://.godot/imported/HERO_CARD_FG_BG.png-d2fcc74bdeb33b4343cf1ece66d8063b.ctex"]
 
 [params]
 

@@ -1,27 +1,39 @@
 [gd_scene load_steps=4 format=3 uid="uid://vhw0b4ogu7a1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/game.gd" id="1_ooege"]
-[ext_resource type="Texture2D" uid="uid://b8wb74ldmke4o" path="res://Assets/Graphics/Board/BOARD.png" id="2_85cwf"]
-[ext_resource type="PackedScene" uid="uid://db8kmed63v1qa" path="res://Assets/Scenes/cardCharacter.tscn" id="2_dadxu"]
+[ext_resource type="PackedScene" uid="uid://db8kmed63v1qa" path="res://Assets/Scenes/card.tscn" id="2_dadxu"]
+[ext_resource type="Texture2D" uid="uid://blmth272njx7u" path="res://Assets/Graphics/Export/BOARD.png" id="2_qth3r"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ooege")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-texture_filter = 1
-position_smoothing_speed = 1.0
-
-[node name="Sprite2D" type="Sprite2D" parent="Camera2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 2
 scale = Vector2(10, 10)
-texture = ExtResource("2_85cwf")
-metadata/_edit_lock_ = true
+texture = ExtResource("2_qth3r")
 
-[node name="cardCharacter" parent="Camera2D" instance=ExtResource("2_dadxu")]
+[node name="cardCharacter" parent="." instance=ExtResource("2_dadxu")]
 texture_filter = 2
 texture_repeat = 1
-position = Vector2(-326, 167)
+position = Vector2(-15, 701)
+
+[node name="cardCharacter2" parent="." instance=ExtResource("2_dadxu")]
+texture_filter = 2
+texture_repeat = 1
+position = Vector2(-345, 699)
+rotation = -0.0222952
+
+[node name="cardCharacter3" parent="." instance=ExtResource("2_dadxu")]
+texture_filter = 2
+texture_repeat = 1
+position = Vector2(282, 713)
+rotation = 0.112476
+
+[node name="Camera2D" type="Camera2D" parent="."]
+texture_filter = 1
+zoom = Vector2(0.5, 0.5)
+position_smoothing_speed = 1.0
 
 [node name="Round_timer" type="Timer" parent="."]
 wait_time = 30.0

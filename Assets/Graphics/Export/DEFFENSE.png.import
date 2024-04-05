@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dspvuvj20f6kc"
-path="res://.godot/imported/FILL_BG.png-73a3bb7492989bf64287652c84c088ba.ctex"
+uid="uid://b6y87c66ci18q"
+path="res://.godot/imported/DEFFENSE.png-c741dd6fc8ca2a2abb65e8e79d95a33d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Board/FILL_BG.png"
-dest_files=["res://.godot/imported/FILL_BG.png-73a3bb7492989bf64287652c84c088ba.ctex"]
+source_file="res://Assets/Graphics/Export/DEFFENSE.png"
+dest_files=["res://.godot/imported/DEFFENSE.png-c741dd6fc8ca2a2abb65e8e79d95a33d.ctex"]
 
 [params]
 

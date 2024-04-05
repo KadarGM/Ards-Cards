@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cykfwdptk2oy"
-path="res://.godot/imported/MANA_POINT.png-fca0f6cfb86aa193a01e1c4ebc5c0dde.ctex"
+uid="uid://sjfmsk36j167"
+path="res://.godot/imported/HERO_CARD_FG.png-799b03c044838476e6eaf59ee1b29549.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Board/MANA_POINT.png"
-dest_files=["res://.godot/imported/MANA_POINT.png-fca0f6cfb86aa193a01e1c4ebc5c0dde.ctex"]
+source_file="res://Assets/Graphics/Export/HERO_CARD_FG.png"
+dest_files=["res://.godot/imported/HERO_CARD_FG.png-799b03c044838476e6eaf59ee1b29549.ctex"]
 
 [params]
 

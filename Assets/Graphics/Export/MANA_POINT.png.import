@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h0psbij1bh5q"
-path="res://.godot/imported/FILL_TL.png-3a10245f38dea605e6674270c1df8ab6.ctex"
+uid="uid://7ou2nkhneqvl"
+path="res://.godot/imported/MANA_POINT.png-85c04e4c6c760384e7f346bb936367fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Board/FILL_TL.png"
-dest_files=["res://.godot/imported/FILL_TL.png-3a10245f38dea605e6674270c1df8ab6.ctex"]
+source_file="res://Assets/Graphics/Export/MANA_POINT.png"
+dest_files=["res://.godot/imported/MANA_POINT.png-85c04e4c6c760384e7f346bb936367fd.ctex"]
 
 [params]
 
