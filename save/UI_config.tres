@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_3jvca")
-resolution = Vector2i(3840, 2160)
-resolution_id = 3
+resolution = Vector2i(1920, 1080)
+resolution_id = 1
 screen_id = 2
 scale_ui = 1.3
-fullscreen = true
-borderless = true
+fullscreen = false
+borderless = false

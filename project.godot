@@ -15,6 +15,10 @@ run/main_scene="res://Assets/Scenes/main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://Assets/Graphics/Icons/icon.svg"
 
+[autoload]
+
+global="*res://Assets/Scripts/Global/global.gd"
+
 [display]
 
 window/size/viewport_width=1920
@@ -35,6 +39,29 @@ window/stretch/aspect="keep_width"
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
+"wheel up"={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":4,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+"wheel down"={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":5,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="card"
+2d_physics/layer_2="card_slot"
+2d_physics/layer_3="board_attack"
+2d_physics/layer_4="board_deffend"
+2d_physics/layer_5="board_hand"
+2d_physics/layer_6="board_artefacts"
+2d_physics/layer_7="board_deck"
+2d_physics/layer_8="board_graveyard"
+2d_physics/layer_9="board_hero"
+2d_physics/layer_10="board_action"
 
 [rendering]
 
@@ -42,4 +69,3 @@ textures/canvas_textures/default_texture_filter=3
 textures/canvas_textures/default_texture_repeat=1
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-anti_aliasing/quality/msaa_2d=1
