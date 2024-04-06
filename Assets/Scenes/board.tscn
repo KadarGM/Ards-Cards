@@ -71,13 +71,15 @@ shape = SubResource("RectangleShape2D_e3cbp")
 
 [node name="CardSlots" type="Node2D" parent="."]
 
-[node name="CardSlot" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+[node name="Attack1" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
 position = Vector2(211, 246)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_1wg0x")
+slot_id = 5
+slot_number = 1
 
-[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/CardSlot"]
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Attack1"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -93,6 +95,202 @@ pivot_offset = Vector2(120, 160)
 color = Color(0.5, 0.5, 0.5, 0.705882)
 metadata/_edit_lock_ = true
 
-[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/CardSlot"]
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Attack1"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Attack2" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(565, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 5
+slot_number = 2
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Attack2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Attack2"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Attack3" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(919, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 5
+slot_number = 3
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Attack3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Attack3"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Attack4" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(1270, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 5
+slot_number = 4
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Attack4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Attack4"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Deffend4" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(-1259, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 4
+slot_number = 4
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Deffend4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Deffend4"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Deffend3" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(-905, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 4
+slot_number = 3
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Deffend3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Deffend3"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Deffend2" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(-551, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 4
+slot_number = 2
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Deffend2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Deffend2"]
+shape = SubResource("RectangleShape2D_a7h7s")
+metadata/_edit_lock_ = true
+
+[node name="Deffend1" type="StaticBody2D" parent="CardSlots" groups=["dropable"]]
+position = Vector2(-200, 246)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_1wg0x")
+slot_id = 4
+slot_number = 1
+
+[node name="CardSlotColorRect" type="ColorRect" parent="CardSlots/Deffend1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(120, 160)
+color = Color(0.5, 0.5, 0.5, 0.705882)
+metadata/_edit_lock_ = true
+
+[node name="CardSlotColl" type="CollisionShape2D" parent="CardSlots/Deffend1"]
 shape = SubResource("RectangleShape2D_a7h7s")
 metadata/_edit_lock_ = true

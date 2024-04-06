@@ -74,7 +74,6 @@ func set_mode(fullscreen, borderless):
 				borderless_box.button_pressed = true
 			centre_window()
 	check_texts()
-	print("set mode loaded")
 
 func set_resolution(resolution, resolution_id):
 	get_window().set_size(resolution)
@@ -83,7 +82,6 @@ func set_resolution(resolution, resolution_id):
 	resolution_menu.select(resolution_id)
 	check_texts()
 	centre_window()
-	print("resolution loaded")
 	
 func set_ui_scale(scale_ui):
 	ui_scaler.value = scale_ui*100

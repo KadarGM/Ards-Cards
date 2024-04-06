@@ -24,7 +24,6 @@ func load_data():
 		
 	if setting_data_resource != null:
 		set_ui_scale(setting_data_resource.scale_ui)
-	print("loaded")
 	
 func set_ui_scale(scale_ui):
 	setting_menu.scale.x = scale_ui
