@@ -1,5 +1,5 @@
-extends Node
-class_name playerData
+extends Resource
+class_name playerDataResource
 
 var username: String
 var level = 0

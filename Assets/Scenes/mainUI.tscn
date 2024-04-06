@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="3_mvq8j"]
 [ext_resource type="Texture2D" uid="uid://ceuby7dsogavr" path="res://Assets/Graphics/UI/Ards_celek.png" id="4_a23pu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k01dd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20obq"]
 bg_color = Color(0.290196, 0.266667, 0.258824, 1)
 border_width_bottom = 5
 border_color = Color(0.15, 0.1368, 0.1335, 1)
@@ -18,12 +18,12 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhywg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20cbg"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha8du"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u0ciy"]
 bg_color = Color(0.7, 0.261333, 0.14, 1)
 border_width_bottom = 7
 border_color = Color(0.3, 0.108, 0.06, 1)
@@ -36,7 +36,7 @@ shadow_size = 3
 shadow_offset = Vector2(3, 3)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2o62l"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m70by"]
 bg_color = Color(0.75, 0.28, 0.15, 1)
 border_width_bottom = 7
 border_color = Color(0.42, 0.1568, 0.084, 1)
@@ -49,7 +49,7 @@ shadow_size = 3
 shadow_offset = Vector2(3, 3)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0akn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxv1"]
 bg_color = Color(0.55, 0.205333, 0.11, 1)
 border_width_bottom = 5
 border_color = Color(0.15, 0.056, 0.03, 1)
@@ -62,23 +62,23 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="ImageTexture" id="ImageTexture_snxe0"]
+[sub_resource type="ImageTexture" id="ImageTexture_ix7il"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_k4j3y"]
+[sub_resource type="ImageTexture" id="ImageTexture_5gtwj"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_18r6l"]
+[sub_resource type="ImageTexture" id="ImageTexture_h5gvt"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_7p8yh"]
+[sub_resource type="ImageTexture" id="ImageTexture_4qjw0"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_cv4w4"]
+[sub_resource type="ImageTexture" id="ImageTexture_7eaop"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_ecb3m"]
+[sub_resource type="ImageTexture" id="ImageTexture_oliso"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_iie83"]
+[sub_resource type="ImageTexture" id="ImageTexture_x7ig8"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_vh8cw"]
+[sub_resource type="ImageTexture" id="ImageTexture_wsdtm"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oly8i"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1l85h"]
 bg_color = Color(0.74902, 0.278431, 0.14902, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -93,7 +93,7 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8xhc"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqu8f"]
 bg_color = Color(0.290196, 0.266667, 0.258824, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -109,7 +109,7 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_41uca"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1iel"]
 bg_color = Color(0.85098, 0.317647, 0.168627, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -125,7 +125,7 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2ynd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp7j0"]
 bg_color = Color(0.74902, 0.278431, 0.14902, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -141,7 +141,7 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwyjn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu4uh"]
 bg_color = Color(0.423529, 0.192157, 0.12549, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -157,27 +157,27 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="ImageTexture" id="ImageTexture_efs48"]
+[sub_resource type="ImageTexture" id="ImageTexture_744bt"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_ol2oj"]
+[sub_resource type="ImageTexture" id="ImageTexture_dh68a"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_nwlc0"]
+[sub_resource type="ImageTexture" id="ImageTexture_vhxpr"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_rueee"]
+[sub_resource type="ImageTexture" id="ImageTexture_2u7ws"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_knu0n"]
+[sub_resource type="ImageTexture" id="ImageTexture_qmk1f"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_fv34y"]
+[sub_resource type="ImageTexture" id="ImageTexture_667gv"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_f8wox"]
+[sub_resource type="ImageTexture" id="ImageTexture_pdjcf"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_2fxf3"]
+[sub_resource type="ImageTexture" id="ImageTexture_8w6ox"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_386pp"]
+[sub_resource type="ImageTexture" id="ImageTexture_10iv1"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_2xgnf"]
+[sub_resource type="ImageTexture" id="ImageTexture_j7gg5"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gk3v3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxvwu"]
 bg_color = Color(0.54902, 0.203922, 0.109804, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -192,7 +192,7 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fgc40"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xonse"]
 bg_color = Color(0.14902, 0.054902, 0.0313726, 1)
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
@@ -220,53 +220,53 @@ Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
 Button/font_sizes/font_size = 48
 Button/fonts/font = ExtResource("3_mvq8j")
-Button/styles/disabled = SubResource("StyleBoxFlat_k01dd")
-Button/styles/focus = SubResource("StyleBoxFlat_bhywg")
-Button/styles/hover = SubResource("StyleBoxFlat_ha8du")
-Button/styles/normal = SubResource("StyleBoxFlat_2o62l")
-Button/styles/pressed = SubResource("StyleBoxFlat_g0akn")
+Button/styles/disabled = SubResource("StyleBoxFlat_20obq")
+Button/styles/focus = SubResource("StyleBoxFlat_20cbg")
+Button/styles/hover = SubResource("StyleBoxFlat_u0ciy")
+Button/styles/normal = SubResource("StyleBoxFlat_m70by")
+Button/styles/pressed = SubResource("StyleBoxFlat_7gxv1")
 CheckBox/font_sizes/font_size = 32
 CheckBox/fonts/font = ExtResource("3_mvq8j")
-CheckBox/icons/checked = SubResource("ImageTexture_snxe0")
-CheckBox/icons/checked_disabled = SubResource("ImageTexture_k4j3y")
-CheckBox/icons/radio_checked = SubResource("ImageTexture_18r6l")
-CheckBox/icons/radio_checked_disabled = SubResource("ImageTexture_7p8yh")
-CheckBox/icons/radio_unchecked = SubResource("ImageTexture_cv4w4")
-CheckBox/icons/radio_unchecked_disabled = SubResource("ImageTexture_ecb3m")
-CheckBox/icons/unchecked = SubResource("ImageTexture_iie83")
-CheckBox/icons/unchecked_disabled = SubResource("ImageTexture_vh8cw")
-CheckBox/styles/disabled = SubResource("StyleBoxFlat_k01dd")
-CheckBox/styles/hover = SubResource("StyleBoxFlat_ha8du")
-CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_g0akn")
-CheckBox/styles/normal = SubResource("StyleBoxFlat_2o62l")
-CheckBox/styles/pressed = SubResource("StyleBoxFlat_g0akn")
-HSlider/styles/slider = SubResource("StyleBoxFlat_oly8i")
+CheckBox/icons/checked = SubResource("ImageTexture_ix7il")
+CheckBox/icons/checked_disabled = SubResource("ImageTexture_5gtwj")
+CheckBox/icons/radio_checked = SubResource("ImageTexture_h5gvt")
+CheckBox/icons/radio_checked_disabled = SubResource("ImageTexture_4qjw0")
+CheckBox/icons/radio_unchecked = SubResource("ImageTexture_7eaop")
+CheckBox/icons/radio_unchecked_disabled = SubResource("ImageTexture_oliso")
+CheckBox/icons/unchecked = SubResource("ImageTexture_x7ig8")
+CheckBox/icons/unchecked_disabled = SubResource("ImageTexture_wsdtm")
+CheckBox/styles/disabled = SubResource("StyleBoxFlat_20obq")
+CheckBox/styles/hover = SubResource("StyleBoxFlat_u0ciy")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_7gxv1")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_m70by")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_7gxv1")
+HSlider/styles/slider = SubResource("StyleBoxFlat_1l85h")
 Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("3_mvq8j")
 OptionButton/font_sizes/font_size = 32
 OptionButton/fonts/font = ExtResource("3_mvq8j")
 OptionButton/icons/arrow = null
-OptionButton/styles/disabled = SubResource("StyleBoxFlat_v8xhc")
-OptionButton/styles/hover = SubResource("StyleBoxFlat_41uca")
-OptionButton/styles/normal = SubResource("StyleBoxFlat_k2ynd")
-OptionButton/styles/pressed = SubResource("StyleBoxFlat_qwyjn")
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_dqu8f")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_f1iel")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_gp7j0")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_qu4uh")
 PopupMenu/constants/item_start_padding = 10
 PopupMenu/constants/v_separation = 20
 PopupMenu/font_sizes/font_size = 24
 PopupMenu/fonts/font = ExtResource("3_mvq8j")
 PopupMenu/fonts/font_separator = ExtResource("3_mvq8j")
-PopupMenu/icons/checked = SubResource("ImageTexture_efs48")
-PopupMenu/icons/checked_disabled = SubResource("ImageTexture_ol2oj")
-PopupMenu/icons/radio_checked = SubResource("ImageTexture_nwlc0")
-PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_rueee")
-PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_knu0n")
-PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_fv34y")
-PopupMenu/icons/submenu = SubResource("ImageTexture_f8wox")
-PopupMenu/icons/submenu_mirrored = SubResource("ImageTexture_2fxf3")
-PopupMenu/icons/unchecked = SubResource("ImageTexture_386pp")
-PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_2xgnf")
-PopupMenu/styles/hover = SubResource("StyleBoxFlat_gk3v3")
-PopupMenu/styles/panel = SubResource("StyleBoxFlat_fgc40")
+PopupMenu/icons/checked = SubResource("ImageTexture_744bt")
+PopupMenu/icons/checked_disabled = SubResource("ImageTexture_dh68a")
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_vhxpr")
+PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_2u7ws")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_qmk1f")
+PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_667gv")
+PopupMenu/icons/submenu = SubResource("ImageTexture_pdjcf")
+PopupMenu/icons/submenu_mirrored = SubResource("ImageTexture_8w6ox")
+PopupMenu/icons/unchecked = SubResource("ImageTexture_10iv1")
+PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_j7gg5")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_lxvwu")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_xonse")
 
 [node name="MainUI" type="CanvasLayer"]
 follow_viewport_scale = 1.1
@@ -279,6 +279,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_force_pass_scroll_events = false
 script = ExtResource("3_hd5xt")
 
 [node name="SettingMenu" type="MarginContainer" parent="Control"]

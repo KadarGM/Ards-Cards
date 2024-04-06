@@ -15,13 +15,7 @@
 size = Vector2(240, 320)
 
 [node name="card" type="Node2D"]
-position = Vector2(0, -160)
 script = ExtResource("1_wnf6q")
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_0oiwr")
 
 [node name="CardStats" type="Node2D" parent="."]
 
@@ -147,7 +141,7 @@ pivot_offset = Vector2(200, 30)
 size_flags_horizontal = 4
 theme_override_constants/line_spacing = -4
 theme_override_fonts/font = ExtResource("2_s7wnn")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 42
 text = "Saint Mravenec 3000"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -179,5 +173,13 @@ texture = ExtResource("9_k2dkd")
 [node name="CardBgText" type="Sprite2D" parent="CardBG/BG"]
 texture = ExtResource("10_tgl6e")
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_0oiwr")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

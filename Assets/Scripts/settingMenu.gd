@@ -23,7 +23,6 @@ var Resolutions : Dictionary = {
 var save_setting_path = "res://save/"
 var save_setting_name = "UI_config.tres"
 var setting_data_resource : SettingDataResource
-	
 
 func _ready():
 	add_resolutions()
@@ -241,3 +240,4 @@ func set_scale_text():
 
 func _on_back_button_pressed():
 	save_data()
+

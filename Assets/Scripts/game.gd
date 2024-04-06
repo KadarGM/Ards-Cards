@@ -1,7 +1,5 @@
 extends Node2D
 
-@onready var round_timer = $Round_timer
-
 var start_round = 0
 var player_turn
 
