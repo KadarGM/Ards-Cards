@@ -1,7 +1,7 @@
 extends Node2D
 
 var draggable = false
-var is_inside_dropable = false
+var is_inside = false
 var offset: Vector2
 var initialPos: Vector2
 var body_ref
@@ -31,8 +31,8 @@ func _process(delta):
 		elif Input.is_action_just_released("left click"):
 			global.is_dragging = false
 			var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
-			if is_inside_dropable:
-				tween.tween_property(self,"position",body_ref.position,.2)
+			if is_inside:
+				tween.tween_property(self,"global_position",body_ref.global_position,.2)
 			else:
 				tween.tween_property(self,"global_position",initialPos,.2)
 
@@ -44,7 +44,6 @@ func _process(delta):
 			top_level = false
 		if global.is_detailed == false:
 			detail_card()
-				
 
 func detail_card():
 	if Input.is_action_pressed("right click"):
@@ -69,15 +68,12 @@ func _on_area_2d_mouse_exited():
 	top_level = false
 
 func _on_area_2d_body_entered(body):
-	if body.is_in_group('dropable'):
-		is_inside_dropable = true
-		body.modulate = Color(Color(0, 0, 0, 0.706))
-		body_ref = body
-		draggable = true
-		body.visible = false
-
+	is_inside = true
+	body_ref = body
+	#draggable = true
+	body.visible = false
+		
 
 func _on_area_2d_body_exited(body):
-	is_inside_dropable = false
-	body.modulate = Color(Color(0.5, 0.5, 0.5, 0.706))
+	is_inside = false
 	body.visible = true

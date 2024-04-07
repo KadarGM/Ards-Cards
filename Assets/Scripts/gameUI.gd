@@ -7,6 +7,7 @@ extends CanvasLayer
 
 
 func _ready():
+	global.reset()
 	start()
 
 func start():

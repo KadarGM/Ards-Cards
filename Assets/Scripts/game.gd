@@ -1,5 +1,18 @@
 extends Node2D
 
+var slot_dict : Dictionary = {
+	
+	"Deck": 0,
+	"Graveyard": 1,
+	"Hero": 2,
+	"Hand": 3,
+	"Deffend": 4,
+	"Attack": 5,
+	"Artefacts": 6,
+	"Actions": 7
+	
+}
+
 var start_round = 0
 var player_turn
 

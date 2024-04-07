@@ -54,14 +54,6 @@ window/stretch/aspect="keep_width"
 
 2d_physics/layer_1="card"
 2d_physics/layer_2="card_slot"
-2d_physics/layer_3="board_attack"
-2d_physics/layer_4="board_deffend"
-2d_physics/layer_5="board_hand"
-2d_physics/layer_6="board_artefacts"
-2d_physics/layer_7="board_deck"
-2d_physics/layer_8="board_graveyard"
-2d_physics/layer_9="board_hero"
-2d_physics/layer_10="board_action"
 
 [rendering]
 
