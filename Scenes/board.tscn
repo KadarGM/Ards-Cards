@@ -1,109 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://t1yewwigw1d0"]
 
+[ext_resource type="Script" path="res://Assets/Scripts/Board/boardData.gd" id="1_mvrah"]
 [ext_resource type="Texture2D" uid="uid://blmth272njx7u" path="res://Assets/Graphics/Export/BOARD.png" id="1_nivb8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3cbp"]
-size = Vector2(300, 400)
-
 [node name="Board" type="Node2D"]
+script = ExtResource("1_mvrah")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 2
 scale = Vector2(10, 10)
 texture = ExtResource("1_nivb8")
-
-[node name="AttackBoardsPlayer" type="Node2D" parent="."]
-position = Vector2(730, 250)
-
-[node name="AttackSlot_1" type="StaticBody2D" parent="AttackBoardsPlayer"]
-modulate = Color(1, 1, 1, 0.494118)
-position = Vector2(-550, 0)
-collision_layer = 0
-collision_mask = 0
-
-[node name="Coll" type="CollisionShape2D" parent="AttackBoardsPlayer/AttackSlot_1"]
-shape = SubResource("RectangleShape2D_e3cbp")
-
-[node name="ColorRect" type="ColorRect" parent="AttackBoardsPlayer/AttackSlot_1"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -200.0
-offset_right = 150.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.270588, 0.901961, 0.376471, 0.784314)
-
-[node name="AttackSlot_2" type="StaticBody2D" parent="AttackBoardsPlayer"]
-modulate = Color(1, 1, 1, 0.494118)
-position = Vector2(-185, 0)
-collision_layer = 0
-collision_mask = 0
-
-[node name="Coll" type="CollisionShape2D" parent="AttackBoardsPlayer/AttackSlot_2"]
-shape = SubResource("RectangleShape2D_e3cbp")
-
-[node name="ColorRect" type="ColorRect" parent="AttackBoardsPlayer/AttackSlot_2"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -200.0
-offset_right = 150.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.270588, 0.901961, 0.376471, 0.784314)
-
-[node name="AttackSlot_3" type="StaticBody2D" parent="AttackBoardsPlayer"]
-modulate = Color(1, 1, 1, 0.494118)
-position = Vector2(185, 0)
-collision_layer = 0
-collision_mask = 0
-
-[node name="Coll" type="CollisionShape2D" parent="AttackBoardsPlayer/AttackSlot_3"]
-shape = SubResource("RectangleShape2D_e3cbp")
-
-[node name="ColorRect" type="ColorRect" parent="AttackBoardsPlayer/AttackSlot_3"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -200.0
-offset_right = 150.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.270588, 0.901961, 0.376471, 0.784314)
-
-[node name="AttackSlot_4" type="StaticBody2D" parent="AttackBoardsPlayer"]
-modulate = Color(1, 1, 1, 0.494118)
-position = Vector2(550, 0)
-collision_layer = 0
-collision_mask = 0
-
-[node name="Coll" type="CollisionShape2D" parent="AttackBoardsPlayer/AttackSlot_4"]
-shape = SubResource("RectangleShape2D_e3cbp")
-
-[node name="ColorRect" type="ColorRect" parent="AttackBoardsPlayer/AttackSlot_4"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -200.0
-offset_right = 150.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.270588, 0.901961, 0.376471, 0.784314)

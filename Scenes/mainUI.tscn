@@ -1,7 +1,7 @@
 [gd_scene load_steps=36 format=3 uid="uid://cm7ypqm5xo3sy"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/mainMenuUI.gd" id="1_wna4g"]
-[ext_resource type="Script" path="res://Assets/Scripts/settingMenu.gd" id="3_hd5xt"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/mainMenuUI.gd" id="1_wna4g"]
+[ext_resource type="Script" path="res://Assets/Scripts/UI/settingMenu.gd" id="3_hd5xt"]
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="3_mvq8j"]
 [ext_resource type="Texture2D" uid="uid://ceuby7dsogavr" path="res://Assets/Graphics/UI/Ards_celek.png" id="4_a23pu"]
 
