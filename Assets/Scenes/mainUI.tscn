@@ -272,6 +272,15 @@ PopupMenu/styles/panel = SubResource("StyleBoxFlat_xonse")
 follow_viewport_scale = 1.1
 script = ExtResource("1_wna4g")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+light_mask = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.231373, 0.2, 0.14902, 1)
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15

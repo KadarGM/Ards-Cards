@@ -1,13 +1,25 @@
 [gd_scene load_steps=3 format=3 uid="uid://t1yewwigw1d0"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Board/boardData.gd" id="1_mvrah"]
 [ext_resource type="Texture2D" uid="uid://blmth272njx7u" path="res://Assets/Graphics/Export/BOARD.png" id="1_nivb8"]
 
+[sub_resource type="GDScript" id="GDScript_bj7hp"]
+script/source = "extends Node2D
+
+#@onready var attack_slot_1 = $AttackSlot_1
+#
+#
+#
+## Called when the node enters the scene tree for the first time.
+#func _ready():
+	#GameDataManager.get_slot(attack_slot_1)
+"
+
 [node name="Board" type="Node2D"]
-script = ExtResource("1_mvrah")
+script = SubResource("GDScript_bj7hp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 2
 scale = Vector2(10, 10)
 texture = ExtResource("1_nivb8")
+centered = false

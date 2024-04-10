@@ -19,7 +19,6 @@ func _on_play_button_pressed():
 	main_menu.visible = false
 	await get_tree().create_timer(.1).timeout
 	get_tree().change_scene_to_file("res://Assets/Scenes/game.tscn")
-	#get_tree().quit()
 
 func _on_manage_deck_button_pressed():
 	main_menu.visible = false

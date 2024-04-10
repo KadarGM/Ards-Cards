@@ -5,7 +5,6 @@ extends CanvasLayer
 @onready var setting_bg = $Control2/SettingBG
 @onready var control_2 = $Control2
 
-
 func _ready():
 	start()
 
