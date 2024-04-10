@@ -17,7 +17,8 @@ config/icon="res://Assets/Graphics/Icons/icon.svg"
 
 [autoload]
 
-global="*res://Assets/Scripts/Global/global.gd"
+GameDataManager="*res://Assets/Scripts/Global/gameDataManager.gd"
+CardDataList="*res://Assets/Scripts/Cards/cardDataList.gd"
 
 [display]
 

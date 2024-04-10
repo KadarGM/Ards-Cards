@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://db8kmed63v1qa"]
+[gd_scene load_steps=42 format=3 uid="uid://db8kmed63v1qa"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/card.gd" id="1_wnf6q"]
+[ext_resource type="Script" path="res://Assets/Scripts/Cards/cardDataManager.gd" id="1_173ep"]
 [ext_resource type="Texture2D" uid="uid://7ou2nkhneqvl" path="res://Assets/Graphics/Export/MANA_POINT.png" id="2_0afud"]
-[ext_resource type="Script" path="res://Assets/Scripts/Classes/cardData.gd" id="2_go770"]
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="2_s7wnn"]
 [ext_resource type="Texture2D" uid="uid://bukgcmswnvo1i" path="res://Assets/Graphics/Export/HEALTH.png" id="4_8oket"]
 [ext_resource type="Texture2D" uid="uid://b6y87c66ci18q" path="res://Assets/Graphics/Export/DEFFENSE.png" id="5_3u4vg"]
@@ -12,14 +11,273 @@
 [ext_resource type="Texture2D" uid="uid://cxbg0yn6nhmfy" path="res://Assets/Graphics/Export/CARD_BG.png" id="9_k2dkd"]
 [ext_resource type="Texture2D" uid="uid://gm32rlj5oumd" path="res://Assets/Graphics/Export/CARD_BG_TEXT.png" id="10_tgl6e"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0oiwr"]
-size = Vector2(240, 320)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20obq"]
+bg_color = Color(0.290196, 0.266667, 0.258824, 1)
+border_width_bottom = 5
+border_color = Color(0.15, 0.1368, 0.1335, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20cbg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u0ciy"]
+bg_color = Color(0.7, 0.261333, 0.14, 1)
+border_width_bottom = 7
+border_color = Color(0.3, 0.108, 0.06, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 3
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m70by"]
+bg_color = Color(0.75, 0.28, 0.15, 1)
+border_width_bottom = 7
+border_color = Color(0.42, 0.1568, 0.084, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 3
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxv1"]
+bg_color = Color(0.55, 0.205333, 0.11, 1)
+border_width_bottom = 5
+border_color = Color(0.15, 0.056, 0.03, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0392157, 0.0156863, 0.00784314, 0.372549)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+
+[sub_resource type="ImageTexture" id="ImageTexture_ix7il"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_5gtwj"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_h5gvt"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_4qjw0"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_7eaop"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_oliso"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_x7ig8"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_wsdtm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1l85h"]
+bg_color = Color(0.74902, 0.278431, 0.14902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqu8f"]
+bg_color = Color(0.290196, 0.266667, 0.258824, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+anti_aliasing_size = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1iel"]
+bg_color = Color(0.85098, 0.317647, 0.168627, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+anti_aliasing_size = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp7j0"]
+bg_color = Color(0.74902, 0.278431, 0.14902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+anti_aliasing_size = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu4uh"]
+bg_color = Color(0.423529, 0.192157, 0.12549, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+anti_aliasing_size = 2.0
+
+[sub_resource type="ImageTexture" id="ImageTexture_744bt"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_dh68a"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_vhxpr"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_2u7ws"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_qmk1f"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_667gv"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_pdjcf"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_8w6ox"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_10iv1"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_j7gg5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxvwu"]
+bg_color = Color(0.54902, 0.203922, 0.109804, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xonse"]
+bg_color = Color(0.14902, 0.054902, 0.0313726, 1)
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_xve6d"]
+Button/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+Button/colors/font_disabled_color = Color(0.87451, 0.87451, 0.87451, 0.501961)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(0.8, 0.8, 0.8, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0.8, 0.8, 0.8, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("2_s7wnn")
+Button/styles/disabled = SubResource("StyleBoxFlat_20obq")
+Button/styles/focus = SubResource("StyleBoxFlat_20cbg")
+Button/styles/hover = SubResource("StyleBoxFlat_u0ciy")
+Button/styles/normal = SubResource("StyleBoxFlat_m70by")
+Button/styles/pressed = SubResource("StyleBoxFlat_7gxv1")
+CheckBox/font_sizes/font_size = 32
+CheckBox/fonts/font = ExtResource("2_s7wnn")
+CheckBox/icons/checked = SubResource("ImageTexture_ix7il")
+CheckBox/icons/checked_disabled = SubResource("ImageTexture_5gtwj")
+CheckBox/icons/radio_checked = SubResource("ImageTexture_h5gvt")
+CheckBox/icons/radio_checked_disabled = SubResource("ImageTexture_4qjw0")
+CheckBox/icons/radio_unchecked = SubResource("ImageTexture_7eaop")
+CheckBox/icons/radio_unchecked_disabled = SubResource("ImageTexture_oliso")
+CheckBox/icons/unchecked = SubResource("ImageTexture_x7ig8")
+CheckBox/icons/unchecked_disabled = SubResource("ImageTexture_wsdtm")
+CheckBox/styles/disabled = SubResource("StyleBoxFlat_20obq")
+CheckBox/styles/hover = SubResource("StyleBoxFlat_u0ciy")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_7gxv1")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_m70by")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_7gxv1")
+HSlider/styles/slider = SubResource("StyleBoxFlat_1l85h")
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("2_s7wnn")
+OptionButton/font_sizes/font_size = 32
+OptionButton/fonts/font = ExtResource("2_s7wnn")
+OptionButton/icons/arrow = null
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_dqu8f")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_f1iel")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_gp7j0")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_qu4uh")
+PopupMenu/constants/item_start_padding = 10
+PopupMenu/constants/v_separation = 20
+PopupMenu/font_sizes/font_size = 24
+PopupMenu/fonts/font = ExtResource("2_s7wnn")
+PopupMenu/fonts/font_separator = ExtResource("2_s7wnn")
+PopupMenu/icons/checked = SubResource("ImageTexture_744bt")
+PopupMenu/icons/checked_disabled = SubResource("ImageTexture_dh68a")
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_vhxpr")
+PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_2u7ws")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_qmk1f")
+PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_667gv")
+PopupMenu/icons/submenu = SubResource("ImageTexture_pdjcf")
+PopupMenu/icons/submenu_mirrored = SubResource("ImageTexture_8w6ox")
+PopupMenu/icons/unchecked = SubResource("ImageTexture_10iv1")
+PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_j7gg5")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_lxvwu")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_xonse")
 
 [node name="card" type="Node2D"]
-script = ExtResource("1_wnf6q")
+script = ExtResource("1_173ep")
 
 [node name="cardTrans" type="Node2D" parent="."]
-script = ExtResource("2_go770")
 
 [node name="NameLabel" type="Label" parent="cardTrans"]
 texture_filter = 1
@@ -31,9 +289,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -209.0
+offset_top = -368.0
 offset_right = 200.0
-offset_bottom = -149.0
+offset_bottom = -308.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.6, 0.6)
@@ -48,20 +306,18 @@ vertical_alignment = 1
 autowrap_mode = 1
 max_lines_visible = 2
 visible_characters_behavior = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="CardStats" type="MarginContainer" parent="cardTrans"]
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -176.0
-offset_top = -160.0
-offset_right = 179.0
-offset_bottom = 160.0
+anchor_bottom = 1.0
+offset_left = -177.5
+offset_top = -320.0
+offset_right = 177.5
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 8
@@ -214,6 +470,7 @@ layout_mode = 2
 texture = ExtResource("6_no6vg")
 
 [node name="CardFG" type="Node2D" parent="cardTrans"]
+position = Vector2(0, -160)
 
 [node name="CardFgBg" type="Sprite2D" parent="cardTrans/CardFG"]
 scale = Vector2(10, 10)
@@ -226,9 +483,10 @@ scale = Vector2(10, 10)
 texture = ExtResource("8_c46ei")
 
 [node name="CardBG" type="Node2D" parent="cardTrans"]
+visible = false
+position = Vector2(0, -160)
 
 [node name="BG" type="Sprite2D" parent="cardTrans/CardBG"]
-visible = false
 modulate = Color(0.870588, 0.541176, 0.113725, 1)
 texture_filter = 1
 scale = Vector2(10, 10)
@@ -237,13 +495,52 @@ texture = ExtResource("9_k2dkd")
 [node name="CardBgText" type="Sprite2D" parent="cardTrans/CardBG/BG"]
 texture = ExtResource("10_tgl6e")
 
-[node name="Area2D" type="Area2D" parent="." groups=["card"]]
-collision_mask = 2
+[node name="PlayMenu" type="MarginContainer" parent="cardTrans"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -416.0
+offset_right = 120.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(120, 138)
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_0oiwr")
+[node name="HBoxContainer" type="HBoxContainer" parent="cardTrans/PlayMenu"]
+layout_mode = 2
+alignment = 1
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[node name="VBoxContainer" type="VBoxContainer" parent="cardTrans/PlayMenu/HBoxContainer"]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_xve6d")
+text = "put"
+flat = true
+icon_alignment = 1
+
+[node name="ActiveCard" type="Button" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -320.0
+offset_right = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_xve6d")
+toggle_mode = true
+flat = true
+
+[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
+[connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
+[connection signal="toggled" from="ActiveCard" to="." method="_on_use_card_toggled"]
