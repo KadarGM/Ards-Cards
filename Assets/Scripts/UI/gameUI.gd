@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const GAME = preload("res://Assets/Scenes/game.tscn")
+
 @onready var setting_menu = $Control2/SettingMenu
 @onready var game_menu = $Control/GameMenu
 @onready var setting_bg = $Control2/SettingBG
@@ -23,11 +25,13 @@ func _on_setting_button_pressed():
 	control_2.visible = true
 
 func _on_exit_button_pressed():
+	var game = GAME.instantiate()
 	game_menu.visible = false
 	setting_bg.visible = false
 	control_2.visible = false
 	get_window().set_mode(Window.MODE_WINDOWED)
 	get_tree().change_scene_to_file("res://Assets/Scenes/main.tscn")
+	GameDataManager.reset()
 
 func _on_back_setting_button_pressed():
 	setting_menu.visible = false

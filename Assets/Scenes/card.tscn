@@ -493,18 +493,6 @@ texture_filter = 1
 scale = Vector2(10, 10)
 texture = ExtResource("8_c46ei")
 
-[node name="CardBG" type="Node2D" parent="cardTrans"]
-visible = false
-
-[node name="BG" type="Sprite2D" parent="cardTrans/CardBG"]
-modulate = Color(0.870588, 0.541176, 0.113725, 1)
-texture_filter = 1
-scale = Vector2(10, 10)
-texture = ExtResource("9_k2dkd")
-
-[node name="CardBgText" type="Sprite2D" parent="cardTrans/CardBG/BG"]
-texture = ExtResource("10_tgl6e")
-
 [node name="PlayMenu" type="MarginContainer" parent="cardTrans"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -575,6 +563,37 @@ grow_vertical = 2
 theme = SubResource("Theme_xve6d")
 toggle_mode = true
 flat = true
+
+[node name="CardBG" type="Node2D" parent="."]
+
+[node name="BG" type="Sprite2D" parent="CardBG"]
+modulate = Color(0.870588, 0.541176, 0.113725, 1)
+texture_filter = 1
+scale = Vector2(10, 10)
+texture = ExtResource("9_k2dkd")
+
+[node name="CardBgText" type="Sprite2D" parent="CardBG/BG"]
+texture = ExtResource("10_tgl6e")
+
+[node name="TypeLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.5
+offset_top = -59.0
+offset_right = 59.5
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_s7wnn")
+theme_override_font_sizes/font_size = 128
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
 
 [connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer/PutButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/PlayButton" to="." method="_on_play_button_pressed"]

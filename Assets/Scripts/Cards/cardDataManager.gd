@@ -6,7 +6,8 @@ var is_on_button = false
 
 var game_data_manager = GameDataManager
 @export var id: int
-#@export var id_hand: int
+@export var id_in_slot: int
+@export var type: int
 
 @onready var stats_values = []
 @onready var stats = CardDataList.card[id]
@@ -27,12 +28,18 @@ var game_data_manager = GameDataManager
 @onready var deffense_label = $cardTrans/CardStats/LeftContainer/GridContainer/DeffenseSprite/DeffenseLabel
 @onready var attack_label = $cardTrans/CardStats/LeftContainer/GridContainer/AttackSprite/AttackLabel
 
+@onready var card_bg = $CardBG
+@onready var type_label = $TypeLabel
+
 func _ready():
 	set_stats_value()
 	set_stats_visible(false)
 	set_play_menu(false)
 	set_colors()
-
+	card_trans.visible = false
+	active_card.visible = false
+	card_bg.visible = true
+	
 func set_colors():
 	color_rect.modulate = fg.modulate
 	#put_button.modulate = fg.modulate
@@ -56,6 +63,7 @@ func _process(delta):
 
 func set_stats_value():
 	stats_values = stats
+	type_label.text = str(type)
 	name_label.text = str(stats_values[0])
 	mana_label.text = str(stats_values[1])
 	health_label.text = str(stats_values[2])
@@ -118,11 +126,23 @@ func _on_active_card_mouse_exited():
 	is_on_button = false
 
 func _on_play_button_pressed():
-	var current_slots = game_data_manager.attack_slot_current
+	print("id_in_slot",id_in_slot)
+	var current_slots
+	if type == 0:
+		current_slots = game_data_manager.p1_a_slots.size()
+	if type == 1:
+		current_slots = game_data_manager.p1_d_slots.size()
 	if current_slots > game_data_manager.fight_slot_min and current_slots <= game_data_manager.fight_slot_max:
-		if game_data_manager.attack_slots_array.size() > 0:
-			game_data_manager.put(self)
-			put_button.visible = false
+		game_data_manager.put(self)
+		put_button.visible = false 
+		print("p1_deck",game_data_manager.p1_deck.size())
+		print("p1_hand ",game_data_manager.p1_hand.size())
+		print("p1_attack ",game_data_manager.p1_attack.size())
+		print("p1_defense ",game_data_manager.p1_defense.size())
+		print("p1_a_slots",game_data_manager.p1_a_slots.size())
+		print("p1_a_slots_full",game_data_manager.p1_a_slots_full.size())
+		print("p1_d_slots",game_data_manager.p1_d_slots.size())
+		print("p1_dslots_full",game_data_manager.p1_d_slots_full.size())
 	else:
 		print("no_size")
 	
