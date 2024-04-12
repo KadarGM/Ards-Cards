@@ -14,8 +14,8 @@ var game_data_manager = GameDataManager
 @onready var stats = CardDataList.card[id]
 
 @onready var play_menu = $cardTrans/PlayMenu
-@onready var put_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer/PutButton
-@onready var put_button_1 = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/PutButton1
+@onready var put_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer
+@onready var put_button_1 = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer2
 @onready var active_card = $ActiveCard
 
 @onready var card_trans = $cardTrans
@@ -131,24 +131,26 @@ func _on_active_card_mouse_exited():
 func _on_play_button_pressed():
 	var current_slots
 	var max_slots
-	var min_slots
 	if type == 0:
-		current_slots = game_data_manager.p1_a_slots.size()
-		max_slots = 4
-		min_slots = 0
+		current_slots = game_data_manager.p1_attack.size()
+		max_slots = game_data_manager.p1_a_slots.size()
 	if type == 1:
-		current_slots = game_data_manager.p1_d_slots.size()
-		max_slots = 4
-		min_slots = 0
+		current_slots = game_data_manager.p1_defense.size()
+		max_slots = game_data_manager.p1_d_slots.size()
 	if type == 2:
-		current_slots = game_data_manager.p1_ar_slots.size()
-		max_slots = 2
-		min_slots = 0
-	if current_slots > min_slots and current_slots <= max_slots:
+		current_slots = game_data_manager.p1_artefact.size()
+		max_slots = game_data_manager.p1_ar_slots.size()
+	if current_slots < max_slots:
 		game_data_manager.put(self)
 		put_button.visible = false 
 	else:
 		print("no_size")
+	change_slots_size()
 
 func _on_put_button_pressed():
 	game_data_manager.destroy(self)
+	change_slots_size()
+
+func change_slots_size():
+	game_data_manager.p1_dc_slots[0].card_count.text = str(game_data_manager.p1_deck.size())
+	game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())

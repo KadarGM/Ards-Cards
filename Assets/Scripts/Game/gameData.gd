@@ -9,11 +9,13 @@ var game_data_manager = GameDataManager
 # Holders
 var card_holder
 var slot_holder
+var is_starting = false
 
 func _ready():
 	on_start_game("player1")
 
 func on_start_game(player):
+	is_starting = true
 	set_board()
 	node_holders()
 	create_slot(player,"grave",1)
@@ -25,11 +27,14 @@ func on_start_game(player):
 	for c in range(6):
 		await get_tree().create_timer(.5).timeout
 		draw_card(player,1)
+	is_starting = false
 #
-#func _process(delta):
-	#if game_data_manager.p1_hand.size() < 8:
-		#if Input.is_action_just_pressed("right click"):
-			#draw_card("player1",1)
+func _process(delta):
+	create_slot_counter()
+	if is_starting == false:
+		if game_data_manager.p1_hand.size() < 8:
+			if Input.is_action_just_pressed("right click"):
+				draw_card("player1",1)
 
 func set_board():
 	var board = BOARD.instantiate()
@@ -55,9 +60,8 @@ func draw_card(player, num):
 			clone.card_trans.visible = true
 			clone.active_card.visible = true
 			from_deck_to_hand_anim(player,clone,c)
-		game_data_manager.reindex_card_in_hand(player)
 		await  get_tree().create_timer(.3).timeout
-		game_data_manager.reorganize_hand()#
+		game_data_manager.reorganize_hand(player)#
 	#if player == "player2":
 		#for c in range(num):
 			#var clone = CARD.instantiate()
@@ -70,7 +74,7 @@ func from_deck_to_hand_anim(player,clone,c):
 	if player == "player1":
 		var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 		var card_spacing = 150
-		var start_x = get_viewport().size.x
+		var start_x = 1920
 		clone.position.x = 3600
 		clone.position.y = 1300
 		tween.tween_property(clone, "position:x", start_x - (card_spacing * c), .5)
@@ -81,7 +85,7 @@ func create_deck(player,num):
 		for c in num:
 			var clone = CARD.instantiate()
 			clone.id = randi_range(0,3)
-			clone.type = randi_range(0,0)
+			clone.type = randi_range(0,2)
 			clone.id_in_slot = c
 			clone.slot_type = "deck"
 			clone.position = game_data_manager.p1_dc_slots[0].position
@@ -107,9 +111,16 @@ func create_slot(player,type,num):
 		for s in range(num):
 			var slot = SLOT.instantiate()
 			slot.id_slot = s
+			slot.slot = type
 			slot_type.append(slot)
 			slot_holder.add_child(slot,true)
 			organize(player,type,slot,s)
+
+func create_slot_counter():
+	game_data_manager.p1_g_slots[0].card_count.visible = true
+	game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())
+	game_data_manager.p1_dc_slots[0].card_count.visible = true
+	game_data_manager.p1_dc_slots[0].card_count.text  = str(game_data_manager.p1_deck.size())
 
 func organize(player,type,body,n):
 	if player == "player1":

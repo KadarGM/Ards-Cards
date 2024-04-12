@@ -95,7 +95,8 @@ func set_screen(screen):
 	screen_menu.set_text(monitor_text)
 	DisplayServer.window_set_current_screen(screen,0)
 	setting_data_resource.screen_id = screen
-	screen_menu.select(screen)
+	if screen != 0:
+		screen_menu.select(screen)
 
 func save_data():
 	ResourceSaver.save(setting_data_resource, save_setting_path + save_setting_name)
@@ -123,8 +124,9 @@ func set_resolution_text():
 func set_monitor_text():
 	var active_screen = DisplayServer.window_get_current_screen()
 	var monitor_text = "Screen: "+str(active_screen)
-	screen_menu.set_text(monitor_text)
-	screen_menu.select(active_screen)
+	if active_screen != 0:
+		screen_menu.set_text(monitor_text)
+		screen_menu.select(active_screen)
 
 func change_borderless_text():
 	var _window = get_window()
