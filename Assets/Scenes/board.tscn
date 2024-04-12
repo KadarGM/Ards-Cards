@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://blmth272njx7u" path="res://Assets/Graphics/Export/BOARD.png" id="1_nivb8"]
 
 [node name="Board" type="Node2D"]
+z_index = -1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

@@ -3,6 +3,7 @@ extends Node2D
 var max_card_scale = 2.2
 var min_card_scale = 1
 var is_on_button = false
+var is_in_grave = false
 
 var game_data_manager = GameDataManager
 @export var id: int
@@ -86,7 +87,8 @@ func detail_card():
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(card_trans, "scale", Vector2(max_card_scale,max_card_scale), .3)
 	set_stats_visible(true)
-	set_play_menu(true)
+	if is_in_grave == false:
+		set_play_menu(true)
 	top_level = true
 
 func release_detail_card():
@@ -119,6 +121,7 @@ func _on_active_card_mouse_entered():
 		searching_hand()
 	if Input.is_action_pressed("left click"):
 		active_card.button_pressed = true
+		top_level = true
 	is_on_button = true
 
 func _on_active_card_mouse_exited():
@@ -126,6 +129,7 @@ func _on_active_card_mouse_exited():
 		release_searching_hand()
 	if Input.is_action_pressed("left click"):
 		active_card.button_pressed = false
+		top_level = true
 	is_on_button = false
 
 func _on_play_button_pressed():
@@ -149,8 +153,10 @@ func _on_play_button_pressed():
 
 func _on_put_button_pressed():
 	game_data_manager.destroy(self)
+	is_in_grave = true
 	change_slots_size()
 
 func change_slots_size():
 	game_data_manager.p1_dc_slots[0].card_count.text = str(game_data_manager.p1_deck.size())
 	game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())
+

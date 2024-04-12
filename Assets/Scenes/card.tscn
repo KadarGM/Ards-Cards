@@ -290,6 +290,7 @@ PopupMenu/styles/hover = SubResource("StyleBoxFlat_lxvwu")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_xonse")
 
 [node name="card" type="Node2D"]
+z_index = 2
 texture_filter = 1
 script = ExtResource("1_173ep")
 

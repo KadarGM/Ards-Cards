@@ -14,9 +14,11 @@ func _ready():
 
 func _on_color_rect_mouse_entered():
 	if slot == "grave":
-		game_data_manager.show_grave("player1")
+		if Input.is_action_pressed("left click"):
+			game_data_manager.show_grave("player1")
 
 
 func _on_color_rect_mouse_exited():
 	if slot == "grave":
-		print("no")
+		if Input.is_action_pressed("right click"):
+			game_data_manager.hide_grave("player1")

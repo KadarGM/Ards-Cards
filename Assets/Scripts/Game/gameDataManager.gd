@@ -17,6 +17,7 @@ var p1_g_slots = []
 var p1_a_slots = []
 var p1_d_slots = []
 var p1_ar_slots = []
+var p1_g_show = []
 
 var p2_hand = []
 
@@ -34,6 +35,11 @@ func reset():
 	p1_d_slots = []
 	p1_ar_slots = []
 
+func _process(delta):
+	check_put_avaliable(p1_attack)
+	check_put_avaliable(p1_defense)
+	check_put_avaliable(p1_artefact)
+
 func put(body):
 	var card_body = body
 	if card_body.type == 0:
@@ -45,6 +51,7 @@ func put(body):
 				p1_attack[i].id_in_slot = i
 				p1_a_slots[i].is_empty = 0
 				card_animation(card_body, "position",p1_a_slots[i].position)
+				
 				break
 	if card_body.type == 1:
 		for i in range(p1_d_slots.size()):
@@ -55,6 +62,7 @@ func put(body):
 				p1_defense[i].id_in_slot = i
 				p1_d_slots[i].is_empty = 0
 				card_animation(card_body, "position", p1_d_slots[i].position)
+				
 				break
 	if card_body.type == 2:
 		for i in range(p1_ar_slots.size()):
@@ -65,12 +73,34 @@ func put(body):
 				p1_artefact[i].id_in_slot = i
 				p1_ar_slots[i].is_empty = 0
 				card_animation(card_body, "position", p1_ar_slots[i].position)
+				
 				break
 	if p1_hand.size() > 0:
 		reorganize_hand("player1")
 	await get_tree().create_timer(.3).timeout
 	body.put_button_1.visible = true
 	
+func check_put_avaliable(type1):
+	var typ
+	var maximum
+	if type1 == p1_attack:
+		typ = 0
+		maximum = 4
+	if type1 == p1_defense:
+		typ = 1
+		maximum = 4
+	if type1 == p1_artefact:
+		typ = 2
+		maximum = 2
+	if type1.size() == maximum:
+		for i in range(p1_hand.size()):
+			if p1_hand[i].type == typ:
+				p1_hand[i].put_button.visible = false
+	if type1.size() < maximum:
+		for i in range(p1_hand.size()):
+			if p1_hand[i].type == typ:
+				p1_hand[i].put_button.visible = true
+				
 
 func destroy(body):
 	var card_body = body
@@ -78,29 +108,24 @@ func destroy(body):
 		p1_a_slots[card_body.id_in_slot].is_empty = 1
 		p1_graveyard.append(card_body)
 		p1_attack.remove_at(card_body.id_in_slot)
-		card_body.card_bg.visible = true
-		card_body.card_trans.visible = false
-		card_body.active_card.visible = false
 		card_animation(card_body,"position", p1_g_slots[0].position)
 		reorganize_slot("player1",p1_attack,p1_a_slots)
 	if card_body.slot_type == "p1_defense":
 		p1_d_slots[card_body.id_in_slot].is_empty = 1
 		p1_graveyard.append(card_body)
 		p1_defense.remove_at(card_body.id_in_slot)
-		card_body.card_bg.visible = true
-		card_body.card_trans.visible = false
-		card_body.active_card.visible = false
 		card_animation(card_body,"position", p1_g_slots[0].position)
 		reorganize_slot("player1",p1_defense,p1_d_slots)
 	if card_body.slot_type == "p1_artefact":
 		p1_ar_slots[card_body.id_in_slot].is_empty = 1
 		p1_graveyard.append(card_body)
 		p1_artefact.remove_at(card_body.id_in_slot)
-		card_body.card_bg.visible = true
-		card_body.card_trans.visible = false
-		card_body.active_card.visible = false
 		card_animation(card_body,"position", p1_g_slots[0].position)
 		reorganize_slot("player1",p1_artefact,p1_ar_slots)
+	card_body.card_bg.visible = true
+	card_body.card_trans.visible = false
+	card_body.active_card.visible = false
+	card_body.play_menu.visible = false
 
 func reorganize_slot(player,type,slot_type):
 	if player == "player1":
@@ -114,31 +139,26 @@ func show_grave(player):
 	if player == "player1":
 		var card_spacing = 150
 		var start_x = 2500
-		if p1_graveyard.size() > 0 and p1_graveyard.size() <= 20:
-			for c in range(p1_graveyard.size()):
-				p1_graveyard[c].top_level = true
-				card_animation(p1_graveyard[c],"position:x",start_x - (card_spacing * c))
-				card_animation(p1_graveyard[c],"position:y",780)
-				p1_graveyard[c].card_bg.visible = false
-				p1_graveyard[c].card_trans.visible = true
-				p1_graveyard[c].active_card.visible = true
-		if p1_graveyard.size() <= 40:
-			for c in range(20,p1_graveyard.size()):
-				p1_graveyard[c].top_level = true
-				card_animation(p1_graveyard[c],"position:x",start_x - (card_spacing * (c)))
-				card_animation(p1_graveyard[c],"position:y",1080)
-				p1_graveyard[c].card_bg.visible = false
-				p1_graveyard[c].card_trans.visible = true
-				p1_graveyard[c].active_card.visible = true
-		if p1_graveyard.size() <= 60:
-			for c in range(40,p1_graveyard.size()):
-				p1_graveyard[c].top_level = true
-				card_animation(p1_graveyard[c],"position:x",start_x - (card_spacing * (c)))
-				card_animation(p1_graveyard[c],"position:y",1380)
-				p1_graveyard[c].card_bg.visible = false
-				p1_graveyard[c].card_trans.visible = true
-				p1_graveyard[c].active_card.visible = true
-				
+		for c in range(p1_graveyard.size()):
+			p1_g_show.append(p1_graveyard[0])
+			p1_graveyard.remove_at(c)
+			p1_g_show[c].card_bg.visible = false
+			p1_g_show[c].card_trans.visible = true
+			p1_g_show[c].active_card.visible = true
+			card_animation(p1_g_show[c],"position:x",start_x - (card_spacing * c))
+			card_animation(p1_g_show[c],"position:y",780)
+			p1_g_show[c].top_level = true
+
+func hide_grave(player):
+	if player == "player1":
+		for i in range(p1_g_show.size()):
+			card_animation(p1_g_show[i],"position", p1_g_slots[0].position)
+			p1_graveyard.append(p1_g_show[i])
+			p1_g_show.remove_at(i)
+			p1_graveyard[i].card_bg.visible = true
+			p1_graveyard[i].card_trans.visible = false
+			p1_graveyard[i].active_card.visible = false
+			
 
 func reorganize_hand(player):
 	if player == "player1":

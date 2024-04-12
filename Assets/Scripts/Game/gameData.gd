@@ -24,7 +24,7 @@ func on_start_game(player):
 	create_slot(player,"attack",4)
 	create_slot(player,"defense",4)
 	create_deck(player,60)
-	for c in range(6):
+	for c in range(8):
 		await get_tree().create_timer(.5).timeout
 		draw_card(player,1)
 	is_starting = false
@@ -50,18 +50,19 @@ func node_holders():
 
 func draw_card(player, num):
 	if player == "player1":
-		for c in range(num):
-			var clone = game_data_manager.p1_deck[c]
-			clone.id_in_slot = c
-			clone.slot_type = "hand"
-			game_data_manager.p1_hand.append(clone)
-			game_data_manager.p1_deck.remove_at(c)
-			clone.card_bg.visible = false
-			clone.card_trans.visible = true
-			clone.active_card.visible = true
-			from_deck_to_hand_anim(player,clone,c)
-		await  get_tree().create_timer(.3).timeout
-		game_data_manager.reorganize_hand(player)#
+		if game_data_manager.p1_deck.size() > 0:
+			for c in range(num):
+				var clone = game_data_manager.p1_deck[c]
+				clone.id_in_slot = c
+				clone.slot_type = "hand"
+				game_data_manager.p1_hand.append(clone)
+				game_data_manager.p1_deck.remove_at(c)
+				clone.card_bg.visible = false
+				clone.card_trans.visible = true
+				clone.active_card.visible = true
+				from_deck_to_hand_anim(player,clone,c)
+			await  get_tree().create_timer(.3).timeout
+			game_data_manager.reorganize_hand(player)#
 	#if player == "player2":
 		#for c in range(num):
 			#var clone = CARD.instantiate()
