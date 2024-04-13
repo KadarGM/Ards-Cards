@@ -137,28 +137,30 @@ func reorganize_slot(player,type,slot_type):
 
 func show_grave(player):
 	if player == "player1":
-		var card_spacing = 150
+		var card_spacing = 100
 		var start_x = 2500
+		var x_multiplier = 0
+		var y_multiplier = 0
 		for c in range(p1_graveyard.size()):
-			p1_g_show.append(p1_graveyard[0])
-			p1_graveyard.remove_at(c)
-			p1_g_show[c].card_bg.visible = false
-			p1_g_show[c].card_trans.visible = true
-			p1_g_show[c].active_card.visible = true
-			card_animation(p1_g_show[c],"position:x",start_x - (card_spacing * c))
-			card_animation(p1_g_show[c],"position:y",780)
-			p1_g_show[c].top_level = true
+			if p1_graveyard.size()%12 == 0:
+				x_multiplier = 0
+				y_multiplier += 1
+			p1_graveyard[c].card_bg.visible = false
+			p1_graveyard[c].card_trans.visible = true
+			p1_graveyard[c].active_card.visible = true
+			card_animation(p1_graveyard[c],"position:x",start_x - (card_spacing * x_multiplier))
+			card_animation(p1_graveyard[c],"position:y",780 + (300 * y_multiplier))
+			p1_graveyard[c].top_level = true
+			x_multiplier += 1
+			print("multiplier: ", x_multiplier)
 
 func hide_grave(player):
 	if player == "player1":
-		for i in range(p1_g_show.size()):
-			card_animation(p1_g_show[i],"position", p1_g_slots[0].position)
-			p1_graveyard.append(p1_g_show[i])
-			p1_g_show.remove_at(i)
+		for i in range(p1_graveyard.size()):
 			p1_graveyard[i].card_bg.visible = true
 			p1_graveyard[i].card_trans.visible = false
 			p1_graveyard[i].active_card.visible = false
-			
+			card_animation(p1_graveyard[i],"position", p1_g_slots[0].position)
 
 func reorganize_hand(player):
 	if player == "player1":

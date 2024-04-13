@@ -91,12 +91,14 @@ func set_ui_scale(scale_ui):
 	ui_scaler_text.set_text("UI: " + str(scale_ui*100) + "%")
 
 func set_screen(screen):
-	var monitor_text = "Screen: "+str(screen)
-	screen_menu.set_text(monitor_text)
-	DisplayServer.window_set_current_screen(screen,0)
-	setting_data_resource.screen_id = screen
-	if screen != 0:
-		screen_menu.select(screen)
+	var screens = DisplayServer.get_screen_count()
+	if screens > 1:
+		var monitor_text = "Screen: "+str(screen)
+		screen_menu.set_text(monitor_text)
+		DisplayServer.window_set_current_screen(screen,0)
+		setting_data_resource.screen_id = screen
+		if screen != 0:
+			screen_menu.select(screen)
 
 func save_data():
 	ResourceSaver.save(setting_data_resource, save_setting_path + save_setting_name)
