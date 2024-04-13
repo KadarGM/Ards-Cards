@@ -141,26 +141,25 @@ func show_grave(player):
 		var start_x = 2500
 		var x_multiplier = 0
 		var y_multiplier = 0
-		for c in range(p1_graveyard.size()):
-			if p1_graveyard.size()%12 == 0:
-				x_multiplier = 0
-				y_multiplier += 1
-			p1_graveyard[c].card_bg.visible = false
-			p1_graveyard[c].card_trans.visible = true
-			p1_graveyard[c].active_card.visible = true
-			card_animation(p1_graveyard[c],"position:x",start_x - (card_spacing * x_multiplier))
-			card_animation(p1_graveyard[c],"position:y",780 + (300 * y_multiplier))
-			p1_graveyard[c].top_level = true
-			x_multiplier += 1
-			print("multiplier: ", x_multiplier)
+		for c in range(1,p1_graveyard.size()+1):
+			if p1_graveyard.size()/12 != 1:
+				y_multiplier = 0
+			if p1_graveyard.size()/12 == c:
+				y_multiplier = p1_graveyard.size()/12
+			card_animation(p1_graveyard[c-1],"position:x",start_x - (card_spacing * c))
+			card_animation(p1_graveyard[c-1],"position:y",780 + (300 * y_multiplier))
+			p1_graveyard[c-1].card_bg.visible = false
+			p1_graveyard[c-1].card_trans.visible = true
+			p1_graveyard[c-1].active_card.visible = true
+			p1_graveyard[c-1].top_level = true
 
 func hide_grave(player):
 	if player == "player1":
 		for i in range(p1_graveyard.size()):
+			card_animation(p1_graveyard[i],"position", p1_g_slots[0].position)
 			p1_graveyard[i].card_bg.visible = true
 			p1_graveyard[i].card_trans.visible = false
 			p1_graveyard[i].active_card.visible = false
-			card_animation(p1_graveyard[i],"position", p1_g_slots[0].position)
 
 func reorganize_hand(player):
 	if player == "player1":
@@ -174,3 +173,4 @@ func reorganize_hand(player):
 func card_animation(who,what,where):
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(who, what, where, .5)
+	await get_tree().create_timer(.5).timeout
