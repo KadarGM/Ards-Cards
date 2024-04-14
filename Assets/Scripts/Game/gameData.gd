@@ -2,24 +2,22 @@ extends Node
 
 const CARD = preload("res://Assets/Scenes/card.tscn")
 const SLOT = preload("res://Assets/Scenes/slot.tscn")
-const BOARD = preload("res://Assets/Scenes/board.tscn")
 
 var game_data_manager = GameDataManager
 
 # Holders
 var card_holder
 var slot_holder
-var is_starting = false
 
 func _ready():
 	on_start_game("player1")
 
 func on_start_game(player):
-	is_starting = true
-	set_board()
+	game_data_manager.is_starting = true
 	node_holders()
 	create_slot(player,"grave",1)
 	create_slot(player,"deck",1)
+	create_slot(player,"action",1)
 	create_slot(player,"artefact",2)
 	create_slot(player,"attack",4)
 	create_slot(player,"defense",4)
@@ -27,18 +25,16 @@ func on_start_game(player):
 	for c in range(8):
 		await get_tree().create_timer(.5).timeout
 		draw_card(player,1)
-	is_starting = false
-#
-func _process(delta):
-	create_slot_counter()
-	if is_starting == false:
-		if game_data_manager.p1_hand.size() < 8:
-			if Input.is_action_just_pressed("right click"):
-				draw_card("player1",1)
+	await get_tree().create_timer(1.0).timeout
+	game_data_manager.is_starting = false
 
-func set_board():
-	var board = BOARD.instantiate()
-	add_child(board,true)
+func _process(_delta):
+	create_slot_counter()
+	if game_data_manager.is_starting == false:
+		if game_data_manager.p1_hand.size() < 8:
+			if Input.is_action_just_pressed("space key"):
+				draw_card("player1",1)
+				await get_tree().create_timer(.2).timeout
 
 func node_holders():
 	card_holder = Node2D.new()
@@ -61,15 +57,8 @@ func draw_card(player, num):
 				clone.card_trans.visible = true
 				clone.active_card.visible = true
 				from_deck_to_hand_anim(player,clone,c)
-			await  get_tree().create_timer(.3).timeout
-			game_data_manager.reorganize_hand(player)#
-	#if player == "player2":
-		#for c in range(num):
-			#var clone = CARD.instantiate()
-			#clone.id = randi_range(0,3)
-			#clone.id_in_slot = c
-			#game_data_manager.p2_hand.append(clone)
-			#card_holder.add_child(clone, true)
+			await  get_tree().create_timer(.2).timeout
+			game_data_manager.reorganize_hand(player)
 
 func from_deck_to_hand_anim(player,clone,c):
 	if player == "player1":
@@ -86,7 +75,7 @@ func create_deck(player,num):
 		for c in num:
 			var clone = CARD.instantiate()
 			clone.id = randi_range(0,3)
-			clone.type = randi_range(0,2)
+			clone.type = randi_range(0,3)
 			clone.id_in_slot = c
 			clone.slot_type = "deck"
 			clone.position = game_data_manager.p1_dc_slots[0].position
@@ -105,6 +94,8 @@ func create_slot(player,type,num):
 			slot_type= game_data_manager.p1_d_slots
 		if type == "artefact":
 			slot_type = game_data_manager.p1_ar_slots
+		if type == "action":
+			slot_type = game_data_manager.p1_ac_slots
 		if type == "grave":
 			slot_type = game_data_manager.p1_g_slots
 		if type == "deck":
@@ -134,6 +125,9 @@ func organize(player,type,body,n):
 		if type == "artefact":
 			body.position.x = 3200 - (350 * n) 
 			body.position.y = 1800
+		if type == "action":
+			body.position.x = 1920
+			body.position.y = 1080
 		if type == "grave":
 			body.position.x = 220
 			body.position.y = 1325

@@ -40,6 +40,3 @@ text = "50"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
-
-[connection signal="mouse_entered" from="ColorRect" to="." method="_on_color_rect_mouse_entered"]
-[connection signal="mouse_exited" from="ColorRect" to="." method="_on_color_rect_mouse_exited"]

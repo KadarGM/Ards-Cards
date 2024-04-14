@@ -2,10 +2,10 @@ extends Node2D
 
 var max_card_scale = 2.2
 var min_card_scale = 1
-var is_on_button = false
-var is_in_grave = false
+
 
 var game_data_manager = GameDataManager
+
 @export var id: int
 @export var id_in_slot: int
 @export var slot_type: String
@@ -43,27 +43,32 @@ func _ready():
 	card_trans.visible = false
 	active_card.visible = false
 	card_bg.visible = true
-	
+
 func set_colors():
 	color_rect.modulate = fg.modulate
 	#put_button.modulate = fg.modulate
 
-func _process(delta):
-	if game_data_manager.is_searching == false:
-		release_searching_hand()
-	if is_on_button == false:
+func _process(_delta):
+	if game_data_manager.is_starting == false:
 		if Input.is_action_just_pressed("right click"):
-			game_data_manager.is_searching = true
-			release_detail_card()
-			await get_tree().create_timer(.1).timeout
+			if game_data_manager.is_detailed == true:
+				release_detail_card()
+				game_data_manager.is_searching = true
+				active_card.button_pressed = false
+				release_searching_hand()
+			if game_data_manager.p1_graveyard.size() > 0:
+				game_data_manager.reorganize_showed_grave("player1")
+			#if game_data_manager.is_detailed == false:
+				#game_data_manager.hide_grave("player1")
+				
 		if Input.is_action_just_pressed("left click"):
-			active_card.button_pressed = false
-			await get_tree().create_timer(.1).timeout
-	if is_on_button == true:
-		if Input.is_action_just_pressed("right click"):
-			game_data_manager.is_searching = true
-			active_card.button_pressed = false
-			await get_tree().create_timer(.1).timeout
+			if game_data_manager.is_detailed == true:
+				release_detail_card()
+				game_data_manager.is_searching = true
+				active_card.button_pressed = false
+				release_searching_hand()
+			if game_data_manager.p1_graveyard.size() > 0:
+				game_data_manager.reorganize_showed_grave("player1")
 
 func set_stats_value():
 	stats_values = stats
@@ -83,80 +88,87 @@ func set_play_menu(cond):
 	play_menu.visible = cond
 
 func detail_card():
-	await get_tree().create_timer(.1).timeout
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(card_trans, "scale", Vector2(max_card_scale,max_card_scale), .3)
+	print(id_in_slot)
 	set_stats_visible(true)
-	if is_in_grave == false:
+	if game_data_manager.is_in_grave == false:
 		set_play_menu(true)
 	top_level = true
+	await get_tree().create_timer(.1).timeout
 
 func release_detail_card():
-	await get_tree().create_timer(.1).timeout
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(card_trans, "scale", Vector2(min_card_scale,min_card_scale), .3)
 	set_stats_visible(false)
 	set_play_menu(false)
+	
 	top_level = false
+	await get_tree().create_timer(.1).timeout
 
 func searching_hand():
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(self, "scale", Vector2(1.1,1.1), .2)
-	
 
 func release_searching_hand():
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(self, "scale", Vector2(min_card_scale,min_card_scale), .2)
 
 func _on_use_card_toggled(toggled_on):
-	if toggled_on:
-		detail_card()
-		game_data_manager.is_searching = false
-	if not toggled_on:
-		release_detail_card()
-		game_data_manager.is_searching = true
+	if game_data_manager.is_starting == false:
+		if toggled_on:
+			game_data_manager.p1_body.append(self)
+			detail_card()
+			game_data_manager.is_searching = false
+			game_data_manager.is_detailed = true
+		if not toggled_on:
+			game_data_manager.p1_body = []
+			release_detail_card()
+			game_data_manager.is_searching = true
+			game_data_manager.is_detailed = false
 
 func _on_active_card_mouse_entered():
+	game_data_manager.is_on_button = true
 	if game_data_manager.is_searching == true:
 		searching_hand()
-	if Input.is_action_pressed("left click"):
-		active_card.button_pressed = true
-		top_level = true
-	is_on_button = true
+	#if Input.is_action_pressed("left click"):
+		#active_card.button_pressed = true
+		#game_data_manager.p1_body.append(self)
 
 func _on_active_card_mouse_exited():
+	game_data_manager.is_on_button = false
 	if game_data_manager.is_searching == true:
 		release_searching_hand()
-	if Input.is_action_pressed("left click"):
-		active_card.button_pressed = false
-		top_level = true
-	is_on_button = false
+	#if Input.is_action_pressed("left click"):
+		#active_card.button_pressed = false
+		#game_data_manager.p1_body = []
 
 func _on_play_button_pressed():
-	var current_slots
-	var max_slots
-	if type == 0:
-		current_slots = game_data_manager.p1_attack.size()
-		max_slots = game_data_manager.p1_a_slots.size()
-	if type == 1:
-		current_slots = game_data_manager.p1_defense.size()
-		max_slots = game_data_manager.p1_d_slots.size()
-	if type == 2:
-		current_slots = game_data_manager.p1_artefact.size()
-		max_slots = game_data_manager.p1_ar_slots.size()
-	if current_slots < max_slots:
-		game_data_manager.put(self)
-		put_button.visible = false 
-	else:
-		print("no_size")
-	change_slots_size()
+	if game_data_manager.is_starting == false:
+		var current_slots
+		var max_slots
+		if type == 0:
+			current_slots = game_data_manager.p1_attack.size()
+			max_slots = game_data_manager.p1_a_slots.size()
+		if type == 1:
+			current_slots = game_data_manager.p1_defense.size()
+			max_slots = game_data_manager.p1_d_slots.size()
+		if type == 2:
+			current_slots = game_data_manager.p1_artefact.size()
+			max_slots = game_data_manager.p1_ar_slots.size()
+		if current_slots < max_slots:
+			game_data_manager.put(self)
+			put_button.visible = false 
+		else:
+			print("no_size")
+		change_slots_size()
 
 func _on_put_button_pressed():
-	game_data_manager.destroy(self)
-	is_in_grave = true
-	change_slots_size()
+	if game_data_manager.is_starting == false:
+		game_data_manager.destroy(self)
+		#game_data_manager.is_in_grave = true
+		change_slots_size()
 
 func change_slots_size():
 	game_data_manager.p1_dc_slots[0].card_count.text = str(game_data_manager.p1_deck.size())
 	game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())
-
