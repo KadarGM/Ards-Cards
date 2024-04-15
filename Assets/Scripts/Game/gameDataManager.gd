@@ -60,16 +60,16 @@ func _process(_delta):
 		if is_detailed == true and p1_body[0].slot_type == "hand":
 			var current_slots
 			var max_slots
-			if p1_body[0].type == 0:
+			if p1_body[0].PLAYER_CARDS[0].type == 0:
 				current_slots = p1_attack.size()
 				max_slots = p1_a_slots.size()
-			if p1_body[0].type == 1:
+			if p1_body[0].PLAYER_CARDS[0].type == 1:
 				current_slots = p1_defense.size()
 				max_slots = p1_d_slots.size()
-			if p1_body[0].type == 2:
+			if p1_body[0].PLAYER_CARDS[0].type == 2:
 				current_slots = p1_artefact.size()
 				max_slots = p1_ar_slots.size()
-			if p1_body[0].type == 3:
+			if p1_body[0].PLAYER_CARDS[0].type == 3:
 				current_slots = p1_action.size()
 				max_slots = p1_ac_slots.size()
 			if current_slots < max_slots:
@@ -81,11 +81,24 @@ func _process(_delta):
 			p1_body[0].release_detail_card()
 			p1_body[0].active_card.button_pressed = false
 
-		if is_detailed == true and p1_body[0].slot_type != "hand" and p1_body[0].slot_type != "grave" and p1_body[0].slot_type != "deck":
+	if Input.is_action_just_pressed("r key"):
+		if is_detailed == true and p1_body[0].slot_type != "hand"  and p1_body[0].slot_type != "grave" and p1_body[0].slot_type != "deck":
 			destroy(p1_body[0])
 			p1_body[0].change_slots_size()
 			p1_body[0].release_detail_card()
 			p1_body[0].active_card.button_pressed = false
+		if is_detailed == true and p1_body[0].slot_type == "hand":
+			p1_graveyard.append(p1_body[0])
+			p1_hand.remove_at(p1_body[0].id_in_slot)
+			p1_body[0].slot_type = "grave"
+			p1_body[0].release_detail_card()
+			reorganize_hand("player1")
+			card_animation(p1_body[0],"position", p1_g_slots[0].position)
+			p1_body[0].z_index = p1_g_slots.size()
+			p1_body[0].card_bg.visible = true
+			p1_body[0].card_trans.visible = false
+			p1_body[0].active_card.visible = false
+			p1_body[0].put_button_1.visible = false
 	
 	if Input.is_action_just_pressed("g key"):
 		if is_grave_active == false:
@@ -100,7 +113,7 @@ func _process(_delta):
 
 func put(body):
 	var card_body = body
-	if card_body.type == 0:
+	if card_body.PLAYER_CARDS[body.id].type == 0:
 		for i in range(p1_a_slots.size()):
 			if p1_a_slots[i].is_empty == 1:
 				card_body.slot_type = "p1_attack"
@@ -110,7 +123,7 @@ func put(body):
 				p1_a_slots[i].is_empty = 0
 				card_animation(card_body, "position",p1_a_slots[i].position)
 				break
-	if card_body.type == 1:
+	if card_body.PLAYER_CARDS[body.id].type == 1:
 		for i in range(p1_d_slots.size()):
 			if p1_d_slots[i].is_empty == 1:
 				card_body.slot_type = "p1_defense"
@@ -120,7 +133,7 @@ func put(body):
 				p1_d_slots[i].is_empty = 0
 				card_animation(card_body, "position", p1_d_slots[i].position)
 				break
-	if card_body.type == 2:
+	if card_body.PLAYER_CARDS[body.id].type == 2:
 		for i in range(p1_ar_slots.size()):
 			if p1_ar_slots[i].is_empty == 1:
 				card_body.slot_type = "p1_artefact"
@@ -130,7 +143,7 @@ func put(body):
 				p1_ar_slots[i].is_empty = 0
 				card_animation(card_body, "position", p1_ar_slots[i].position)
 				break
-	if card_body.type == 3:
+	if card_body.PLAYER_CARDS[body.id].type == 3:
 		for i in range(p1_ac_slots.size()):
 			if p1_ac_slots[i].is_empty == 1:
 				card_body.slot_type = "p1_action"
@@ -162,11 +175,11 @@ func check_put_avaliable(type1):
 		maximum = 1
 	if type1.size() == maximum:
 		for i in range(p1_hand.size()):
-			if p1_hand[i].type == typ:
+			if p1_hand[i].PLAYER_CARDS[p1_hand[i].id].type == typ:
 				p1_hand[i].put_button.visible = false
 	if type1.size() < maximum:
 		for i in range(p1_hand.size()):
-			if p1_hand[i].type == typ:
+			if p1_hand[i].PLAYER_CARDS[p1_hand[i].id].type == typ:
 				p1_hand[i].put_button.visible = true
 
 func destroy(body):

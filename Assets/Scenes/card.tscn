@@ -302,12 +302,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -177.5
+offset_left = 102.0
 offset_top = -160.0
-offset_right = 177.5
+offset_right = 225.0
 offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(20, 0)
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 8
@@ -315,21 +316,29 @@ theme_override_constants/margin_bottom = 0
 
 [node name="LeftContainer" type="HBoxContainer" parent="cardTrans/CardStats"]
 layout_mode = 2
-alignment = 2
 
 [node name="GridContainer" type="GridContainer" parent="cardTrans/CardStats/LeftContainer"]
 custom_minimum_size = Vector2(30, 30)
 layout_direction = 2
 layout_mode = 2
 
-[node name="ManaSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+[node name="ManaRect" type="ColorRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+custom_minimum_size = Vector2(110, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.0823529, 0.278431, 0.278431, 1)
+
+[node name="ManaSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/ManaRect"]
 modulate = Color(0.3, 1, 1, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+offset_left = 14.0
+offset_right = 54.0
+offset_bottom = 40.0
 texture = ExtResource("2_0afud")
 
-[node name="ManaLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/ManaSprite"]
+[node name="ManaLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/ManaRect/ManaSprite"]
 texture_filter = 1
 layout_mode = 2
 offset_left = 48.0
@@ -346,14 +355,23 @@ max_lines_visible = 1
 visible_characters = 2
 visible_characters_behavior = 4
 
-[node name="HealthSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+[node name="HealthRect" type="ColorRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+custom_minimum_size = Vector2(110, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.219608, 0.0666667, 0.0666667, 1)
+
+[node name="HealthSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/HealthRect"]
 modulate = Color(1, 0.3, 0.3, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+offset_left = 14.0
+offset_right = 54.0
+offset_bottom = 40.0
 texture = ExtResource("4_8oket")
 
-[node name="HealthLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/HealthSprite"]
+[node name="HealthLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/HealthRect/HealthSprite"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 48.0
@@ -370,15 +388,23 @@ max_lines_visible = 1
 visible_characters = 2
 visible_characters_behavior = 4
 
-[node name="DeffenseSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
-visible = false
+[node name="DeffenseRect" type="ColorRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+custom_minimum_size = Vector2(110, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.172549, 0.219608, 0.0666667, 1)
+
+[node name="DeffenseSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/DeffenseRect"]
 modulate = Color(0.79, 1, 0.3, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+offset_left = 14.0
+offset_right = 54.0
+offset_bottom = 40.0
 texture = ExtResource("5_3u4vg")
 
-[node name="DeffenseLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/DeffenseSprite"]
+[node name="DeffenseLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/DeffenseRect/DeffenseSprite"]
 texture_filter = 1
 layout_direction = 1
 layout_mode = 0
@@ -396,14 +422,23 @@ max_lines_visible = 1
 visible_characters = 2
 visible_characters_behavior = 4
 
-[node name="AttackSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+[node name="AttackRect" type="ColorRect" parent="cardTrans/CardStats/LeftContainer/GridContainer"]
+custom_minimum_size = Vector2(110, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.270588, 0.227451, 0.0823529, 1)
+
+[node name="AttackSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/AttackRect"]
 modulate = Color(1, 0.848333, 0.3, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+offset_left = 14.0
+offset_right = 54.0
+offset_bottom = 40.0
 texture = ExtResource("6_no6vg")
 
-[node name="AttackLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/AttackSprite"]
+[node name="AttackLabel" type="Label" parent="cardTrans/CardStats/LeftContainer/GridContainer/AttackRect/AttackSprite"]
 texture_filter = 1
 layout_direction = 1
 layout_mode = 2
@@ -420,57 +455,12 @@ vertical_alignment = 1
 max_lines_visible = 1
 visible_characters = 2
 visible_characters_behavior = 4
-
-[node name="RightContainer" type="HBoxContainer" parent="cardTrans/CardStats"]
-visible = false
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="cardTrans/CardStats/RightContainer"]
-custom_minimum_size = Vector2(30, 30)
-layout_direction = 2
-layout_mode = 2
-
-[node name="ManaSprite" type="TextureRect" parent="cardTrans/CardStats/RightContainer/GridContainer"]
-modulate = Color(0.3, 1, 1, 1)
-texture_filter = 1
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("2_0afud")
-
-[node name="HealthSprite" type="TextureRect" parent="cardTrans/CardStats/RightContainer/GridContainer"]
-modulate = Color(1, 0.3, 0.3, 1)
-texture_filter = 1
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("4_8oket")
-
-[node name="DeffenseSprite" type="TextureRect" parent="cardTrans/CardStats/RightContainer/GridContainer"]
-visible = false
-modulate = Color(0.79, 1, 0.3, 1)
-texture_filter = 1
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("5_3u4vg")
-
-[node name="AttackSprite" type="TextureRect" parent="cardTrans/CardStats/RightContainer/GridContainer"]
-modulate = Color(1, 0.848333, 0.3, 1)
-texture_filter = 1
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("6_no6vg")
 
 [node name="CardFG" type="Node2D" parent="cardTrans"]
 
 [node name="CardFgBg" type="Sprite2D" parent="cardTrans/CardFG"]
 scale = Vector2(10, 10)
 texture = ExtResource("7_sxw7x")
-
-[node name="ColorRect" type="ColorRect" parent="cardTrans/CardFG"]
-modulate = Color(1, 0.454902, 1, 1)
-offset_left = -113.0
-offset_top = 68.0
-offset_right = 113.0
-offset_bottom = 149.0
 
 [node name="NameLabel" type="Label" parent="cardTrans/CardFG"]
 texture_filter = 1
@@ -479,18 +469,19 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -132.0
-offset_top = 60.0
-offset_right = 142.0
-offset_bottom = 150.0
+offset_left = -121.0
+offset_top = -158.0
+offset_right = 128.0
+offset_bottom = -87.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(112, 42)
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -4
 theme_override_fonts/font = ExtResource("2_s7wnn")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 32
 text = "Saint Mravenec 3000"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -543,7 +534,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_3qout")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hogyo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8ifr4")
 action_mode = 0
-text = "use"
+text = "use (e)"
 icon_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="cardTrans/PlayMenu/HBoxContainer"]
@@ -562,8 +553,51 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_3qout")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hogyo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8ifr4")
 action_mode = 0
-text = "destroy"
+text = "destroy (e)"
 icon_alignment = 1
+
+[node name="RaceLabel" type="Label" parent="cardTrans"]
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = 107.0
+offset_right = 165.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_s7wnn")
+theme_override_font_sizes/font_size = 32
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 8
+visible_ratio = 8.0
+
+[node name="TypeLabel" type="Label" parent="cardTrans"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = 82.0
+offset_right = 166.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_s7wnn")
+theme_override_font_sizes/font_size = 32
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 20
+visible_ratio = 20.0
 
 [node name="ActiveCard" type="Button" parent="."]
 anchors_preset = 15
@@ -579,30 +613,10 @@ theme = SubResource("Theme_xve6d")
 toggle_mode = true
 flat = true
 
-[node name="TypeLabel" type="Label" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.5
-offset_top = -59.0
-offset_right = 59.5
-offset_bottom = 59.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_s7wnn")
-theme_override_font_sizes/font_size = 128
-text = "D"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 1
-
 [node name="CardBG" type="Node2D" parent="."]
+visible = false
 
 [node name="BG" type="Sprite2D" parent="CardBG"]
-modulate = Color(0.870588, 0.541176, 0.113725, 1)
 texture_filter = 1
 scale = Vector2(10, 10)
 texture = ExtResource("9_k2dkd")

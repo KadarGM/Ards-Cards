@@ -34,7 +34,7 @@ func _process(_delta):
 		if game_data_manager.p1_hand.size() < 8:
 			if Input.is_action_just_pressed("space key"):
 				draw_card("player1",1)
-				await get_tree().create_timer(.2).timeout
+				await get_tree().create_timer(.5).timeout
 
 func node_holders():
 	card_holder = Node2D.new()
@@ -75,7 +75,6 @@ func create_deck(player,num):
 		for c in num:
 			var clone = CARD.instantiate()
 			clone.id = randi_range(0,3)
-			clone.type = randi_range(0,3)
 			clone.id_in_slot = c
 			clone.slot_type = "deck"
 			clone.position = game_data_manager.p1_dc_slots[0].position
