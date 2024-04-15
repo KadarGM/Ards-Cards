@@ -102,7 +102,6 @@ func release_detail_card():
 	tween.tween_property(card_trans, "scale", Vector2(min_card_scale,min_card_scale), .3)
 	set_stats_visible(false)
 	set_play_menu(false)
-	
 	top_level = false
 	await get_tree().create_timer(.1).timeout
 
@@ -117,31 +116,25 @@ func release_searching_hand():
 func _on_use_card_toggled(toggled_on):
 	if game_data_manager.is_starting == false:
 		if toggled_on:
-			game_data_manager.p1_body.append(self)
 			detail_card()
 			game_data_manager.is_searching = false
 			game_data_manager.is_detailed = true
+			game_data_manager.p1_body.append(self)
 		if not toggled_on:
-			game_data_manager.p1_body = []
 			release_detail_card()
 			game_data_manager.is_searching = true
 			game_data_manager.is_detailed = false
+			game_data_manager.p1_body = []
 
 func _on_active_card_mouse_entered():
 	game_data_manager.is_on_button = true
 	if game_data_manager.is_searching == true:
 		searching_hand()
-	#if Input.is_action_pressed("left click"):
-		#active_card.button_pressed = true
-		#game_data_manager.p1_body.append(self)
 
 func _on_active_card_mouse_exited():
 	game_data_manager.is_on_button = false
 	if game_data_manager.is_searching == true:
 		release_searching_hand()
-	#if Input.is_action_pressed("left click"):
-		#active_card.button_pressed = false
-		#game_data_manager.p1_body = []
 
 func _on_play_button_pressed():
 	if game_data_manager.is_starting == false:
@@ -156,6 +149,9 @@ func _on_play_button_pressed():
 		if type == 2:
 			current_slots = game_data_manager.p1_artefact.size()
 			max_slots = game_data_manager.p1_ar_slots.size()
+		if type == 3:
+			current_slots = game_data_manager.p1_action.size()
+			max_slots = game_data_manager.p1_ac_slots.size()
 		if current_slots < max_slots:
 			game_data_manager.put(self)
 			put_button.visible = false 
@@ -166,7 +162,6 @@ func _on_play_button_pressed():
 func _on_put_button_pressed():
 	if game_data_manager.is_starting == false:
 		game_data_manager.destroy(self)
-		#game_data_manager.is_in_grave = true
 		change_slots_size()
 
 func change_slots_size():

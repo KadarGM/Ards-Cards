@@ -126,8 +126,8 @@ func organize(player,type,body,n):
 			body.position.x = 3200 - (350 * n) 
 			body.position.y = 1800
 		if type == "action":
-			body.position.x = 1920
-			body.position.y = 1080
+			body.position.x = (3200-(350*2))
+			body.position.y = 1800
 		if type == "grave":
 			body.position.x = 220
 			body.position.y = 1325

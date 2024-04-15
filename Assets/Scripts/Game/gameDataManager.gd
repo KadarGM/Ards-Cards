@@ -91,7 +91,10 @@ func _process(_delta):
 		if is_grave_active == false:
 			show_grave("player1")
 			is_grave_active = true
+			reorganize_showed_grave("player1")
 		elif is_grave_active == true:
+			if is_detailed == true:
+				p1_body[0].release_detail_card()
 			hide_grave("player1")
 			is_grave_active = false
 
@@ -231,16 +234,17 @@ func show_grave(player):
 			p1_graveyard[c].card_trans.visible = true
 			p1_graveyard[c].active_card.visible = true
 			await get_tree().create_timer(0.05).timeout
-		reorganize_showed_grave("player1")
-#
+
 func reorganize_showed_grave(player):
 	if player == "player1":
 		for c in range(p1_graveyard.size()):
 			p1_graveyard[c].z_index = c + 3
+			p1_graveyard[c].release_searching_hand()
 
 func hide_grave(player):
 	if player == "player1":
 		for i in range(p1_graveyard.size()):
+			p1_graveyard[i].release_searching_hand()
 			p1_graveyard[i].card_bg.visible = true
 			p1_graveyard[i].card_trans.visible = false
 			p1_graveyard[i].active_card.visible = false
