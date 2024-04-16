@@ -230,8 +230,8 @@ func show_grave(player):
 	if player == "player1":
 		var card_spacing_x = 200
 		var card_spacing_y = 280
-		var start_x = get_viewport().content_scale_size.x*1.5
-		var start_y = get_viewport().content_scale_size.y/2
+		var start_x = 3000
+		var start_y = 480
 		var x_multiplier
 		var y_multiplier
 		for c in range(p1_graveyard.size()):
@@ -240,6 +240,7 @@ func show_grave(player):
 				x_multiplier = 0
 			if c%12 != 0:
 				x_multiplier += 1
+			#start_y += 280
 			p1_graveyard[c].id_in_slot = c
 			card_animation(p1_graveyard[c],"position:x",start_x - (card_spacing_x * x_multiplier))
 			card_animation(p1_graveyard[c],"position:y",start_y + (card_spacing_y * y_multiplier))
