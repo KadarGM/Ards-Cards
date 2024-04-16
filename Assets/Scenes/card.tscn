@@ -501,9 +501,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -120.0
+offset_left = -233.0
 offset_top = -221.0
-offset_right = 120.0
+offset_right = 234.0
 offset_bottom = 161.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -522,7 +522,7 @@ alignment = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="PutButton" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer"]
+[node name="UseButton" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.901961, 0.901961, 0.901961, 1)
@@ -541,7 +541,7 @@ icon_alignment = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="PutButton1" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2"]
+[node name="DestroyButton" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.901961, 0.901961, 0.901961, 1)
@@ -553,7 +553,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_3qout")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hogyo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8ifr4")
 action_mode = 0
-text = "destroy (e)"
+text = "destroy (r)"
 icon_alignment = 1
 
 [node name="RaceLabel" type="Label" parent="cardTrans"]
@@ -624,8 +624,8 @@ texture = ExtResource("9_k2dkd")
 [node name="CardBgText" type="Sprite2D" parent="CardBG/BG"]
 texture = ExtResource("10_tgl6e")
 
-[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer/PutButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/PutButton1" to="." method="_on_put_button_pressed"]
+[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer/UseButton" to="." method="_on_use_button_pressed"]
+[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/DestroyButton" to="." method="_on_destroy_button_pressed"]
 [connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
 [connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
 [connection signal="toggled" from="ActiveCard" to="." method="_on_use_card_toggled"]

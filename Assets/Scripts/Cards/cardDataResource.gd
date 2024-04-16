@@ -29,6 +29,19 @@ enum Instants {
 enum Artefacts {
 	Enhance, Heal
 }
+
+enum WhewCast {
+	NULL, die, put, board, end_turn, start_turn
+}
+enum WhatCast {
+	NULL, furry, evoke, add, destroy, shoot, wound, double_attack, triple_attack 
+}
+enum WhereCast {
+	NULL, hand, deck, graveyard, board, enemy_hand, enemy_deck, enemy_graveyard, enemy_board
+}
+enum WhomCast {
+	NULL, all, all_enemy, all_ally, any 
+}
 #endregion
 
 @export_category("General")
@@ -39,16 +52,29 @@ enum Artefacts {
 @export var race : Race
 @export_node_path("Sprite2D") var picture
 
-@export_group("Separate Stats")
-@export_subgroup("Hero")
+@export_group("Hero")
 @export var mana_max : int
 @export var mana_cur : int
 
-@export_subgroup("Creature")
+@export_group("Creature")
 @export var hero : Heroes
 @export var elite : Elites
 
-@export_subgroup("Spells")
+@export_subgroup("Creature Cast Data")
+@export var when_cast : WhewCast
+@export var when_repeat : int
+@export var when_value : int
+@export var what_cast : WhatCast
+@export var what_repeat : int
+@export var what_value : int
+@export var where_cast : WhereCast
+@export var where_repeat : int
+@export var where_value : int
+@export var whom_cast : WhomCast
+@export var whom_repeat : int
+@export var whom_value : int
+
+@export_group("Spells")
 @export var type_spell : Type_spell
 @export var spell : Spells
 @export var instants : Instants
@@ -60,5 +86,8 @@ enum Artefacts {
 @export var defense: int
 @export var attack: int
 @export var specialization : Specializations
-@export var has_spell : int
+@export var will_cast : bool
+
+
+
 

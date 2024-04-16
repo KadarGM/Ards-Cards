@@ -15,3 +15,21 @@ anchor_mode = 0
 zoom = Vector2(0.5, 0.5)
 
 [node name="Board" parent="." instance=ExtResource("3_0cuqm")]
+
+[node name="CardBarier" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -186.0
+offset_top = -167.0
+offset_right = 4057.0
+offset_bottom = 2317.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CardBarier"]
+layout_mode = 2
+offset_right = 4243.0
+offset_bottom = 2484.0
+color = Color(0, 0, 0, 0.470588)
