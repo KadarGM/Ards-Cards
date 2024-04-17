@@ -13,7 +13,8 @@ const CARDS_LIST: Array[CardDataResource] = [
 	preload("res://Assets/Resources/Cards/Creature/testCard4.tres"),
 	]
 
-const TYPE_ARRAY = ["Attack Creature", "Defend Creature", "Artefact", "Action", "Spell", "Attack Elite", "Defend Elite", "Hero"] 
+const TYPE_ARRAY = ["Attack Creature", "Defend Creature", "Artefact", "Action", "Spell", "Attack Elite", "Defend Elite", "Hero"]
+const TYPE_SHORT_ARRAY = ["A", "D", "AR", "AC", "SP", "AE", "DE", "HE"]
 const RACE_ARRAY = ["Forest", "Rusty", "Black", "Termite", "Yellow", "White"]
 const HERO_ARRAY = []
 const ELITE_ARRAY = []
@@ -28,6 +29,15 @@ const RACE_COLOR : Dictionary = {
 	5 : Color(1, 1, 1), #White
 }
 
+const RACE_TEXT_COLOR : Dictionary = {
+	0 : Color(0.884, 1, 0.871), #Forest
+	1 : Color(1, 0.979, 0.959), #Rusty
+	2 : Color(0.917, 0.94, 0.94), #Black
+	3 : Color(0.096, 0.107, 0.054), #Termite
+	4 : Color(0.113, 0.097, 0.009), #Yellow
+	5 : Color(0, 0, 0), #White
+}
+
 @export var id: int
 @export var id_in_slot: int
 @export var slot_type: String
@@ -37,7 +47,7 @@ const RACE_COLOR : Dictionary = {
 @onready var destroy_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer2
 @onready var active_card = $ActiveCard
 @onready var card_trans = $cardTrans
-@onready var name_label = $cardTrans/CardFG/NameLabel
+@onready var name_label = $cardTrans/NameLabel
 @onready var card_stats = $cardTrans/CardStats
 @onready var fg = $cardTrans/CardFG/FG
 @onready var bg = $CardBG/BG
@@ -46,12 +56,16 @@ const RACE_COLOR : Dictionary = {
 @onready var deffense_label = $cardTrans/CardStats/LeftContainer/GridContainer/DeffenseRect/DeffenseSprite/DeffenseLabel
 @onready var attack_label = $cardTrans/CardStats/LeftContainer/GridContainer/AttackRect/AttackSprite/AttackLabel
 @onready var card_bg = $CardBG
-@onready var type_label = $cardTrans/TypeLabel
+@onready var type_label = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect/TypeSprite/TypeLabel
 @onready var race_label = $cardTrans/RaceLabel
 @onready var mana_rect = $cardTrans/CardStats/LeftContainer/GridContainer/ManaRect
 @onready var health_rect = $cardTrans/CardStats/LeftContainer/GridContainer/HealthRect
 @onready var deffense_rect = $cardTrans/CardStats/LeftContainer/GridContainer/DeffenseRect
 @onready var attack_rect = $cardTrans/CardStats/LeftContainer/GridContainer/AttackRect
+@onready var type_rect = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect
+@onready var type_sprite = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect/TypeSprite
+
+
 
 #endregion
 
@@ -85,16 +99,20 @@ func _process(_delta):
 
 #region SET_CARD_STATS
 func set_stats():
-	type_label.text = str(TYPE_ARRAY[CARDS_LIST[id].type])
+	type_label.text = str(TYPE_SHORT_ARRAY[CARDS_LIST[id].type])
 	type_label.visible = true
+	type_rect.color = RACE_COLOR[CARDS_LIST[id].race]
+	type_sprite.modulate = RACE_TEXT_COLOR[CARDS_LIST[id].race]
 	#CARDS_LIST[id].name
-	name_label.text = CARDS_LIST[id].name
 	name_label.visible = true
+	name_label.text = CARDS_LIST[id].name
+	name_label.add_theme_color_override("font_color", RACE_TEXT_COLOR[CARDS_LIST[id].race])
+	#name_label.interpolate_property(get_stylebox("normal"), "bg_color", Color.red, Color.blue)
 	#CARDS_LIST[id].description
 	#descritption_label.text = str(CARDS_LIST[id].description)
 	#CARDS_LIST[id].race
-	race_label.visible = true
-	race_label.text = RACE_ARRAY[CARDS_LIST[id].race]
+	#race_label.visible = true
+	#race_label.text = RACE_ARRAY[CARDS_LIST[id].race]
 	fg.modulate = RACE_COLOR[CARDS_LIST[id].race]
 	#CARDS_LIST[id].picture
 	if CARDS_LIST[id].type != 7:
@@ -111,14 +129,15 @@ func set_stats():
 		#CARDS_LIST[id].health
 		health_label.text = str(CARDS_LIST[id].health)
 		health_rect.visible = true
+		if CARDS_LIST[id].type != 7:
+			deffense_rect.visible = false
 		if CARDS_LIST[id].type == 7:
 			#CARDS_LIST[id].defense
 			deffense_rect.visible = true
 			deffense_label.text = str(CARDS_LIST[id].defense)
 			#CARDS_LIST[id].mana_max
 			#CARDS_LIST[id].mana_cur
-		else:
-			deffense_rect.visible = false
+		
 		#CARDS_LIST[id].attack
 		attack_label.text = str(CARDS_LIST[id].attack)
 		attack_rect.visible = true
@@ -197,8 +216,6 @@ func set_stats():
 func set_stats_visible(cond): # Sets the visibility of various UI elements related to card statistics.
 	card_stats.visible = cond
 	name_label.visible = cond
-	type_label.visible = cond
-	race_label.visible = cond
 
 func set_play_menu(cond): # Sets the visibility of the play menu UI element.
 	play_menu.visible = cond
@@ -233,11 +250,11 @@ func release_detail_card(): # Hides the detailed view of the card.
 
 func searching_hand(): # Enlarges the card when it is being searched for.
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
-	tween.tween_property(self, "scale", Vector2(1.1,1.1), .2)
-	if CARDS_LIST[id].defense == 0:
-		deffense_rect.visible = false
-	else:
-		deffense_rect.visible = true
+	tween.tween_property(self, "scale", Vector2(1.3,1.3), .2)
+	#if CARDS_LIST[id].defense == 0:
+		#deffense_rect.visible = false
+	#else:
+		#deffense_rect.visible = true
 	card_stats.visible = true
 	card_stats.scale = Vector2(1.6,1.6)
 
