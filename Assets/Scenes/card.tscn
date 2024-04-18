@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://db8kmed63v1qa"]
+[gd_scene load_steps=45 format=3 uid="uid://db8kmed63v1qa"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Cards/cardDataManager.gd" id="1_173ep"]
 [ext_resource type="Texture2D" uid="uid://7ou2nkhneqvl" path="res://Assets/Graphics/Export/MANA_POINT.png" id="2_0afud"]
@@ -12,24 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://cxbg0yn6nhmfy" path="res://Assets/Graphics/Export/CARD_BG.png" id="9_k2dkd"]
 [ext_resource type="Texture2D" uid="uid://gm32rlj5oumd" path="res://Assets/Graphics/Export/CARD_BG_TEXT.png" id="10_tgl6e"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qout"]
-bg_color = Color(0.301961, 0.301961, 0.301961, 0.392157)
-border_color = Color(0.8, 0.8, 0.8, 0)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hogyo"]
-bg_color = Color(0.4, 0.4, 0.4, 0.392157)
-border_color = Color(0.8, 0.8, 0.8, 0)
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ifr4"]
-bg_color = Color(0.301961, 0, 0, 0.392157)
-border_color = Color(0.8, 0.8, 0.8, 0)
-anti_aliasing = false
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6ea1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20obq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6uwa1"]
 bg_color = Color(0.290196, 0.266667, 0.258824, 1)
 border_width_bottom = 5
 border_color = Color(0.15, 0.1368, 0.1335, 1)
@@ -42,12 +27,12 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20cbg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x4hgu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u0ciy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eer55"]
 bg_color = Color(0.7, 0.261333, 0.14, 1)
 border_width_bottom = 7
 border_color = Color(0.3, 0.108, 0.06, 1)
@@ -60,7 +45,7 @@ shadow_size = 3
 shadow_offset = Vector2(3, 3)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m70by"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygy0x"]
 bg_color = Color(0.75, 0.28, 0.15, 1)
 border_width_bottom = 7
 border_color = Color(0.42, 0.1568, 0.084, 1)
@@ -73,7 +58,7 @@ shadow_size = 3
 shadow_offset = Vector2(3, 3)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxv1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qj5sn"]
 bg_color = Color(0.55, 0.205333, 0.11, 1)
 border_width_bottom = 5
 border_color = Color(0.15, 0.056, 0.03, 1)
@@ -86,23 +71,23 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="ImageTexture" id="ImageTexture_ix7il"]
+[sub_resource type="ImageTexture" id="ImageTexture_kjs1r"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_5gtwj"]
+[sub_resource type="ImageTexture" id="ImageTexture_be3re"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_h5gvt"]
+[sub_resource type="ImageTexture" id="ImageTexture_21q67"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_4qjw0"]
+[sub_resource type="ImageTexture" id="ImageTexture_6glar"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_7eaop"]
+[sub_resource type="ImageTexture" id="ImageTexture_h7kyj"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_oliso"]
+[sub_resource type="ImageTexture" id="ImageTexture_2htwm"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_x7ig8"]
+[sub_resource type="ImageTexture" id="ImageTexture_pflly"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_wsdtm"]
+[sub_resource type="ImageTexture" id="ImageTexture_0oaqq"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1l85h"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8417"]
 bg_color = Color(0.74902, 0.278431, 0.14902, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -117,7 +102,7 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqu8f"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_naav5"]
 bg_color = Color(0.290196, 0.266667, 0.258824, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -133,7 +118,7 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1iel"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ii3a"]
 bg_color = Color(0.85098, 0.317647, 0.168627, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -149,7 +134,7 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp7j0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfxax"]
 bg_color = Color(0.74902, 0.278431, 0.14902, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -165,7 +150,7 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu4uh"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x78w"]
 bg_color = Color(0.423529, 0.192157, 0.12549, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -181,27 +166,27 @@ shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 anti_aliasing_size = 2.0
 
-[sub_resource type="ImageTexture" id="ImageTexture_744bt"]
+[sub_resource type="ImageTexture" id="ImageTexture_hyhan"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_dh68a"]
+[sub_resource type="ImageTexture" id="ImageTexture_iiveh"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_vhxpr"]
+[sub_resource type="ImageTexture" id="ImageTexture_q8h5f"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_2u7ws"]
+[sub_resource type="ImageTexture" id="ImageTexture_m7tjd"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_qmk1f"]
+[sub_resource type="ImageTexture" id="ImageTexture_fornv"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_667gv"]
+[sub_resource type="ImageTexture" id="ImageTexture_rfhou"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_pdjcf"]
+[sub_resource type="ImageTexture" id="ImageTexture_epoor"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_8w6ox"]
+[sub_resource type="ImageTexture" id="ImageTexture_00jqv"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_10iv1"]
+[sub_resource type="ImageTexture" id="ImageTexture_jtet6"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_j7gg5"]
+[sub_resource type="ImageTexture" id="ImageTexture_445jr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxvwu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f2jfg"]
 bg_color = Color(0.54902, 0.203922, 0.109804, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -216,7 +201,7 @@ shadow_size = 2
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xonse"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xyvbn"]
 bg_color = Color(0.14902, 0.054902, 0.0313726, 1)
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
@@ -244,53 +229,56 @@ Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
 Button/font_sizes/font_size = 48
 Button/fonts/font = ExtResource("2_s7wnn")
-Button/styles/disabled = SubResource("StyleBoxFlat_20obq")
-Button/styles/focus = SubResource("StyleBoxFlat_20cbg")
-Button/styles/hover = SubResource("StyleBoxFlat_u0ciy")
-Button/styles/normal = SubResource("StyleBoxFlat_m70by")
-Button/styles/pressed = SubResource("StyleBoxFlat_7gxv1")
+Button/styles/disabled = SubResource("StyleBoxFlat_6uwa1")
+Button/styles/focus = SubResource("StyleBoxFlat_x4hgu")
+Button/styles/hover = SubResource("StyleBoxFlat_eer55")
+Button/styles/normal = SubResource("StyleBoxFlat_ygy0x")
+Button/styles/pressed = SubResource("StyleBoxFlat_qj5sn")
 CheckBox/font_sizes/font_size = 32
 CheckBox/fonts/font = ExtResource("2_s7wnn")
-CheckBox/icons/checked = SubResource("ImageTexture_ix7il")
-CheckBox/icons/checked_disabled = SubResource("ImageTexture_5gtwj")
-CheckBox/icons/radio_checked = SubResource("ImageTexture_h5gvt")
-CheckBox/icons/radio_checked_disabled = SubResource("ImageTexture_4qjw0")
-CheckBox/icons/radio_unchecked = SubResource("ImageTexture_7eaop")
-CheckBox/icons/radio_unchecked_disabled = SubResource("ImageTexture_oliso")
-CheckBox/icons/unchecked = SubResource("ImageTexture_x7ig8")
-CheckBox/icons/unchecked_disabled = SubResource("ImageTexture_wsdtm")
-CheckBox/styles/disabled = SubResource("StyleBoxFlat_20obq")
-CheckBox/styles/hover = SubResource("StyleBoxFlat_u0ciy")
-CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_7gxv1")
-CheckBox/styles/normal = SubResource("StyleBoxFlat_m70by")
-CheckBox/styles/pressed = SubResource("StyleBoxFlat_7gxv1")
-HSlider/styles/slider = SubResource("StyleBoxFlat_1l85h")
+CheckBox/icons/checked = SubResource("ImageTexture_kjs1r")
+CheckBox/icons/checked_disabled = SubResource("ImageTexture_be3re")
+CheckBox/icons/radio_checked = SubResource("ImageTexture_21q67")
+CheckBox/icons/radio_checked_disabled = SubResource("ImageTexture_6glar")
+CheckBox/icons/radio_unchecked = SubResource("ImageTexture_h7kyj")
+CheckBox/icons/radio_unchecked_disabled = SubResource("ImageTexture_2htwm")
+CheckBox/icons/unchecked = SubResource("ImageTexture_pflly")
+CheckBox/icons/unchecked_disabled = SubResource("ImageTexture_0oaqq")
+CheckBox/styles/disabled = SubResource("StyleBoxFlat_6uwa1")
+CheckBox/styles/hover = SubResource("StyleBoxFlat_eer55")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_qj5sn")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_ygy0x")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_qj5sn")
+HSlider/styles/slider = SubResource("StyleBoxFlat_t8417")
 Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("2_s7wnn")
 OptionButton/font_sizes/font_size = 32
 OptionButton/fonts/font = ExtResource("2_s7wnn")
 OptionButton/icons/arrow = null
-OptionButton/styles/disabled = SubResource("StyleBoxFlat_dqu8f")
-OptionButton/styles/hover = SubResource("StyleBoxFlat_f1iel")
-OptionButton/styles/normal = SubResource("StyleBoxFlat_gp7j0")
-OptionButton/styles/pressed = SubResource("StyleBoxFlat_qu4uh")
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_naav5")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_8ii3a")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_qfxax")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_8x78w")
 PopupMenu/constants/item_start_padding = 10
 PopupMenu/constants/v_separation = 20
 PopupMenu/font_sizes/font_size = 24
 PopupMenu/fonts/font = ExtResource("2_s7wnn")
 PopupMenu/fonts/font_separator = ExtResource("2_s7wnn")
-PopupMenu/icons/checked = SubResource("ImageTexture_744bt")
-PopupMenu/icons/checked_disabled = SubResource("ImageTexture_dh68a")
-PopupMenu/icons/radio_checked = SubResource("ImageTexture_vhxpr")
-PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_2u7ws")
-PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_qmk1f")
-PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_667gv")
-PopupMenu/icons/submenu = SubResource("ImageTexture_pdjcf")
-PopupMenu/icons/submenu_mirrored = SubResource("ImageTexture_8w6ox")
-PopupMenu/icons/unchecked = SubResource("ImageTexture_10iv1")
-PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_j7gg5")
-PopupMenu/styles/hover = SubResource("StyleBoxFlat_lxvwu")
-PopupMenu/styles/panel = SubResource("StyleBoxFlat_xonse")
+PopupMenu/icons/checked = SubResource("ImageTexture_hyhan")
+PopupMenu/icons/checked_disabled = SubResource("ImageTexture_iiveh")
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_q8h5f")
+PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_m7tjd")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_fornv")
+PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_rfhou")
+PopupMenu/icons/submenu = SubResource("ImageTexture_epoor")
+PopupMenu/icons/submenu_mirrored = SubResource("ImageTexture_00jqv")
+PopupMenu/icons/unchecked = SubResource("ImageTexture_jtet6")
+PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_445jr")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_f2jfg")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_xyvbn")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ry5gw"]
+size = Vector2(240, 320)
 
 [node name="card" type="Node2D"]
 z_index = 2
@@ -569,67 +557,6 @@ texture_filter = 1
 scale = Vector2(10, 10)
 texture = ExtResource("8_c46ei")
 
-[node name="PlayMenu" type="MarginContainer" parent="cardTrans"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -233.0
-offset_top = -221.0
-offset_right = 234.0
-offset_bottom = 161.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(120, 138)
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="HBoxContainer" type="HBoxContainer" parent="cardTrans/PlayMenu"]
-custom_minimum_size = Vector2(240, 0)
-layout_mode = 2
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="cardTrans/PlayMenu/HBoxContainer"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="UseButton" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.901961, 0.901961, 0.901961, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 0.301961, 0.301961, 1)
-theme_override_fonts/font = ExtResource("2_ihitu")
-theme_override_font_sizes/font_size = 48
-theme_override_styles/normal = SubResource("StyleBoxFlat_3qout")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hogyo")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_8ifr4")
-action_mode = 0
-text = "use (e)"
-icon_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="cardTrans/PlayMenu/HBoxContainer"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="DestroyButton" type="Button" parent="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(200, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.901961, 0.901961, 0.901961, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 0.301961, 0.301961, 1)
-theme_override_fonts/font = ExtResource("2_ihitu")
-theme_override_font_sizes/font_size = 48
-theme_override_styles/normal = SubResource("StyleBoxFlat_3qout")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hogyo")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_8ifr4")
-action_mode = 0
-text = "destroy (r)"
-icon_alignment = 1
-
 [node name="RaceLabel" type="Label" parent="cardTrans"]
 visible = false
 anchors_preset = -1
@@ -712,6 +639,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_xve6d")
 toggle_mode = true
+button_mask = 2
 flat = true
 
 [node name="CardBG" type="Node2D" parent="."]
@@ -725,8 +653,14 @@ texture = ExtResource("9_k2dkd")
 [node name="CardBgText" type="Sprite2D" parent="CardBG/BG"]
 texture = ExtResource("10_tgl6e")
 
-[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer/UseButton" to="." method="_on_use_button_pressed"]
-[connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/DestroyButton" to="." method="_on_destroy_button_pressed"]
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ry5gw")
+
 [connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
 [connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
 [connection signal="toggled" from="ActiveCard" to="." method="_on_use_card_toggled"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

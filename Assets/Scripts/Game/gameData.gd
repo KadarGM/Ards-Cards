@@ -27,28 +27,33 @@ func on_start_game(player):
 	create_slot(player,"attack",4)
 	create_slot(player,"defense",4)
 	create_deck(player,60)
+	print("Game is starting.")
 	for c in range(8):
 		await get_tree().create_timer(.5).timeout
 		draw_card(player,1)
 	await get_tree().create_timer(1.0).timeout
 	game_data_manager.is_starting = false
+	print(player, " is first!")
 
 func _process(_delta):
 	create_slot_counter()
-	if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false:
-		if game_data_manager.p1_hand.size() < 8:
-			if Input.is_action_just_pressed("space key"):
-				draw_card("player1",1)
-				await get_tree().create_timer(.5).timeout
-	if game_data_manager.p1_graveyard.size() > 0:
-		if game_data_manager.is_grave_active == true:
-			await get_tree().create_timer(.1).timeout
-			card_barier.z_index = 3
-			card_barier.visible = true
-		if game_data_manager.is_grave_active == false:
-			await get_tree().create_timer(.1).timeout
-			card_barier.z_index = -1
-			card_barier.visible = false
+	if game_data_manager.is_drawing == false and game_data_manager.is_detailed == false and game_data_manager.is_dragging == false:
+		if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false:
+			if game_data_manager.p1_hand.size() < 8:
+				if Input.is_action_just_pressed("space key"):
+					game_data_manager.is_drawing = true
+					draw_card("player1",1)
+					await get_tree().create_timer(.5).timeout
+					game_data_manager.is_drawing = false
+		if game_data_manager.p1_graveyard.size() > 0:
+			if game_data_manager.is_grave_active == true:
+				await get_tree().create_timer(.1).timeout
+				card_barier.z_index = 3
+				card_barier.visible = true
+			if game_data_manager.is_grave_active == false:
+				await get_tree().create_timer(.1).timeout
+				card_barier.z_index = -1
+				card_barier.visible = false
 
 func node_holders(): # Creates the necessary node holders for cards and slots.
 	card_holder = Node2D.new()
@@ -63,6 +68,7 @@ func draw_card(player, num): # Draws cards from the deck to the player's hand.
 		if game_data_manager.p1_deck.size() > 0:
 			for c in range(num):
 				var clone = game_data_manager.p1_deck[c]
+				clone.area_2d.visible = false
 				clone.id_in_slot = c
 				clone.slot_type = "hand"
 				game_data_manager.p1_hand.append(clone)
@@ -71,8 +77,11 @@ func draw_card(player, num): # Draws cards from the deck to the player's hand.
 				clone.card_trans.visible = true
 				clone.active_card.visible = true
 				from_deck_to_hand_anim(player,clone,c)
+				clone.area_2d.visible = true
+				print("Card ",clone.CARDS_LIST[clone.id].name, " was drawen for ",player, "!")
 			await  get_tree().create_timer(.2).timeout
 			game_data_manager.reorganize_hand(player)
+			
 
 func from_deck_to_hand_anim(player,clone,c): # Animates the transition of cards from the deck to the player's hand.
 	if player == "player1":

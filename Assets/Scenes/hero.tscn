@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvdmdwmrjdsyr"]
+
+[ext_resource type="Texture2D" uid="uid://ckmvciwuv2sxx" path="res://Assets/Graphics/Export/HERO_CARD_FG_BG.png" id="1_1gua4"]
+[ext_resource type="Texture2D" uid="uid://w62hg8uanhx8" path="res://Assets/Graphics/Export/HERO_CARD_FG.png" id="2_8tppo"]
+
+[node name="Hero" type="Node2D"]
+
+[node name="hero_trans" type="Node2D" parent="."]
+
+[node name="CardFG" type="Node2D" parent="hero_trans"]
+
+[node name="CardFgBg" type="Sprite2D" parent="hero_trans/CardFG"]
+texture_filter = 1
+scale = Vector2(12, 12)
+texture = ExtResource("1_1gua4")
+
+[node name="FG" type="Sprite2D" parent="hero_trans/CardFG"]
+modulate = Color(0.870588, 0.541176, 0.113725, 1)
+texture_filter = 1
+scale = Vector2(12, 12)
+texture = ExtResource("2_8tppo")
