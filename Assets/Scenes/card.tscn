@@ -627,7 +627,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 max_lines_visible = 3
 
-[node name="ActiveCard" type="Button" parent="."]
+[node name="ActiveCard" type="Button" parent="cardTrans"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -659,8 +659,8 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ry5gw")
 
-[connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
-[connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
-[connection signal="toggled" from="ActiveCard" to="." method="_on_use_card_toggled"]
+[connection signal="mouse_entered" from="cardTrans/ActiveCard" to="." method="_on_active_card_mouse_entered"]
+[connection signal="mouse_exited" from="cardTrans/ActiveCard" to="." method="_on_active_card_mouse_exited"]
+[connection signal="toggled" from="cardTrans/ActiveCard" to="." method="_on_use_card_toggled"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -7,6 +7,7 @@ var draggable = false
 var is_inside_drop = false
 var offset: Vector2
 var initialPos : Vector2
+var is_moving = false
 
 var game_data_manager = GameDataManager
 
@@ -46,7 +47,7 @@ const RACE_TEXT_COLOR : Dictionary = {
 @export var id_in_slot: int
 @export var slot_type: String
 @export var type: int
-@onready var active_card = $ActiveCard
+@onready var active_card = $cardTrans/ActiveCard
 @onready var card_trans = $cardTrans
 @onready var name_label = $cardTrans/NameLabel
 @onready var card_stats = $cardTrans/CardStats
@@ -130,7 +131,7 @@ func _process(_delta):
 					draggable = true
 					change_slots_size()
 				game_data_manager.is_dragging = false
-				await get_tree().create_timer(.2).timeout
+				#await get_tree().create_timer(.2).timeout
 
 #region SET_CARD_STATS
 func set_stats():
@@ -256,15 +257,15 @@ func detail_card(): # Displays a detailed view of the card.
 	card_stats.visible = true
 	card_stats.scale = Vector2(1,1)
 	top_level = true
-	await get_tree().create_timer(.1).timeout
-	top_level = true
+	#await get_tree().create_timer(.1).timeout
+	#top_level = true
 
 func release_detail_card(): # Hides the detailed view of the card.
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(card_trans, "scale", Vector2(min_card_scale,min_card_scale), .3)
 	set_stats_visible(false)
 	active_card.visible = true
-	await get_tree().create_timer(.1).timeout
+	#await get_tree().create_timer(.1).timeout
 	top_level = false
 
 func searching_hand(): # Enlarges the card when it is being searched for.
@@ -279,6 +280,17 @@ func release_searching_hand(): # Restores the card to its original size after it
 	card_stats.visible = false
 	card_stats.scale = Vector2(1,1)
 
+func disable_buttons():
+	if game_data_manager.p1_body.size() > 0:
+		for i in range(game_data_manager.p1_hand.size()):
+			game_data_manager.p1_hand[i].active_card.visible = false
+		game_data_manager.p1_body[0].active_card.visible = true
+
+func enable_buttons():
+	if game_data_manager.p1_body.size() == 0:
+		for i in range(game_data_manager.p1_hand.size()):
+			game_data_manager.p1_hand[i].active_card.visible = true
+
 func _on_use_card_toggled(toggled_on): # Handles the toggling of using a card.
 	if game_data_manager.is_starting == false:
 		if toggled_on:
@@ -288,6 +300,8 @@ func _on_use_card_toggled(toggled_on): # Handles the toggling of using a card.
 				game_data_manager.is_detailed = true
 				if draggable == false:
 					game_data_manager.p1_body.append(self)
+				disable_buttons()
+				
 		if not toggled_on:
 			if game_data_manager.is_dragging == false:
 				release_detail_card()
@@ -295,6 +309,8 @@ func _on_use_card_toggled(toggled_on): # Handles the toggling of using a card.
 				game_data_manager.is_detailed = false
 				if draggable == false:
 					game_data_manager.p1_body = []
+				enable_buttons()
+				
 
 func _on_active_card_mouse_entered(): # Handles mouse entering the active card area.
 	if game_data_manager.is_starting == false:
@@ -303,7 +319,7 @@ func _on_active_card_mouse_entered(): # Handles mouse entering the active card a
 				game_data_manager.p1_body.append(self)
 				draggable = true
 			searching_hand()
-			self.top_level = true
+			#self.top_level = true
 
 func _on_active_card_mouse_exited(): # Handles mouse exiting the active card area.
 	if game_data_manager.is_starting == false:
@@ -314,7 +330,7 @@ func _on_active_card_mouse_exited(): # Handles mouse exiting the active card are
 			release_searching_hand()
 
 #region Buttons - commentary
-			self.top_level = false
+			#self.top_level = false
 
 #func _on_destroy_button_pressed(): # Handles the use button being pressed.
 	#if game_data_manager.is_starting == false:
