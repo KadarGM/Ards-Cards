@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dr8fkyi2hosdp"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Slot/slotData.gd" id="1_5iibj"]
+[ext_resource type="Script" path="res://Assets/Scripts/Slot/slot.gd" id="1_l1nny"]
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="2_as4mx"]
 
 [node name="Slot" type="Node2D"]
-script = ExtResource("1_5iibj")
+script = ExtResource("1_l1nny")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(300, 400)
@@ -19,7 +19,7 @@ offset_right = 150.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.38, 0.38, 0.196078)
+color = Color(1, 1, 1, 0)
 
 [node name="CardCount" type="Label" parent="."]
 anchors_preset = 8

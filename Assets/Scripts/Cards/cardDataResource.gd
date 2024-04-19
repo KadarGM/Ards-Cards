@@ -6,7 +6,7 @@ enum Race {
 	Forest, Rusty, Black, Termite, Yellow, White
 }
 enum Type {
-	AttackCreature, DefendCreature, Artefact, Action, Spell
+	AttackCreature, DefendCreature, Artefact, Action, Spell, AttackElite, DefendElite, Hero 
 }
 enum Type_spell {
 	Spell, Action, Artefact
@@ -51,6 +51,10 @@ enum WhomCast {
 @export_multiline var description: String
 @export var race : Race
 @export_node_path("Sprite2D") var picture
+
+@export_group("Hero")
+@export var mana_max : int
+@export var mana_cur : int
 
 @export_group("Creature")
 @export var hero : Heroes

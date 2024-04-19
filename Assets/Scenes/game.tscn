@@ -1,23 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://d10udb1sre1ok"]
+[gd_scene load_steps=4 format=3 uid="uid://d10udb1sre1ok"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Game/gameData.gd" id="1_15lvp"]
 [ext_resource type="PackedScene" uid="uid://drmp5mnwikfmw" path="res://Assets/Scenes/gameUI.tscn" id="2_t44m0"]
 [ext_resource type="PackedScene" uid="uid://t1yewwigw1d0" path="res://Assets/Scenes/board.tscn" id="3_0cuqm"]
-[ext_resource type="PackedScene" uid="uid://dmdbc6j2a02qw" path="res://Assets/Scenes/playerGameUI.tscn" id="3_l7ub5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7os2"]
-size = Vector2(2864, 306)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4yw8e"]
-size = Vector2(1129, 696)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_15lvp")
 
 [node name="gameUI" parent="." instance=ExtResource("2_t44m0")]
 layer = 5
-
-[node name="PlayerGameUI" parent="." instance=ExtResource("3_l7ub5")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -42,14 +33,3 @@ layout_mode = 2
 offset_right = 4243.0
 offset_bottom = 2484.0
 color = Color(0, 0, 0, 0.470588)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["dropable"]]
-collision_layer = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1920, 1253)
-shape = SubResource("RectangleShape2D_j7os2")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(2787.5, 1704)
-shape = SubResource("RectangleShape2D_4yw8e")

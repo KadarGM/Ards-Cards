@@ -89,7 +89,6 @@ ui_accept={
 
 2d_physics/layer_1="card"
 2d_physics/layer_2="card_slot"
-2d_physics/layer_3="play_card_area_1"
 
 [rendering]
 
