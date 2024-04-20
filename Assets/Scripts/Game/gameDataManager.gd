@@ -8,9 +8,11 @@ var is_detailed = false
 var is_starting = false
 var is_on_button = false
 var is_in_grave = false
+var is_dragging = false
 
 #arrays
 var p1_body = []
+var p1_selected = []
 
 var p1_deck = []
 var p1_graveyard = []
@@ -33,6 +35,7 @@ var p2_hand = []
 
 func reset(): # Reset all player-related variables to their initial states.
 	p1_body = []
+	p1_selected = []
 
 	p1_deck = []
 	p1_graveyard = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://db8kmed63v1qa"]
+[gd_scene load_steps=48 format=3 uid="uid://db8kmed63v1qa"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Cards/cardDataManager.gd" id="1_173ep"]
 [ext_resource type="Texture2D" uid="uid://7ou2nkhneqvl" path="res://Assets/Graphics/Export/MANA_POINT.png" id="2_0afud"]
@@ -291,6 +291,9 @@ PopupMenu/icons/unchecked = SubResource("ImageTexture_10iv1")
 PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_j7gg5")
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_lxvwu")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_xonse")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5dbym"]
+size = Vector2(240, 320)
 
 [node name="card" type="Node2D"]
 z_index = 2
@@ -712,7 +715,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_xve6d")
 toggle_mode = true
+button_mask = 2
 flat = true
+
+[node name="DragArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea"]
+shape = SubResource("RectangleShape2D_5dbym")
 
 [node name="CardBG" type="Node2D" parent="."]
 visible = false
@@ -730,3 +740,4 @@ texture = ExtResource("10_tgl6e")
 [connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
 [connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
 [connection signal="toggled" from="ActiveCard" to="." method="_on_use_card_toggled"]
+[connection signal="mouse_entered" from="DragArea" to="." method="_on_drag_area_mouse_entered"]

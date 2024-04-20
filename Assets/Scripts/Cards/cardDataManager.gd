@@ -3,6 +3,11 @@ extends Node2D
 #region Variables, Constants
 var max_card_scale = 2.2
 var min_card_scale = 1
+var draggable = false
+var is_inside_drop = false
+var init_pos: Vector2
+var body_ref
+var offset: Vector2
 
 var game_data_manager = GameDataManager
 
@@ -80,6 +85,19 @@ func _ready():
 
 func _process(_delta):
 	if game_data_manager.is_starting == false:
+		if draggable == true:
+			if Input.is_action_just_pressed("left click"):
+				init_pos = game_data_manager.p1_selected[0].global_position
+				offset = get_global_mouse_position() - game_data_manager.p1_selected[0].global_position
+				game_data_manager.is_dragging = true
+			if Input.is_action_pressed("left click"):
+				game_data_manager.p1_selected[0].global_position = get_global_mouse_position() - offset
+			elif Input.is_action_just_released("left click"):
+				game_data_manager.is_dragging = false
+				if is_inside_drop == true:
+					game_data_manager.p1_selected[0].position = body_ref.position
+				else:
+					game_data_manager.p1_selected[0].global_position = init_pos
 		if Input.is_action_just_pressed("right click"):
 			if game_data_manager.is_detailed == true:
 				release_detail_card()
@@ -96,6 +114,7 @@ func _process(_delta):
 				release_searching_hand()
 			if game_data_manager.p1_graveyard.size() > 0:
 				game_data_manager.reorganize_showed_grave("player1")
+		
 
 #region SET_CARD_STATS
 func set_stats():
@@ -115,10 +134,8 @@ func set_stats():
 	#race_label.text = RACE_ARRAY[CARDS_LIST[id].race]
 	fg.modulate = RACE_COLOR[CARDS_LIST[id].race]
 	#CARDS_LIST[id].picture
-	if CARDS_LIST[id].type != 7:
-		#CARDS_LIST[id].mana_cost
-		mana_label.text = str(CARDS_LIST[id].mana_cost)
-		mana_rect.visible = true
+	mana_label.text = str(CARDS_LIST[id].mana_cost)
+	mana_rect.visible = true
 	if CARDS_LIST[id].type == 0 or CARDS_LIST[id].type == 1 or CARDS_LIST[id].type == 5 or CARDS_LIST[id].type == 6  or CARDS_LIST[id].type == 7: #Attack Creature, Defense Creature, Attack Elite, Defend Elite, Hero
 		if CARDS_LIST[id].hero == 0 or CARDS_LIST[id].type == 1 or CARDS_LIST[id].type == 5 or CARDS_LIST[id].type == 6:
 			#CARDS_LIST[id].hero
@@ -208,11 +225,13 @@ func set_stats():
 				#if CARDS_LIST[id].whom_cast == 4:
 					#pass
 	if CARDS_LIST[id].type == 2 or CARDS_LIST[id].type == 3 or CARDS_LIST[id].type == 4:
+		deffense_rect.visible = false
 		health_rect.visible = false
 		attack_rect.visible = false
 					
 #endregion
 
+#region UI
 func set_stats_visible(cond): # Sets the visibility of various UI elements related to card statistics.
 	card_stats.visible = cond
 	name_label.visible = cond
@@ -223,7 +242,9 @@ func set_play_menu(cond): # Sets the visibility of the play menu UI element.
 func change_slots_size(): # Updates the count of cards in the player's deck and graveyard slots.
 	game_data_manager.p1_dc_slots[0].card_count.text = str(game_data_manager.p1_deck.size())
 	game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())
+#endregion
 
+#region Detail Cards
 func detail_card(): # Displays a detailed view of the card.
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(card_trans, "scale", Vector2(max_card_scale,max_card_scale), .3)
@@ -247,48 +268,49 @@ func release_detail_card(): # Hides the detailed view of the card.
 	active_card.visible = true
 	await get_tree().create_timer(.1).timeout
 	top_level = false
+#endregion
 
+#region Searching Cards
 func searching_hand(): # Enlarges the card when it is being searched for.
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(self, "scale", Vector2(1.3,1.3), .2)
-	#if CARDS_LIST[id].defense == 0:
-		#deffense_rect.visible = false
-	#else:
-		#deffense_rect.visible = true
 	card_stats.visible = true
 	card_stats.scale = Vector2(1.6,1.6)
 
 func release_searching_hand(): # Restores the card to its original size after it has been searched for.
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(self, "scale", Vector2(min_card_scale,min_card_scale), .2)
-	if CARDS_LIST[id].defense == 0:
-		deffense_rect.visible = false
-	else:
-		deffense_rect.visible = false
 	card_stats.visible = false
 	card_stats.scale = Vector2(1,1)
+#endregion
 
 func _on_use_card_toggled(toggled_on): # Handles the toggling of using a card.
 	if game_data_manager.is_starting == false:
-		if toggled_on:
-			detail_card()
-			game_data_manager.is_searching = false
-			game_data_manager.is_detailed = true
-			game_data_manager.p1_body.append(self)
-		if not toggled_on:
-			release_detail_card()
-			game_data_manager.is_searching = true
-			game_data_manager.is_detailed = false
-			game_data_manager.p1_body = []
+			if toggled_on:
+				detail_card()
+				game_data_manager.is_searching = false
+				game_data_manager.is_detailed = true
+				game_data_manager.p1_body.append(self)
+			if not toggled_on:
+				release_detail_card()
+				game_data_manager.is_searching = true
+				game_data_manager.is_detailed = false
+				game_data_manager.p1_body = []
 
 func _on_active_card_mouse_entered(): # Handles mouse entering the active card area.
 	game_data_manager.is_on_button = true
+	if game_data_manager.is_dragging == false:
+		game_data_manager.p1_selected.append(self)
+		draggable = true
 	if game_data_manager.is_searching == true:
 		searching_hand()
 		self.top_level = true
 
 func _on_active_card_mouse_exited(): # Handles mouse exiting the active card area.
 	game_data_manager.is_on_button = false
+	if game_data_manager.is_dragging == false:
+		game_data_manager.p1_selected = []
+		draggable = false
 	if game_data_manager.is_searching == true:
 		release_searching_hand()
 		self.top_level = false
