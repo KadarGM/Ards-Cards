@@ -6,7 +6,6 @@ var is_searching = true
 var is_grave_active = false
 var is_detailed = false
 var is_starting = false
-var is_on_button = false
 var is_in_grave = false
 var is_dragging = false
 

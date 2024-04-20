@@ -47,6 +47,7 @@ const RACE_TEXT_COLOR : Dictionary = {
 @export var id_in_slot: int
 @export var slot_type: String
 @export var type: int
+
 @onready var play_menu = $cardTrans/PlayMenu
 @onready var use_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer
 @onready var destroy_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer2
@@ -85,36 +86,39 @@ func _ready():
 
 func _process(_delta):
 	if game_data_manager.is_starting == false:
-		if draggable == true:
+		if draggable == true and game_data_manager.p1_selected.size() > 0:
 			if Input.is_action_just_pressed("left click"):
 				init_pos = game_data_manager.p1_selected[0].global_position
-				offset = get_global_mouse_position() - game_data_manager.p1_selected[0].global_position
+				#offset = get_global_mouse_position() - game_data_manager.p1_selected[0].global_position
 				game_data_manager.is_dragging = true
-			if Input.is_action_pressed("left click"):
-				game_data_manager.p1_selected[0].global_position = get_global_mouse_position() - offset
+				print("init1: ",init_pos)
+			elif Input.is_action_pressed("left click"):
+				game_data_manager.p1_selected[0].global_position = get_global_mouse_position()
 			elif Input.is_action_just_released("left click"):
 				game_data_manager.is_dragging = false
-				if is_inside_drop == true:
-					game_data_manager.p1_selected[0].position = body_ref.position
+				if is_inside_drop != true:
+					game_data_manager.p1_selected[0].global_position = init_pos
+					print("init2: ",init_pos)
 				else:
 					game_data_manager.p1_selected[0].global_position = init_pos
-		if Input.is_action_just_pressed("right click"):
-			if game_data_manager.is_detailed == true:
-				release_detail_card()
-				game_data_manager.is_searching = true
-				active_card.button_pressed = false
-				release_searching_hand()
-			if game_data_manager.p1_graveyard.size() > 0:
-				game_data_manager.reorganize_showed_grave("player1")
-		if Input.is_action_just_pressed("left click"):
-			if game_data_manager.is_detailed == true:
-				release_detail_card()
-				game_data_manager.is_searching = true
-				active_card.button_pressed = false
-				release_searching_hand()
-			if game_data_manager.p1_graveyard.size() > 0:
-				game_data_manager.reorganize_showed_grave("player1")
-		
+					print("init3: ",init_pos)
+		if game_data_manager.is_detailed == true:
+			if Input.is_action_just_pressed("right click"):
+				if game_data_manager.is_detailed == true:
+					release_detail_card()
+					game_data_manager.is_searching = true
+					active_card.button_pressed = false
+					release_searching_hand()
+				if game_data_manager.p1_graveyard.size() > 0:
+					game_data_manager.reorganize_showed_grave("player1")
+			if Input.is_action_just_pressed("left click"):
+				if game_data_manager.is_detailed == true:
+					release_detail_card()
+					game_data_manager.is_searching = true
+					active_card.button_pressed = false
+					release_searching_hand()
+				if game_data_manager.p1_graveyard.size() > 0:
+					game_data_manager.reorganize_showed_grave("player1")
 
 #region SET_CARD_STATS
 func set_stats():
@@ -136,8 +140,8 @@ func set_stats():
 	#CARDS_LIST[id].picture
 	mana_label.text = str(CARDS_LIST[id].mana_cost)
 	mana_rect.visible = true
-	if CARDS_LIST[id].type == 0 or CARDS_LIST[id].type == 1 or CARDS_LIST[id].type == 5 or CARDS_LIST[id].type == 6  or CARDS_LIST[id].type == 7: #Attack Creature, Defense Creature, Attack Elite, Defend Elite, Hero
-		if CARDS_LIST[id].hero == 0 or CARDS_LIST[id].type == 1 or CARDS_LIST[id].type == 5 or CARDS_LIST[id].type == 6:
+	if CARDS_LIST[id].type == 0 or CARDS_LIST[id].type == 1: #Attack Creature, Defense Creature, Attack Elite, Defend Elite, Hero
+		if CARDS_LIST[id].hero == 0 or CARDS_LIST[id].type == 1:
 			#CARDS_LIST[id].hero
 			pass
 		if CARDS_LIST[id].elite == 0 or CARDS_LIST[id].type == 1:
@@ -285,30 +289,30 @@ func release_searching_hand(): # Restores the card to its original size after it
 #endregion
 
 func _on_use_card_toggled(toggled_on): # Handles the toggling of using a card.
-	if game_data_manager.is_starting == false:
-			if toggled_on:
-				detail_card()
-				game_data_manager.is_searching = false
-				game_data_manager.is_detailed = true
-				game_data_manager.p1_body.append(self)
-			if not toggled_on:
-				release_detail_card()
-				game_data_manager.is_searching = true
-				game_data_manager.is_detailed = false
-				game_data_manager.p1_body = []
+	if game_data_manager.is_starting == false and game_data_manager.is_dragging == false:
+		if toggled_on:
+			detail_card()
+			game_data_manager.p1_body.append(self)
+			game_data_manager.is_detailed = true
+			game_data_manager.is_searching = false
+		if not toggled_on:
+			release_detail_card()
+			game_data_manager.p1_body = []
+			game_data_manager.is_detailed = false
+			game_data_manager.is_searching = true
 
 func _on_active_card_mouse_entered(): # Handles mouse entering the active card area.
-	game_data_manager.is_on_button = true
 	if game_data_manager.is_dragging == false:
 		game_data_manager.p1_selected.append(self)
+		print("card ",game_data_manager.p1_selected[0], " enter.")
 		draggable = true
 	if game_data_manager.is_searching == true:
 		searching_hand()
 		self.top_level = true
 
 func _on_active_card_mouse_exited(): # Handles mouse exiting the active card area.
-	game_data_manager.is_on_button = false
 	if game_data_manager.is_dragging == false:
+		print("card ",game_data_manager.p1_selected[0], " leave.")
 		game_data_manager.p1_selected = []
 		draggable = false
 	if game_data_manager.is_searching == true:
