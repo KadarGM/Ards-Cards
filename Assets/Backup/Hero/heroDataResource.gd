@@ -1,35 +1,13 @@
 extends Resource
-class_name CardDataResource
+class_name HeroDataResource
 
 #region Enums
 enum Race {
 	Forest, Rusty, Black, Termite, Yellow, White
 }
-enum Type {
-	AttackCreature, DefendCreature, Artefact, Action, Spell
-}
-enum Type_spell {
-	Spell, Action, Artefact
-}
-enum Heroes {
-	NULL
-}
-enum Elites {
-	NULL
-}
 enum Specializations {
 	Fighter, Archer, Sorcerer, Dark_wizard, Necromancer, Shaman, Rider_shooter, Elite, Rider
 }
-enum Spells {
-	Enhance, Surface_enhance, Heal, Draw, Surface_heal, Destructive, Surface_destructive, Worm
-}
-enum Instants {
-	Destructive, Enhance
-}
-enum Artefacts {
-	Enhance, Heal
-}
-
 enum WhewCast {
 	NULL, die, put, board, end_turn, start_turn
 }
@@ -46,15 +24,12 @@ enum WhomCast {
 
 @export_category("General")
 @export_group("Main")
-@export var type : Type
+@export var hero_id: int
 @export var name: String
 @export_multiline var description: String
 @export var race : Race
+@export var prize: int
 @export_node_path("Sprite2D") var picture
-
-@export_group("Creature")
-@export var hero : Heroes
-@export var elite : Elites
 
 @export_subgroup("Creature Cast Data")
 @export var when_cast : WhewCast
@@ -70,14 +45,7 @@ enum WhomCast {
 @export var whom_repeat : int
 @export var whom_value : int
 
-@export_group("Spells")
-@export var type_spell : Type_spell
-@export var spell : Spells
-@export var instants : Instants
-@export var artefacts : Artefacts
-
 @export_group("Global Stats")
-@export var mana_cost : int
 @export var health: int
 @export var defense: int
 @export var attack: int

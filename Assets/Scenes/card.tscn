@@ -573,6 +573,7 @@ scale = Vector2(10, 10)
 texture = ExtResource("8_c46ei")
 
 [node name="PlayMenu" type="MarginContainer" parent="cardTrans"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -714,7 +715,7 @@ offset_bottom = 161.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_xve6d")
-toggle_mode = true
+action_mode = 0
 button_mask = 2
 flat = true
 
@@ -739,5 +740,7 @@ texture = ExtResource("10_tgl6e")
 [connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/DestroyButton" to="." method="_on_destroy_button_pressed"]
 [connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
 [connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
+[connection signal="pressed" from="ActiveCard" to="." method="_on_active_card_pressed"]
 [connection signal="toggled" from="ActiveCard" to="." method="_on_use_card_toggled"]
-[connection signal="mouse_entered" from="DragArea" to="." method="_on_drag_area_mouse_entered"]
+[connection signal="body_entered" from="DragArea" to="." method="_on_drag_area_body_entered"]
+[connection signal="body_exited" from="DragArea" to="." method="_on_drag_area_body_exited"]

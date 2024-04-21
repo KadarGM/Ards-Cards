@@ -60,7 +60,7 @@ func node_holders(): # Creates the necessary node holders for cards and slots.
 
 func draw_card(player, num): # Draws cards from the deck to the player's hand.
 	if player == "player1":
-		if game_data_manager.p1_deck.size() > 0:
+		if game_data_manager.p1_deck.size() > 0 and game_data_manager.is_dragging == false:
 			for c in range(num):
 				var clone = game_data_manager.p1_deck[c]
 				clone.id_in_slot = c

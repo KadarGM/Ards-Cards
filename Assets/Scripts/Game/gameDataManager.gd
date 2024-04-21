@@ -32,7 +32,17 @@ var p1_g_show = []
 var p2_hand = []
 #endregion
 
+var SLOT_TYPES_ARRAY = [p1_a_slots,p1_d_slots,p1_ar_slots,p1_ac_slots]
+
 func reset(): # Reset all player-related variables to their initial states.
+	
+	is_searching = true
+	is_grave_active = false
+	is_detailed = false
+	is_starting = false
+	is_in_grave = false
+	is_dragging = false
+	
 	p1_body = []
 	p1_selected = []
 
@@ -55,10 +65,11 @@ func reset(): # Reset all player-related variables to their initial states.
 	p2_hand = []
 
 func _process(_delta):
+	slot_visible("player1")
 	check_put_avaliable(p1_attack)
 	check_put_avaliable(p1_defense)
 	check_put_avaliable(p1_artefact)
-	if is_detailed == true and p1_body[0].slot_type == "grave":
+	if is_detailed == true and p1_body[0].slot_type == "grave" and is_dragging == false:
 		if is_grave_active == true:
 			for i in range(p1_graveyard.size()):
 				p1_graveyard[i].z_index = i + 5
@@ -67,7 +78,7 @@ func _process(_delta):
 			reorganize_showed_grave("player1")
 
 	if Input.is_action_just_pressed("e key"):
-		if is_starting == false and is_detailed == true and is_grave_active == false:
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false:
 			if p1_body[0].slot_type == "hand":
 				var current_slots
 				var max_slots
@@ -93,7 +104,7 @@ func _process(_delta):
 			p1_body[0].active_card.button_pressed = false
 
 	if Input.is_action_just_pressed("r key"):
-		if is_starting == false and is_detailed == true and is_grave_active == false:
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false:
 			p1_body[0].release_detail_card()
 			is_searching = true
 			if p1_body[0].slot_type != "hand" and p1_body[0].slot_type != "grave" and p1_body[0].slot_type != "deck":
@@ -111,9 +122,10 @@ func _process(_delta):
 				p1_body[0].card_trans.visible = false
 				p1_body[0].active_card.visible = false
 				p1_body[0].destroy_button.visible = false
+				p1_body[0].active_card.button_pressed = false
 		
 	if Input.is_action_just_pressed("g key"):
-		if is_starting == false and p1_graveyard.size() > 0:
+		if is_starting == false and p1_graveyard.size() > 0 and is_dragging == false:
 			if is_detailed == true:
 				p1_body[0].release_detail_card()
 				is_searching = true
@@ -172,7 +184,30 @@ func put(body): # Place a card into its corresponding slot based on its type.
 	await get_tree().create_timer(.3).timeout
 	body.destroy_button.visible = true
 	is_searching = true
-	
+
+func slot_visible(player):
+	var slot_type
+	if player == "player1":
+		if is_dragging:
+			slot_type = SLOT_TYPES_ARRAY[p1_selected[0].id]
+			for i in range(slot_type.size()):
+					if slot_type[i].is_empty == 1:
+						slot_type[i].color_rect.visible = true
+					if slot_type[i].is_empty == 0:
+						slot_type[i].color_rect.visible = false
+		elif is_detailed == true:
+			slot_type = SLOT_TYPES_ARRAY[p1_body[0].id]
+			for i in range(slot_type.size()):
+					if slot_type[i].is_empty == 1:
+						slot_type[i].color_rect.visible = true
+					if slot_type[i].is_empty == 0:
+						slot_type[i].color_rect.visible = false
+		else:
+			for i in range(SLOT_TYPES_ARRAY.size()):
+				slot_type = SLOT_TYPES_ARRAY[i]
+				for j in range(slot_type.size()):
+					slot_type[j].color_rect.visible = false
+
 func check_put_avaliable(type1): # Check if a card can be put into a particular slot type and adjust UI accordingly.
 	var typ
 	var maximum

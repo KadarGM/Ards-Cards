@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://d10udb1sre1ok"]
+[gd_scene load_steps=6 format=3 uid="uid://d10udb1sre1ok"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Game/gameData.gd" id="1_15lvp"]
 [ext_resource type="PackedScene" uid="uid://drmp5mnwikfmw" path="res://Assets/Scenes/gameUI.tscn" id="2_t44m0"]
 [ext_resource type="PackedScene" uid="uid://t1yewwigw1d0" path="res://Assets/Scenes/board.tscn" id="3_0cuqm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h54g7"]
+size = Vector2(2921, 466)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxvuu"]
+size = Vector2(974.5, 766)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_15lvp")
@@ -33,3 +39,14 @@ layout_mode = 2
 offset_right = 4243.0
 offset_bottom = 2484.0
 color = Color(0, 0, 0, 0.470588)
+
+[node name="SlotsArea" type="StaticBody2D" parent="." groups=["dropable"]]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotsArea"]
+position = Vector2(1921.5, 1078)
+shape = SubResource("RectangleShape2D_h54g7")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="SlotsArea"]
+position = Vector2(2891.25, 1690)
+shape = SubResource("RectangleShape2D_xxvuu")

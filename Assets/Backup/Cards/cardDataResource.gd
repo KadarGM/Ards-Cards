@@ -83,3 +83,7 @@ enum WhomCast {
 @export var attack: int
 @export var specialization : Specializations
 @export var will_cast : bool
+
+
+
+

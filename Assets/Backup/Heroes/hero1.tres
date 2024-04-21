@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="HeroDataResource" load_steps=2 format=3 uid="uid://djemlpgh58kdw"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Hero/heroDataResource.gd" id="1_41w0w"]
+
+[resource]
+script = ExtResource("1_41w0w")
+hero_id = 1
+name = "Nohac"
+description = "velky typek"
+race = 0
+prize = 0
+picture = null
+when_cast = 0
+when_repeat = 0
+when_value = 0
+what_cast = 0
+what_repeat = 0
+what_value = 0
+where_cast = 0
+where_repeat = 0
+where_value = 0
+whom_cast = 0
+whom_repeat = 0
+whom_value = 0
+health = 30
+defense = 2
+attack = 2
+specialization = 0
+will_cast = false
