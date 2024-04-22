@@ -9,7 +9,6 @@ var init_pos: Vector2
 var body_ref
 var offset: Vector2
 
-
 var game_data_manager = GameDataManager
 
 const CARDS_LIST: Array[CardDataResource] = [
@@ -85,67 +84,7 @@ func _ready():
 	active_card.visible = false
 	card_bg.visible = true
 
-func _process(_delta):
-	if game_data_manager.is_starting == false:
-		if draggable == true and game_data_manager.p1_selected.size() > 0 and game_data_manager.p1_selected[0].slot_type == "hand" and game_data_manager.is_detailed == false:
-			
-			if Input.is_action_just_pressed("left click"):
-				init_pos = game_data_manager.p1_selected[0].global_position
-				game_data_manager.is_dragging = true
-				print("init1: ",init_pos)
-			elif Input.is_action_pressed("left click"):
-				game_data_manager.p1_selected[0].global_position = get_global_mouse_position()
-				game_data_manager.is_searching = false
-			elif Input.is_action_just_released("left click"):
-				game_data_manager.is_dragging = false
-				if is_inside_drop == true:
-					game_data_manager.p1_body = game_data_manager.p1_selected
-					var current_slots
-					var max_slots
-					if CARDS_LIST[game_data_manager.p1_body[0].id].type == 0:
-						current_slots = game_data_manager.p1_attack.size()
-						max_slots = game_data_manager.p1_a_slots.size()
-					if CARDS_LIST[game_data_manager.p1_body[0].id].type == 1:
-						current_slots = game_data_manager.p1_defense.size()
-						max_slots = game_data_manager.p1_d_slots.size()
-					if CARDS_LIST[game_data_manager.p1_body[0].id].type == 2:
-						current_slots = game_data_manager.p1_artefact.size()
-						max_slots = game_data_manager.p1_ar_slots.size()
-					if CARDS_LIST[game_data_manager.p1_body[0].id].type == 3:
-						current_slots = game_data_manager.p1_action.size()
-						max_slots = game_data_manager.p1_ac_slots.size()
-					if current_slots < max_slots:
-						release_searching_hand()
-						game_data_manager.put(game_data_manager.p1_body[0])
-						use_button.visible = false
-						game_data_manager.is_searching = true
-					else:
-						card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .1)
-						print("no_size")
-						await get_tree().create_timer(0.3).timeout
-					change_slots_size()
-					release_detail_card()
-					game_data_manager.is_searching = true
-					await get_tree().create_timer(0.3).timeout
-				else:
-					card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .1)
-					release_detail_card()
-					game_data_manager.is_searching = true
-					await get_tree().create_timer(0.3).timeout
-				release_detail_card()
-				game_data_manager.is_searching = true
-				await get_tree().create_timer(0.3).timeout
-					
-		if game_data_manager.is_detailed == true:
-			if Input.is_action_just_released("right click"):
-				await get_tree().create_timer(0.3).timeout
-				release_detail_card()
-				release_searching_hand()
-				game_data_manager.is_searching = true
-				game_data_manager.is_detailed = false
-				if game_data_manager.p1_graveyard.size() > 0:
-					game_data_manager.reorganize_showed_grave("player1")
-				
+
 
 #region SET_CARD_STATS
 func set_stats():
@@ -298,34 +237,22 @@ func release_searching_hand(): # Restores the card to its original size after it
 func card_animation(body,parametr,how_many, time):
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(body, parametr, how_many, time)
-
-#func _on_use_card_toggled(toggled_on): # Handles the toggling of using a card.
-	#if game_data_manager.is_starting == false and game_data_manager.is_dragging == false:
-		#if toggled_on:
-			#detail_card()
-			#release_searching_hand()
-			#game_data_manager.p1_body = []
-			#game_data_manager.p1_body.append(self)
-			#game_data_manager.is_detailed = true
-			#game_data_manager.is_searching = false
-		#if not toggled_on:
-			#release_detail_card()
-			#release_searching_hand()
-			#game_data_manager.p1_body = []
-			#game_data_manager.is_detailed = false
-			#game_data_manager.is_searching = true
+	
 
 func _on_active_card_pressed():
-	if game_data_manager.is_starting == false and game_data_manager.is_dragging == false:
-		detail_card()
-		release_searching_hand()
-		game_data_manager.p1_body = []
-		game_data_manager.p1_body.append(self)
-		game_data_manager.is_detailed = true
-		game_data_manager.is_searching = false
+	if game_data_manager.is_starting == false:
+		if game_data_manager.is_dragging == false:
+			game_data_manager.slot_visible("player1","detail",true)
+			detail_card()
+			release_searching_hand()
+			game_data_manager.p1_body = []
+			game_data_manager.p1_body.append(self)
+			game_data_manager.is_searching = false
+			game_data_manager.is_detailed = true
 
 func _on_active_card_mouse_entered(): # Handles mouse entering the active card area.
 	if game_data_manager.is_dragging == false:
+		game_data_manager.p1_selected = []
 		game_data_manager.p1_selected.append(self)
 		draggable = true
 	if game_data_manager.is_searching == true:
@@ -377,5 +304,62 @@ func _on_drag_area_body_exited(body):
 	if body.is_in_group('dropable'):
 		is_inside_drop = false
 
+func if_dragged_release():
+	game_data_manager.slot_visible("player1","drag",false)
+	await get_tree().create_timer(.3).timeout
+	release_detail_card()
+	release_searching_hand()
+	await get_tree().create_timer(.3).timeout
+	game_data_manager.is_searching = true
 
+func _process(_delta):
+	if game_data_manager.is_starting == false:
+		if draggable == true and game_data_manager.p1_selected.size() > 0 and game_data_manager.p1_selected[0].slot_type == "hand" and game_data_manager.is_detailed == false:
+			if Input.is_action_just_pressed("left click"):
+				init_pos = game_data_manager.p1_selected[0].global_position
+				offset = get_global_mouse_position() - game_data_manager.p1_selected[0].global_position
+				game_data_manager.is_dragging = true
+				game_data_manager.slot_visible("player1","drag",true)
+			if Input.is_action_pressed("left click"):
+				game_data_manager.p1_selected[0].global_position = get_global_mouse_position() - offset
+				release_searching_hand()
+				game_data_manager.is_searching = false
+			elif Input.is_action_just_released("left click"):
+				game_data_manager.is_dragging = false
+				if is_inside_drop == true:
+					var current_slots
+					var max_slots
+					if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 0:
+						current_slots = game_data_manager.p1_attack.size()
+						max_slots = game_data_manager.p1_a_slots.size()
+					if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 1:
+						current_slots = game_data_manager.p1_defense.size()
+						max_slots = game_data_manager.p1_d_slots.size()
+					if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 2:
+						current_slots = game_data_manager.p1_artefact.size()
+						max_slots = game_data_manager.p1_ar_slots.size()
+					if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 3:
+						current_slots = game_data_manager.p1_action.size()
+						max_slots = game_data_manager.p1_ac_slots.size()
+					if current_slots < max_slots:
+						game_data_manager.put(game_data_manager.p1_selected[0])
+					else:
+						card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .2)
+						if_dragged_release()
+					change_slots_size()
+					if_dragged_release()
+				else:
+					card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .2)
+					if_dragged_release()
+		
+		if game_data_manager.is_detailed == true and game_data_manager.is_dragging == false:
+			if Input.is_action_just_released("right click"):
+				game_data_manager.slot_visible("player1","detail",false)
+				release_detail_card()
+				release_searching_hand()
+				await get_tree().create_timer(.3).timeout
+				game_data_manager.is_detailed = false
+				game_data_manager.is_searching = true
+				if game_data_manager.p1_graveyard.size() > 0:
+					game_data_manager.reorganize_showed_grave("player1")
 

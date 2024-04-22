@@ -44,7 +44,7 @@ func reset(): # Reset all player-related variables to their initial states.
 	is_dragging = false
 	
 	p1_body = []
-	p1_selected = []
+
 
 	p1_deck = []
 	p1_graveyard = []
@@ -65,7 +65,7 @@ func reset(): # Reset all player-related variables to their initial states.
 	p2_hand = []
 
 func _process(_delta):
-	slot_visible("player1")
+	
 	check_put_avaliable(p1_attack)
 	check_put_avaliable(p1_defense)
 	check_put_avaliable(p1_artefact)
@@ -185,28 +185,26 @@ func put(body): # Place a card into its corresponding slot based on its type.
 	body.destroy_button.visible = true
 	is_searching = true
 
-func slot_visible(player):
+func slot_visible(player,type,cond):
 	var slot_type
+	#var condition
 	if player == "player1":
-		if is_dragging:
-			slot_type = SLOT_TYPES_ARRAY[p1_selected[0].id]
-			for i in range(slot_type.size()):
+		if is_starting == false:
+			if cond == true:
+				if type == "detail":
+					slot_type = SLOT_TYPES_ARRAY[p1_body[0].id]
+				if type == "drag":
+					slot_type = SLOT_TYPES_ARRAY[p1_selected[0].id]
+				for i in range(slot_type.size()):
 					if slot_type[i].is_empty == 1:
 						slot_type[i].color_rect.visible = true
 					if slot_type[i].is_empty == 0:
 						slot_type[i].color_rect.visible = false
-		elif is_detailed == true:
-			slot_type = SLOT_TYPES_ARRAY[p1_body[0].id]
-			for i in range(slot_type.size()):
-					if slot_type[i].is_empty == 1:
-						slot_type[i].color_rect.visible = true
-					if slot_type[i].is_empty == 0:
-						slot_type[i].color_rect.visible = false
-		else:
-			for i in range(SLOT_TYPES_ARRAY.size()):
-				slot_type = SLOT_TYPES_ARRAY[i]
-				for j in range(slot_type.size()):
-					slot_type[j].color_rect.visible = false
+			elif cond == false:
+				for i in range(SLOT_TYPES_ARRAY.size()):
+					slot_type = SLOT_TYPES_ARRAY[i]
+					for j in range(slot_type.size()):
+						slot_type[j].color_rect.visible = false
 
 func check_put_avaliable(type1): # Check if a card can be put into a particular slot type and adjust UI accordingly.
 	var typ

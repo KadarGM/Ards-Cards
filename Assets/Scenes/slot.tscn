@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dr8fkyi2hosdp"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Slot/slotData.gd" id="1_vy0j4"]
-[ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="2_as4mx"]
+[ext_resource type="FontFile" uid="uid://h8cq4acmo5w3" path="res://Assets/Graphics/Font/gomarice_no_continue.ttf" id="2_a0eb8"]
 
 [node name="Slot" type="Node2D"]
 script = ExtResource("1_vy0j4")
@@ -34,7 +34,7 @@ offset_bottom = 295.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_as4mx")
+theme_override_fonts/font = ExtResource("2_a0eb8")
 theme_override_font_sizes/font_size = 128
 text = "50"
 horizontal_alignment = 1
