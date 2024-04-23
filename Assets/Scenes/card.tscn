@@ -704,7 +704,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 max_lines_visible = 3
 
-[node name="ActiveCard" type="Button" parent="."]
+[node name="ActiveCard" type="Button" parent="cardTrans"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -719,10 +719,10 @@ action_mode = 0
 button_mask = 2
 flat = true
 
-[node name="DragArea" type="Area2D" parent="."]
+[node name="DragArea" type="Area2D" parent="cardTrans"]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cardTrans/DragArea"]
 shape = SubResource("RectangleShape2D_5dbym")
 
 [node name="CardBG" type="Node2D" parent="."]
@@ -738,8 +738,8 @@ texture = ExtResource("10_tgl6e")
 
 [connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer/UseButton" to="." method="_on_use_button_pressed"]
 [connection signal="pressed" from="cardTrans/PlayMenu/HBoxContainer/VBoxContainer2/DestroyButton" to="." method="_on_destroy_button_pressed"]
-[connection signal="mouse_entered" from="ActiveCard" to="." method="_on_active_card_mouse_entered"]
-[connection signal="mouse_exited" from="ActiveCard" to="." method="_on_active_card_mouse_exited"]
-[connection signal="pressed" from="ActiveCard" to="." method="_on_active_card_pressed"]
-[connection signal="body_entered" from="DragArea" to="." method="_on_drag_area_body_entered"]
-[connection signal="body_exited" from="DragArea" to="." method="_on_drag_area_body_exited"]
+[connection signal="mouse_entered" from="cardTrans/ActiveCard" to="." method="_on_active_card_mouse_entered"]
+[connection signal="mouse_exited" from="cardTrans/ActiveCard" to="." method="_on_active_card_mouse_exited"]
+[connection signal="pressed" from="cardTrans/ActiveCard" to="." method="_on_active_card_pressed"]
+[connection signal="body_entered" from="cardTrans/DragArea" to="." method="_on_drag_area_body_entered"]
+[connection signal="body_exited" from="cardTrans/DragArea" to="." method="_on_drag_area_body_exited"]
