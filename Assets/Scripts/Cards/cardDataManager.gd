@@ -8,14 +8,16 @@ var is_inside_drop = false
 var init_pos: Vector2
 var body_ref
 var offset: Vector2
+var is_on_card = false
 
 var game_data_manager = GameDataManager
+const SLOT = preload("res://Assets/Scenes/slot.tscn")
 
 const CARDS_LIST: Array[CardDataResource] = [
-	preload("res://Assets/Resources/Cards/Creature/testCard1.tres"),
-	preload("res://Assets/Resources/Cards/Creature/testCard2.tres"),
-	preload("res://Assets/Resources/Cards/Creature/testCard3.tres"),
-	preload("res://Assets/Resources/Cards/Creature/testCard4.tres"),
+	preload("res://Assets/Resources/Cards/testCard1.tres"),
+	preload("res://Assets/Resources/Cards/testCard2.tres"),
+	preload("res://Assets/Resources/Cards/testCard3.tres"),
+	preload("res://Assets/Resources/Cards/testCard4.tres"),
 	]
 
 const TYPE_ARRAY = ["Attack Creature", "Defend Creature", "Artefact", "Action", "Spell", "Attack Elite", "Defend Elite", "Hero"]
@@ -51,7 +53,7 @@ const RACE_TEXT_COLOR : Dictionary = {
 @onready var play_menu = $cardTrans/PlayMenu
 @onready var use_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer
 @onready var destroy_button = $cardTrans/PlayMenu/HBoxContainer/VBoxContainer2
-@onready var active_card = $ActiveCard
+@onready var active_card = $cardTrans/ActiveCard
 @onready var card_trans = $cardTrans
 @onready var name_label = $cardTrans/NameLabel
 @onready var card_stats = $cardTrans/CardStats
@@ -70,21 +72,15 @@ const RACE_TEXT_COLOR : Dictionary = {
 @onready var attack_rect = $cardTrans/CardStats/LeftContainer/GridContainer/AttackRect
 @onready var type_rect = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect
 @onready var type_sprite = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect/TypeSprite
-
-
-
 #endregion
 
 func _ready():
 	set_stats()
 	set_stats_visible(false)
-	#set_play_menu(false)
 	destroy_button.visible = false
 	card_trans.visible = false
 	active_card.visible = false
 	card_bg.visible = true
-
-
 
 #region SET_CARD_STATS
 func set_stats():
@@ -193,6 +189,24 @@ func set_stats():
 		deffense_rect.visible = false
 #endregion
 
+#func select_card_in_slot(player,slot_type_string):
+	#var slot_type_array
+	#if player == "player1":
+		#if slot_type_string == "attack":
+			#slot_type_array = game_data_manager.p1_a_slots
+		#elif slot_type_string == "defense":
+			#slot_type_array= game_data_manager.p1_d_slots
+		#elif slot_type_string == "artefact":
+			#slot_type_array = game_data_manager.p1_ar_slots
+		#elif slot_type_string == "action":
+			#slot_type_array = game_data_manager.p1_ac_slots
+		#elif slot_type_string == "grave":
+			#slot_type_array = game_data_manager.p1_g_slots
+		#elif slot_type_string == "deck":
+			#slot_type_array = game_data_manager.p1_dc_slots
+		#print(game_data_manager.p1_selected[0].id_in_slot, " ", slot_type_array)
+		#slot_type_array[game_data_manager.p1_selected[0].id_in_slot].visible = true
+
 #region UI
 func set_stats_visible(cond): # Sets the visibility of various UI elements related to card statistics.
 	card_stats.visible = cond
@@ -203,98 +217,48 @@ func change_slots_size(): # Updates the count of cards in the player's deck and 
 	game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())
 #endregion
 
-#region Detail Cards
-func detail_card(): # Displays a detailed view of the card.
-	card_animation(card_trans,"scale",Vector2(max_card_scale,max_card_scale), .3)
-	set_stats_visible(true)
-	active_card.visible = false
-	card_stats.visible = true
-	card_stats.scale = Vector2(1,1)
-	top_level = true
-	await get_tree().create_timer(.1).timeout
-	top_level = true
-
-func release_detail_card(): # Hides the detailed view of the card.
-	card_animation(card_trans,"scale",Vector2(min_card_scale,min_card_scale), .3)
-	set_stats_visible(false)
-	active_card.visible = true
-	await get_tree().create_timer(.1).timeout
-	top_level = false
-#endregion
-
 #region Searching Cards
 func searching_hand(): # Enlarges the card when it is being searched for.
-	card_animation(self,"scale",Vector2(1.3,1.3), .2)
+	game_data_manager.is_detailed = true
+	card_animation(card_trans,"scale",Vector2(max_card_scale,max_card_scale), .5)
+	set_stats_visible(true)
 	card_stats.visible = true
-	card_stats.scale = Vector2(1.6,1.6)
+	card_stats.scale = Vector2(1,1)
+	top_level = true
+	await get_tree().create_timer(.1).timeout
+	top_level = true
 
 func release_searching_hand(): # Restores the card to its original size after it has been searched for.
-	card_animation(self,"scale",Vector2(min_card_scale,min_card_scale), .2)
-	card_stats.visible = false
-	card_stats.scale = Vector2(1,1)
+	game_data_manager.is_detailed = false
+	card_animation(card_trans,"scale",Vector2(min_card_scale,min_card_scale), .5)
+	set_stats_visible(false)
+	await get_tree().create_timer(.1).timeout
+	top_level = false
 #endregion
 
 func card_animation(body,parametr,how_many, time):
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(body, parametr, how_many, time)
-	
-
-func _on_active_card_pressed():
-	if game_data_manager.is_starting == false:
-		if game_data_manager.is_dragging == false:
-			game_data_manager.slot_visible("player1","detail",true)
-			detail_card()
-			release_searching_hand()
-			game_data_manager.p1_body = []
-			game_data_manager.p1_body.append(self)
-			game_data_manager.is_searching = false
-			game_data_manager.is_detailed = true
 
 func _on_active_card_mouse_entered(): # Handles mouse entering the active card area.
+	is_on_card = true
 	if game_data_manager.is_dragging == false:
 		game_data_manager.p1_selected = []
 		game_data_manager.p1_selected.append(self)
 		draggable = true
 	if game_data_manager.is_searching == true:
 		searching_hand()
+		
 		self.top_level = true
 
 func _on_active_card_mouse_exited(): # Handles mouse exiting the active card area.
+	is_on_card = false
 	if game_data_manager.is_dragging == false:
 		game_data_manager.p1_selected = []
 		draggable = false
 	if game_data_manager.is_searching == true:
 		release_searching_hand()
 		self.top_level = false
-
-func _on_destroy_button_pressed(): # Handles the use button being pressed.
-	if game_data_manager.is_starting == false:
-		game_data_manager.destroy(self)
-		change_slots_size()
-		active_card.button_pressed = false
-
-func _on_use_button_pressed(): # Handles the play button being pressed.
-	if game_data_manager.is_starting == false:
-		var current_slots
-		var max_slots
-		if CARDS_LIST[game_data_manager.p1_body[0].id].type == 0:
-			current_slots = game_data_manager.p1_attack.size()
-			max_slots = game_data_manager.p1_a_slots.size()
-		if CARDS_LIST[game_data_manager.p1_body[0].id].type == 1:
-			current_slots = game_data_manager.p1_defense.size()
-			max_slots = game_data_manager.p1_d_slots.size()
-		if CARDS_LIST[game_data_manager.p1_body[0].id].type == 2:
-			current_slots = game_data_manager.p1_artefact.size()
-			max_slots = game_data_manager.p1_ar_slots.size()
-		if CARDS_LIST[game_data_manager.p1_body[0].id].type == 3:
-			current_slots = game_data_manager.p1_action.size()
-			max_slots = game_data_manager.p1_ac_slots.size()
-		if current_slots < max_slots:
-			game_data_manager.put(game_data_manager.p1_body[0])
-			use_button.visible = false 
-		else:
-			print("no_size")
-		change_slots_size()
 
 func _on_drag_area_body_entered(body):
 	if body.is_in_group('dropable'):
@@ -305,25 +269,25 @@ func _on_drag_area_body_exited(body):
 		is_inside_drop = false
 
 func if_dragged_release():
-	game_data_manager.slot_visible("player1","drag",false)
-	await get_tree().create_timer(.3).timeout
-	release_detail_card()
-	release_searching_hand()
-	await get_tree().create_timer(.3).timeout
-	game_data_manager.is_searching = true
+	game_data_manager.slot_visible("player1",false)
+	await get_tree().create_timer(.05).timeout
+	if self.is_on_card == false:
+		release_searching_hand()
+		game_data_manager.is_searching = true
+	if self.is_on_card == true:
+		game_data_manager.is_searching = true
 
 func _process(_delta):
 	if game_data_manager.is_starting == false:
-		if draggable == true and game_data_manager.p1_selected.size() > 0 and game_data_manager.p1_selected[0].slot_type == "hand" and game_data_manager.is_detailed == false:
+		if draggable == true and game_data_manager.p1_selected.size() > 0 and game_data_manager.p1_selected[0].slot_type == "hand" and game_data_manager.can_dragging == true:
 			if Input.is_action_just_pressed("left click"):
 				init_pos = game_data_manager.p1_selected[0].global_position
 				offset = get_global_mouse_position() - game_data_manager.p1_selected[0].global_position
 				game_data_manager.is_dragging = true
-				game_data_manager.slot_visible("player1","drag",true)
+				game_data_manager.slot_visible("player1",true)
+				game_data_manager.is_searching = false
 			if Input.is_action_pressed("left click"):
 				game_data_manager.p1_selected[0].global_position = get_global_mouse_position() - offset
-				release_searching_hand()
-				game_data_manager.is_searching = false
 			elif Input.is_action_just_released("left click"):
 				game_data_manager.is_dragging = false
 				if is_inside_drop == true:
@@ -351,15 +315,6 @@ func _process(_delta):
 				else:
 					card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .2)
 					if_dragged_release()
-		
-		if game_data_manager.is_detailed == true and game_data_manager.is_dragging == false:
-			if Input.is_action_just_released("right click"):
-				game_data_manager.slot_visible("player1","detail",false)
-				release_detail_card()
-				release_searching_hand()
-				await get_tree().create_timer(.3).timeout
-				game_data_manager.is_detailed = false
-				game_data_manager.is_searching = true
-				if game_data_manager.p1_graveyard.size() > 0:
-					game_data_manager.reorganize_showed_grave("player1")
-
+		#if game_data_manager.p1_selected.size() > 0 and game_data_manager.p1_selected[0].slot_type != "hand":
+			#if Input.is_action_just_pressed("right click"):
+				#select_card_in_slot("player1",game_data_manager.p1_selected[0].slot_type)

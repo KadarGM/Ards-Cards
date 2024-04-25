@@ -35,17 +35,19 @@ func on_start_game(player):
 
 func _process(_delta):
 	create_slot_counter()
-	if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false:
+	if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false:
 		if game_data_manager.p1_hand.size() < 8:
 			if Input.is_action_just_pressed("space key"):
 				draw_card("player1",1)
 				await get_tree().create_timer(.5).timeout
-	if game_data_manager.p1_graveyard.size() > 0:
-		if game_data_manager.is_grave_active == true:
+	if game_data_manager.p1_graveyard.size() > 0 or game_data_manager.p1_deck.size() > 0:
+		if game_data_manager.is_grave_active == true or game_data_manager.is_deck_active == true:
+			game_data_manager.can_dragging = false
 			await get_tree().create_timer(.1).timeout
 			card_barier.z_index = 3
 			card_barier.visible = true
-		if game_data_manager.is_grave_active == false:
+		if game_data_manager.is_grave_active == false or game_data_manager.is_deck_active == false:
+			game_data_manager.can_dragging = true
 			await get_tree().create_timer(.1).timeout
 			card_barier.z_index = -1
 			card_barier.visible = false

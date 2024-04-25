@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://t1yewwigw1d0" path="res://Assets/Scenes/board.tscn" id="3_0cuqm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h54g7"]
-size = Vector2(2921, 466)
+size = Vector2(3849, 1220)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xxvuu"]
-size = Vector2(974.5, 766)
+size = Vector2(1443, 766)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_15lvp")
@@ -44,9 +44,9 @@ color = Color(0, 0, 0, 0.470588)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlotsArea"]
-position = Vector2(1921.5, 1078)
+position = Vector2(1921.5, 701)
 shape = SubResource("RectangleShape2D_h54g7")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="SlotsArea"]
-position = Vector2(2891.25, 1690)
+position = Vector2(3125.5, 1690)
 shape = SubResource("RectangleShape2D_xxvuu")

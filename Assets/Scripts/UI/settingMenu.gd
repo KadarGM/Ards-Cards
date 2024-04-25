@@ -46,7 +46,7 @@ func load_data():
 		set_resolution(setting_data_resource.resolution, setting_data_resource.resolution_id)
 		set_ui_scale(setting_data_resource.scale_ui)
 		set_screen(setting_data_resource.screen_id)
-	print("loaded")
+	print("UI setting loaded!")
 
 func set_mode(fullscreen, borderless):
 	match fullscreen:
@@ -102,7 +102,7 @@ func set_screen(screen):
 
 func save_data():
 	ResourceSaver.save(setting_data_resource, save_setting_path + save_setting_name)
-	print("saved")
+	print("UI setting saved!")
 
 func check_variables():
 	var _window = get_window()
