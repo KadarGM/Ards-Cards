@@ -6,6 +6,7 @@ var is_searching = true
 var is_grave_active = false
 var is_deck_active = false
 var is_detailed = false
+var is_max_detailed = false
 var is_starting = false
 var can_dragging = true
 var is_dragging = false
@@ -94,7 +95,7 @@ func _process(_delta):
 			reorganize_showed_deck("player1")
 
 	if Input.is_action_just_pressed("e key"):
-		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false:
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false:
 			if p1_selected[0].slot_type == "hand":
 				var current_slots
 				var max_slots
@@ -119,7 +120,7 @@ func _process(_delta):
 			p1_selected[0].active_card.button_pressed = false
 
 	if Input.is_action_just_pressed("r key"):
-		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false:
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false:
 			is_searching = true
 			if p1_selected[0].slot_type != "hand" and p1_selected[0].slot_type != "grave" and p1_selected[0].slot_type != "deck":
 				p1_selected[0].change_slots_size()
@@ -207,6 +208,12 @@ func put(body): # Place a card into its corresponding slot based on its type.
 	await get_tree().create_timer(.3).timeout
 	body.release_searching_hand()
 	is_searching = true
+	#print("p1_dc_slots: ",p1_dc_slots)
+	#print("p1_g_slots: ",p1_g_slots)
+	#print("p1_a_slots: ",p1_a_slots)
+	#print("p1_ac_slots: ",p1_ac_slots)
+	#print("p1_d_slots: ",p1_d_slots)
+	#print("p1_ar_slots: ",p1_ar_slots)
 
 func slot_visible(player,cond):
 	var slot_type
