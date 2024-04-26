@@ -1,6 +1,11 @@
 [gd_resource type="Resource" script_class="DeckDataResource" load_steps=2 format=3 uid="uid://bh1lcvqj4vxub"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Decks/deckDataResource.gd" id="1_3eecg"]
+[ext_resource type="Script" path="res://Assets/Scripts/Deck/deckDataResource.gd" id="1_7y0n0"]
 
 [resource]
-script = ExtResource("1_3eecg")
+script = ExtResource("1_7y0n0")
+CARDS_IN_DECK = []
+deck_id = 0
+deck_name = "Test deck 1"
+max_cards = 60
+min_cards = 40
