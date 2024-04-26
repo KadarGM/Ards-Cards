@@ -10,6 +10,7 @@ var is_max_detailed = false
 var is_starting = false
 var can_dragging = true
 var is_dragging = false
+var players_turn
 
 #region Player 1 arrays
 var p1_selected = []
@@ -60,10 +61,9 @@ var p2_ac_slots = []
 var p2_d_slots = []
 var p2_ar_slots = []
 #endregion
-#endregion
-
 var P1_SLOT_TYPES_ARRAY = [p1_a_slots,p1_d_slots,p1_ar_slots,p1_ac_slots]
 var P2_SLOT_TYPES_ARRAY = [p2_a_slots,p2_d_slots,p2_ar_slots,p2_ac_slots]
+#endregion
 
 func reset(): # Reset all player-related variables to their initial states.
 
@@ -128,10 +128,79 @@ func reset(): # Reset all player-related variables to their initial states.
 #endregion
 
 func _process(_delta):
-	p1_process()
-	
+	if players_turn == "player1":
+		p1_process()
+	elif players_turn == "player2":
+		p2_process()
 
 func p1_process():
+	if Input.is_action_just_pressed("e key"):
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and p1_selected.size() > 0 and p1_selected[0].card_owner == "player1":
+			if p1_selected[0].slot_type == "hand":
+				var current_slots
+				var max_slots
+				if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 0:
+					current_slots = p1_attack.size()
+					max_slots = p1_a_slots.size()
+				if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 1:
+					current_slots = p1_defense.size()
+					max_slots = p1_d_slots.size()
+				if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 2:
+					current_slots = p1_artefact.size()
+					max_slots = p1_ar_slots.size()
+				if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 3:
+					current_slots = p1_action.size()
+					max_slots = p1_ac_slots.size()
+				if current_slots < max_slots:
+					put("player1",p1_selected[0])
+					p1_selected[0].use_button.visible = false 
+				else:
+					print("no_size")
+				p1_selected[0].change_slots_size()
+			p1_selected[0].active_card.button_pressed = false
+
+	if Input.is_action_just_pressed("r key"):
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and p1_selected.size() > 0 and p1_selected[0].card_owner == "player1":
+			is_searching = true
+			if p1_selected[0].slot_type != "hand" and p1_selected[0].slot_type != "grave" and p1_selected[0].slot_type != "deck":
+				p1_selected[0].change_slots_size()
+				p1_selected[0].active_card.button_pressed = false
+				destroy("player1",p1_selected[0])
+				
+			elif p1_selected[0].slot_type == "hand":
+				p1_graveyard.append(p1_selected[0])
+				p1_hand.remove_at(p1_selected[0].id_in_slot)
+				p1_selected[0].slot_type = "grave"
+				reorganize_hand("player1")
+				card_animation(p1_selected[0],"position", p1_g_slots[0].position)
+				p1_selected[0].z_index = p1_g_slots.size()
+				p1_selected[0].card_bg.visible = true
+				p1_selected[0].card_trans.visible = false
+		
+	if Input.is_action_just_pressed("g key"):
+		if is_starting == false and p1_graveyard.size() > 0 and is_dragging == false and is_deck_active == false:
+			if is_detailed == true:
+				is_searching = true
+			if is_grave_active == false:
+				show_grave("player1")
+				is_grave_active = true
+				reorganize_showed_grave("player1")
+			elif is_grave_active == true:
+				hide_grave("player1")
+				is_grave_active = false
+
+	if Input.is_action_just_pressed("d key"):
+		if is_starting == false and p1_deck.size() > 0 and is_dragging == false and is_grave_active == false:
+			if is_detailed == true:
+				is_searching = true
+			if is_deck_active == false:
+				show_deck("player1")
+				is_deck_active = true
+				reorganize_showed_deck("player1")
+			elif is_deck_active == true:
+				hide_deck("player1")
+				is_deck_active = false
+
 	if p1_selected.size() > 0 and p1_selected[0].card_owner == "player1":
 		if p1_selected[0].slot_type == "grave":
 			if is_grave_active == true:
@@ -149,72 +218,90 @@ func p1_process():
 			if is_deck_active == false:
 				reorganize_showed_deck("player1")
 
-		if Input.is_action_just_pressed("e key"):
-			if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false:
-				if p1_selected[0].slot_type == "hand":
-					var current_slots
-					var max_slots
-					if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 0:
-						current_slots = p1_attack.size()
-						max_slots = p1_a_slots.size()
-					if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 1:
-						current_slots = p1_defense.size()
-						max_slots = p1_d_slots.size()
-					if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 2:
-						current_slots = p1_artefact.size()
-						max_slots = p1_ar_slots.size()
-					if p1_selected[0].CARDS_LIST[p1_selected[0].id].type == 3:
-						current_slots = p1_action.size()
-						max_slots = p1_ac_slots.size()
-					if current_slots < max_slots:
-						put("player1",p1_selected[0])
-						p1_selected[0].use_button.visible = false 
-					else:
-						print("no_size")
-					p1_selected[0].change_slots_size()
-				p1_selected[0].active_card.button_pressed = false
+func p2_process():
+	if Input.is_action_just_pressed("e key"):
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and p2_selected.size() > 0 and p2_selected[0].card_owner == "player2":
+			if p2_selected[0].slot_type == "hand":
+				var current_slots
+				var max_slots
+				if p2_selected[0].CARDS_LIST[p2_selected[0].id].type == 0:
+					current_slots = p2_attack.size()
+					max_slots = p2_a_slots.size()
+				if p2_selected[0].CARDS_LIST[p2_selected[0].id].type == 1:
+					current_slots = p2_defense.size()
+					max_slots = p2_d_slots.size()
+				if p2_selected[0].CARDS_LIST[p2_selected[0].id].type == 2:
+					current_slots = p2_artefact.size()
+					max_slots = p2_ar_slots.size()
+				if p2_selected[0].CARDS_LIST[p2_selected[0].id].type == 3:
+					current_slots = p2_action.size()
+					max_slots = p2_ac_slots.size()
+				if current_slots < max_slots:
+					put("player2",p2_selected[0])
+					p2_selected[0].use_button.visible = false 
+				else:
+					print("no_size")
+				p2_selected[0].change_slots_size()
+			p2_selected[0].active_card.button_pressed = false
 
-		if Input.is_action_just_pressed("r key"):
-			if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false:
+	if Input.is_action_just_pressed("r key"):
+		if is_starting == false and is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and p2_selected.size() > 0 and p2_selected[0].card_owner == "player2":
+			is_searching = true
+			if p2_selected[0].slot_type != "hand" and p2_selected[0].slot_type != "grave" and p2_selected[0].slot_type != "deck":
+				p2_selected[0].change_slots_size()
+				p2_selected[0].active_card.button_pressed = false
+				destroy("player2",p2_selected[0])
+				
+			elif p2_selected[0].slot_type == "hand":
+				p2_graveyard.append(p2_selected[0])
+				p2_hand.remove_at(p2_selected[0].id_in_slot)
+				p2_selected[0].slot_type = "grave"
+				reorganize_hand("player2")
+				card_animation(p2_selected[0],"position", p2_g_slots[0].position)
+				p2_selected[0].z_index = p2_g_slots.size()
+				p2_selected[0].card_bg.visible = true
+				p2_selected[0].card_trans.visible = false
+		
+	if Input.is_action_just_pressed("g key"):
+		if is_starting == false and p2_graveyard.size() > 0 and is_dragging == false and is_deck_active == false:
+			if is_detailed == true:
 				is_searching = true
-				if p1_selected[0].slot_type != "hand" and p1_selected[0].slot_type != "grave" and p1_selected[0].slot_type != "deck":
-					p1_selected[0].change_slots_size()
-					p1_selected[0].active_card.button_pressed = false
-					destroy("player1",p1_selected[0])
-					
-				elif p1_selected[0].slot_type == "hand":
-					p1_graveyard.append(p1_selected[0])
-					p1_hand.remove_at(p1_selected[0].id_in_slot)
-					p1_selected[0].slot_type = "grave"
-					reorganize_hand("player1")
-					card_animation(p1_selected[0],"position", p1_g_slots[0].position)
-					p1_selected[0].z_index = p1_g_slots.size()
-					p1_selected[0].card_bg.visible = true
-					p1_selected[0].card_trans.visible = false
-			
-		if Input.is_action_just_pressed("g key"):
-			if is_starting == false and p1_graveyard.size() > 0 and is_dragging == false and is_deck_active == false:
-				if is_detailed == true:
-					is_searching = true
-				if is_grave_active == false:
-					show_grave("player1")
-					is_grave_active = true
-					reorganize_showed_grave("player1")
-				elif is_grave_active == true:
-					hide_grave("player1")
-					is_grave_active = false
+			if is_grave_active == false:
+				show_grave("player2")
+				is_grave_active = true
+				reorganize_showed_grave("player2")
+			elif is_grave_active == true:
+				hide_grave("player2")
+				is_grave_active = false
 
-		if Input.is_action_just_pressed("d key"):
-			if is_starting == false and p1_deck.size() > 0 and is_dragging == false and is_grave_active == false:
-				if is_detailed == true:
-					is_searching = true
-				if is_deck_active == false:
-					show_deck("player1")
-					is_deck_active = true
-					reorganize_showed_deck("player1")
-				elif is_deck_active == true:
-					hide_deck("player1")
-					is_deck_active = false
+	if Input.is_action_just_pressed("d key"):
+		if is_starting == false and p2_deck.size() > 0 and is_dragging == false and is_grave_active == false:
+			if is_detailed == true:
+				is_searching = true
+			if is_deck_active == false:
+				show_deck("player2")
+				is_deck_active = true
+				reorganize_showed_deck("player2")
+			elif is_deck_active == true:
+				hide_deck("player2")
+				is_deck_active = false
+
+	if p2_selected.size() > 0 and p2_selected[0].card_owner == "player2":
+		if p2_selected[0].slot_type == "grave":
+			if is_grave_active == true:
+				for i in range(p2_graveyard.size()):
+					p2_graveyard[i].z_index = i + 5
+				p2_selected[0].z_index = p2_graveyard.size() + 4
+			if is_grave_active == false:
+				reorganize_showed_grave("player2")
+
+		if p2_selected[0].slot_type == "deck":
+			if is_grave_active == true:
+				for i in range(p2_deck.size()):
+					p2_deck[i].z_index = i + 5
+				p2_selected[0].z_index = p2_deck.size() + 4
+			if is_deck_active == false:
+				reorganize_showed_deck("player2")
 
 func put(player,body): # Place a card into its corresponding slot based on its type.
 	var card_body = body
@@ -229,7 +316,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p1_a_slots[i].is_empty = 0
 					card_animation(card_body, "position",p1_a_slots[i].position)
 					break
-		if card_body.CARDS_LIST[body.id].type == 1:
+		elif card_body.CARDS_LIST[body.id].type == 1:
 			for i in range(p1_d_slots.size()):
 				if p1_d_slots[i].is_empty == 1:
 					card_body.slot_type = "p1_defense"
@@ -239,7 +326,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p1_d_slots[i].is_empty = 0
 					card_animation(card_body, "position", p1_d_slots[i].position)
 					break
-		if card_body.CARDS_LIST[body.id].type == 2:
+		elif card_body.CARDS_LIST[body.id].type == 2:
 			for i in range(p1_ar_slots.size()):
 				if p1_ar_slots[i].is_empty == 1:
 					card_body.slot_type = "p1_artefact"
@@ -249,7 +336,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p1_ar_slots[i].is_empty = 0
 					card_animation(card_body, "position", p1_ar_slots[i].position)
 					break
-		if card_body.CARDS_LIST[body.id].type == 3:
+		elif card_body.CARDS_LIST[body.id].type == 3:
 			for i in range(p1_ac_slots.size()):
 				if p1_ac_slots[i].is_empty == 1:
 					card_body.slot_type = "p1_action"
@@ -259,7 +346,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p1_ac_slots[i].is_empty = 0
 					card_animation(card_body, "position", p1_ac_slots[i].position)
 					break
-		if p1_hand.size() > 0:
+		elif p1_hand.size() > 0:
 			reorganize_hand("player1")
 		await get_tree().create_timer(.3).timeout
 		body.release_searching_hand("player1") 
@@ -275,7 +362,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p2_a_slots[i].is_empty = 0
 					card_animation(card_body, "position",p2_a_slots[i].position)
 					break
-		if card_body.CARDS_LIST[body.id].type == 1:
+		elif card_body.CARDS_LIST[body.id].type == 1:
 			for i in range(p2_d_slots.size()):
 				if p2_d_slots[i].is_empty == 1:
 					card_body.slot_type = "p2_defense"
@@ -285,7 +372,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p2_d_slots[i].is_empty = 0
 					card_animation(card_body, "position", p2_d_slots[i].position)
 					break
-		if card_body.CARDS_LIST[body.id].type == 2:
+		elif card_body.CARDS_LIST[body.id].type == 2:
 			for i in range(p2_ar_slots.size()):
 				if p2_ar_slots[i].is_empty == 1:
 					card_body.slot_type = "p2_artefact"
@@ -295,7 +382,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p2_ar_slots[i].is_empty = 0
 					card_animation(card_body, "position", p2_ar_slots[i].position)
 					break
-		if card_body.CARDS_LIST[body.id].type == 3:
+		elif card_body.CARDS_LIST[body.id].type == 3:
 			for i in range(p2_ac_slots.size()):
 				if p2_ac_slots[i].is_empty == 1:
 					card_body.slot_type = "p2_action"
@@ -305,7 +392,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					p2_ac_slots[i].is_empty = 0
 					card_animation(card_body, "position", p2_ac_slots[i].position)
 					break
-		if p2_hand.size() > 0:
+		elif p2_hand.size() > 0:
 			reorganize_hand("player2")
 		await get_tree().create_timer(.3).timeout
 		body.release_searching_hand("player2")
@@ -517,29 +604,29 @@ func show_deck(player): # Show the deck for a player.
 func reorganize_showed_grave(player): # Reorganize the displayed graveyard for a player.
 	if player == "player1":
 		for c in range(p1_graveyard.size()):
-			p1_graveyard[c].z_index = c + 5
-			p1_graveyard[c].release_searching_hand()
+			p1_graveyard[c].z_index = c + 11
+			p1_graveyard[c].release_searching_hand("player1")
 	if player == "player2":
 		for c in range(p2_graveyard.size()):
-			p2_graveyard[c].z_index = c + 5
-			p2_graveyard[c].release_searching_hand()
+			p2_graveyard[c].z_index = c + 11
+			p2_graveyard[c].release_searching_hand("player2")
 
 func reorganize_showed_deck(player): # Reorganize the displayed graveyard for a player.
 	if player == "player1":
 		for c in range(p1_deck.size()):
-			p1_deck[c].z_index = 5
+			p1_deck[c].z_index = 11
 			p1_deck[c].top_level = true
-			p1_deck[c].release_searching_hand()
+			p1_deck[c].release_searching_hand("player1")
 	if player == "player2":
 		for c in range(p2_deck.size()):
-			p2_deck[c].z_index = 5
+			p2_deck[c].z_index = 11
 			p2_deck[c].top_level = true
-			p2_deck[c].release_searching_hand()
+			p2_deck[c].release_searching_hand("player2")
 
 func hide_grave(player): # Hide the graveyard for a player.
 	if player == "player1":
 		for i in range(p1_graveyard.size()):
-			p1_graveyard[i].release_searching_hand()
+			p1_graveyard[i].release_searching_hand("player1")
 			p1_graveyard[i].card_bg.visible = true
 			p1_graveyard[i].card_trans.visible = false
 			p1_graveyard[i].active_card.visible = false
@@ -547,7 +634,7 @@ func hide_grave(player): # Hide the graveyard for a player.
 			await get_tree().create_timer(0.01).timeout
 	if player == "player2":
 		for i in range(p2_graveyard.size()):
-			p2_graveyard[i].release_searching_hand()
+			p2_graveyard[i].release_searching_hand("player2")
 			p2_graveyard[i].card_bg.visible = true
 			p2_graveyard[i].card_trans.visible = false
 			p2_graveyard[i].active_card.visible = false
@@ -557,7 +644,7 @@ func hide_grave(player): # Hide the graveyard for a player.
 func hide_deck(player): # Hide the graveyard for a player.
 	if player == "player1":
 		for i in range(p1_deck.size()):
-			p1_deck[i].release_searching_hand()
+			p1_deck[i].release_searching_hand("player1")
 			p1_deck[i].card_bg.visible = true
 			p1_deck[i].card_trans.visible = false
 			p1_deck[i].active_card.visible = false
@@ -565,7 +652,7 @@ func hide_deck(player): # Hide the graveyard for a player.
 			await get_tree().create_timer(0.01).timeout
 	if player == "player2":
 		for i in range(p2_deck.size()):
-			p2_deck[i].release_searching_hand()
+			p2_deck[i].release_searching_hand("player2")
 			p2_deck[i].card_bg.visible = true
 			p2_deck[i].card_trans.visible = false
 			p2_deck[i].active_card.visible = false

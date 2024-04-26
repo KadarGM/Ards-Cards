@@ -15,7 +15,7 @@ var slot_holder
 #endregion
 
 func _ready():
-	#who_start()
+	who_start()
 	on_start_game("player1")
 	on_start_game("player2")
 
@@ -23,14 +23,10 @@ func who_start():
 	var num
 	num = randi_range(1,2)
 	if num == 1:
-		#on_start_game("player1")
-		#await get_tree().create_timer(1.0).timeout
-		#on_start_game("player2")
+		game_data_manager.players_turn = "player1"
 		pass
 	if num == 2:
-		#on_start_game("player2")
-		#await get_tree().create_timer(1.0).timeout
-		#on_start_game("player1")
+		game_data_manager.players_turn = "player2"
 		pass
 
 func on_start_game(player):
@@ -53,20 +49,19 @@ func on_start_game(player):
 func _process(_delta):
 	p1_process()
 	p2_process()
-	
 
 func p1_process():
 	#create_slot_counter("player1")
 	if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false:
 		if game_data_manager.p1_hand.size() < 8:
 			if Input.is_action_just_pressed("space key"):
-				draw_card("player1",1)
+				draw_card(game_data_manager.players_turn,1)
 				await get_tree().create_timer(.5).timeout
 	if game_data_manager.p1_graveyard.size() > 0 or game_data_manager.p1_deck.size() > 0:
 		if game_data_manager.is_grave_active == true or game_data_manager.is_deck_active == true:
 			game_data_manager.can_dragging = false
 			await get_tree().create_timer(.1).timeout
-			card_barier.z_index = 3
+			card_barier.z_index = 10
 			card_barier.visible = true
 		if game_data_manager.is_grave_active == false or game_data_manager.is_deck_active == false:
 			game_data_manager.can_dragging = true
@@ -271,3 +266,11 @@ func organize(player,type,body,n): # Organizes the positions of slots based on t
 		if type == "deck":
 			body.position.x = 220
 			body.position.y = 825
+
+
+func _on_next_turn_button_pressed():
+	if game_data_manager.players_turn == "player1":
+		game_data_manager.players_turn = "player2"
+	elif game_data_manager.players_turn == "player2":
+		game_data_manager.players_turn = "player1"
+	print(game_data_manager.players_turn)

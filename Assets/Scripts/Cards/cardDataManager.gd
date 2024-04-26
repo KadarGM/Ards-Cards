@@ -76,7 +76,6 @@ const RACE_TEXT_COLOR : Dictionary = {
 @onready var attack_rect = $cardTrans/CardStats/LeftContainer/GridContainer/AttackRect
 @onready var type_rect = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect
 @onready var type_sprite = $cardTrans/CardStats/LeftContainer/GridContainer/TypeRect/TypeSprite
-
 @onready var select_color = $cardTrans/SelectColor
 @onready var ready_color = $cardTrans/ReadyColor
 @onready var destroy_color = $cardTrans/DestroyColor
@@ -217,11 +216,11 @@ func select_card_in_slot(player):
 			elif card.slot_type == "p1_action":
 				selected_slot = game_data_manager.p1_ac_selected
 				selected_type = game_data_manager.p1_action
-			selected_type[card.id_in_slot].select_color.visible = true
-			card.is_selected = true
 			selected_slot.append(selected_type[card.id_in_slot])
 			for i in range(selected_slot.size()):
 				selected_slot[i].selected_id = i
+			selected_slot[card.selected_id].select_color.visible = true
+			card.is_selected = true
 	if player == "player2":
 		var card = game_data_manager.p2_selected[0]
 		var selected_slot
@@ -239,11 +238,11 @@ func select_card_in_slot(player):
 			elif card.slot_type == "p2_action":
 				selected_slot = game_data_manager.p2_ac_selected
 				selected_type = game_data_manager.p2_action
-			selected_type[card.id_in_slot].select_color.visible = true
-			card.is_selected = true
 			selected_slot.append(selected_type[card.id_in_slot])
 			for i in range(selected_slot.size()):
 				selected_slot[i].selected_id = i
+			selected_slot[card.selected_id].select_color.visible = true
+			card.is_selected = true
 
 func deselect_card_in_slot(player):
 	if player == "player1":
@@ -341,24 +340,43 @@ func card_animation(body,parametr,how_many, time):
 
 func _on_active_card_mouse_entered(): # Handles mouse entering the active card area.
 	is_on_card = true
-	#var card_owner = game_data_manager.p1_selected.card_owner
-	if game_data_manager.is_dragging == false:
-		game_data_manager.p1_selected = []
-		game_data_manager.p1_selected.append(self)
-		draggable = true
-	if game_data_manager.is_searching == true:
-		searching_hand("player1")
-		self.top_level = true
-
+	if game_data_manager.players_turn == "player1":
+		#if game_data_manager.p1_selected[0].card_owner == "player1":
+			if game_data_manager.is_dragging == false:
+				game_data_manager.p1_selected = []
+				game_data_manager.p1_selected.append(self)
+				draggable = true
+			if game_data_manager.is_searching == true:
+				searching_hand("player1")
+				self.top_level = true
+	if game_data_manager.players_turn == "player2":
+		#if game_data_manager.p2_selected[0].card_owner == "player2":
+			if game_data_manager.is_dragging == false:
+				game_data_manager.p2_selected = []
+				game_data_manager.p2_selected.append(self)
+				draggable = true
+			if game_data_manager.is_searching == true:
+				searching_hand("player2")
+				self.top_level = true
+	
 func _on_active_card_mouse_exited(): # Handles mouse exiting the active card area.
 	is_on_card = false
-	game_data_manager.p1_selected[0].name_label.visible = false
-	if game_data_manager.is_dragging == false:
-		game_data_manager.p1_selected = []
-		draggable = false
-	if game_data_manager.is_searching == true:
-		release_searching_hand("player1")
-		self.top_level = false
+	if game_data_manager.players_turn == "player1":
+		game_data_manager.p1_selected[0].name_label.visible = false
+		if game_data_manager.is_dragging == false:
+			game_data_manager.p1_selected = []
+			draggable = false
+		if game_data_manager.is_searching == true:
+			release_searching_hand("player1")
+			self.top_level = false
+	if game_data_manager.players_turn == "player2":
+		game_data_manager.p2_selected[0].name_label.visible = false
+		if game_data_manager.is_dragging == false:
+			game_data_manager.p2_selected = []
+			draggable = false
+		if game_data_manager.is_searching == true:
+			release_searching_hand("player2")
+			self.top_level = false
 
 func _on_drag_area_body_entered(body):
 	if body.is_in_group('dropable'):
@@ -369,18 +387,23 @@ func _on_drag_area_body_exited(body):
 		is_inside_drop = false
 
 func if_dragged_release():
-	game_data_manager.slot_visible("player1",false)
+	game_data_manager.slot_visible(game_data_manager.players_turn,false)
 	await get_tree().create_timer(.05).timeout
 	if self.is_on_card == false:
-		release_searching_hand("player1")
+		release_searching_hand(game_data_manager.players_turn)
 		game_data_manager.is_searching = true
 	if self.is_on_card == true:
 		game_data_manager.is_searching = true
 
 func _process(_delta):
-	if game_data_manager.is_starting == false and game_data_manager.p1_selected.size() > 0:
-		if game_data_manager.p1_selected[0].card_owner == "player1":
-			if game_data_manager.p1_selected.size() > 0 and game_data_manager.p1_selected[0].slot_type != "hand":
+	if game_data_manager.is_starting == false:
+		if game_data_manager.players_turn == "player1":
+			if (game_data_manager.p1_selected.size() > 0 and 
+			game_data_manager.p1_selected[0].slot_type != "hand" and 
+			game_data_manager.p1_selected[0].slot_type != "deck" and
+			game_data_manager.p1_selected[0].slot_type != "grave" and
+			game_data_manager.is_grave_active == false and
+			game_data_manager.is_deck_active == false):
 					if game_data_manager.p1_selected[0].can_desselect == false:
 						if Input.is_action_just_pressed("left click"):
 							select_card_in_slot("player1")
@@ -439,5 +462,68 @@ func _process(_delta):
 					else:
 						card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .2)
 						if_dragged_release()
-			if game_data_manager.p1_selected[0].card_owner == "player2":
-				pass
+		if game_data_manager.players_turn == "player2":
+			if (game_data_manager.p2_selected.size() > 0 and 
+			game_data_manager.p2_selected[0].slot_type != "hand" and 
+			game_data_manager.p2_selected[0].slot_type != "deck" and
+			game_data_manager.p2_selected[0].slot_type != "grave" and
+			game_data_manager.is_grave_active == false and
+			game_data_manager.is_deck_active == false):
+					if game_data_manager.p2_selected[0].can_desselect == false:
+						if Input.is_action_just_pressed("left click"):
+							select_card_in_slot("player2")
+							await get_tree().create_timer(.1).timeout
+							game_data_manager.p2_selected[0].can_desselect = true
+					if game_data_manager.p2_selected[0].can_desselect == true:
+						if Input.is_action_just_pressed("left click"):
+							deselect_card_in_slot("player2")
+							await get_tree().create_timer(.1).timeout
+							game_data_manager.p2_selected[0].can_desselect = false
+			if game_data_manager.is_detailed == true and is_on_card == true: #and game_data_manager.is_dragging == false:
+				if Input.is_action_pressed("right click"):
+					game_data_manager.is_max_detailed = true
+					card_animation(game_data_manager.p2_selected[0].card_trans,"scale",Vector2(max_card_scale,max_card_scale), .5)
+					card_animation(game_data_manager.p2_selected[0].card_stats,"scale",Vector2(1.2,1.2), .5)
+					game_data_manager.p2_selected[0].name_label.visible = true
+				elif Input.is_action_just_released("right click"):
+					game_data_manager.is_max_detailed = false
+					card_animation(game_data_manager.p2_selected[0].card_trans,"scale",Vector2(detailed_scale,detailed_scale), .5)
+					card_animation(game_data_manager.p2_selected[0].card_stats,"scale",Vector2(1.6,1.6), .5)
+					game_data_manager.p2_selected[0].name_label.visible = false
+			if draggable == true and game_data_manager.p2_selected.size() > 0 and game_data_manager.p2_selected[0].slot_type == "hand" and game_data_manager.can_dragging == true:
+				if Input.is_action_just_pressed("left click"):
+					init_pos = game_data_manager.p2_selected[0].global_position
+					offset = get_global_mouse_position() - game_data_manager.p2_selected[0].global_position
+					game_data_manager.is_dragging = true
+					game_data_manager.slot_visible("player2",true)
+					game_data_manager.is_searching = false
+					
+				if Input.is_action_pressed("left click"):
+					game_data_manager.p2_selected[0].global_position = get_global_mouse_position() - offset
+				elif Input.is_action_just_released("left click"):
+					game_data_manager.is_dragging = false
+					if is_inside_drop == true:
+						var current_slots
+						var max_slots
+						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 0:
+							current_slots = game_data_manager.p2_attack.size()
+							max_slots = game_data_manager.p2_a_slots.size()
+						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 1:
+							current_slots = game_data_manager.p2_defense.size()
+							max_slots = game_data_manager.p2_d_slots.size()
+						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 2:
+							current_slots = game_data_manager.p2_artefact.size()
+							max_slots = game_data_manager.p2_ar_slots.size()
+						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 3:
+							current_slots = game_data_manager.p2_action.size()
+							max_slots = game_data_manager.p2_ac_slots.size()
+						if current_slots < max_slots:
+							game_data_manager.put("player2",game_data_manager.p2_selected[0])
+						else:
+							card_animation(game_data_manager.p2_selected[0],"global_position",init_pos, .2)
+							if_dragged_release()
+						change_slots_size()
+						if_dragged_release()
+					else:
+						card_animation(game_data_manager.p2_selected[0],"global_position",init_pos, .2)
+						if_dragged_release()

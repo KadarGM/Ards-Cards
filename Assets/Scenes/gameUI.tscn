@@ -1,7 +1,8 @@
-[gd_scene load_steps=36 format=3 uid="uid://drmp5mnwikfmw"]
+[gd_scene load_steps=37 format=3 uid="uid://drmp5mnwikfmw"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/UI/gameUI.gd" id="1_yeg5d"]
 [ext_resource type="Script" path="res://Assets/Scripts/UI/gameMenuUi.gd" id="2_8yvab"]
+[ext_resource type="FontFile" uid="uid://h8cq4acmo5w3" path="res://Assets/Graphics/Font/gomarice_no_continue.ttf" id="2_c3dxt"]
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="3_jkx2r"]
 [ext_resource type="Texture2D" uid="uid://co8nefdkfchwg" path="res://Assets/Graphics/UI/setting_icon.png" id="3_kclm8"]
 
@@ -218,8 +219,8 @@ Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
 Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
-Button/font_sizes/font_size = 48
-Button/fonts/font = ExtResource("3_jkx2r")
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("2_c3dxt")
 Button/styles/disabled = SubResource("StyleBoxFlat_k01dd")
 Button/styles/focus = SubResource("StyleBoxFlat_bhywg")
 Button/styles/hover = SubResource("StyleBoxFlat_ha8du")
