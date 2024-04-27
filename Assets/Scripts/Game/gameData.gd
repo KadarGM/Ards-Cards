@@ -7,6 +7,53 @@ const SLOT = preload("res://Assets/Scenes/slot.tscn")
 var game_data_manager = GameDataManager
 var deck = DeckDataResource
 
+const TYPE_ARRAY = [
+	"attack",
+	"defense",
+	"artefacts",
+	"action",
+	"grave",
+	"deck",
+	]
+const TYPE_COUNT = [4,4,2,1,1,1]
+#var P1_SLOT_TYPE = [
+	#game_data_manager.p1_a_slots,
+	#game_data_manager.p1_d_slots,
+	#game_data_manager.p1_ar_slots,
+	#game_data_manager.p1_ac_slots,
+	#game_data_manager.p1_g_slots,
+	#game_data_manager.p1_dc_slots
+	#]
+#var P2_SLOT_TYPE = [
+	#game_data_manager.p2_a_slots,
+	#game_data_manager.p2_d_slots,
+	#game_data_manager.p2_ar_slots,
+	#game_data_manager.p2_ac_slots,
+	#game_data_manager.p2_g_slots,
+	#game_data_manager.p2_dc_slots
+	#]
+#var P1_ARRAYS_ARRAY = [
+	#game_data_manager.p1_attack,
+	#game_data_manager.p1_defense,
+	#game_data_manager.p1_artefact,
+	#game_data_manager.p1_action,
+	#game_data_manager.p1_graveyard,
+	#game_data_manager.p1_deck,
+	#game_data_manager.p1_hand
+	#]
+#var P2_ARRAYS_ARRAY = [
+	#game_data_manager.p2_attack,
+	#game_data_manager.p2_defense,
+	#game_data_manager.p2_artefact,
+	#game_data_manager.p2_action,
+	#game_data_manager.p2_graveyard,
+	#game_data_manager.p2_deck,
+	#game_data_manager.p2_hand
+	#]
+
+#var deck_array
+#var hand_array
+
 @onready var card_barier = $CardBarier
 
 # Holders
@@ -15,9 +62,16 @@ var slot_holder
 #endregion
 
 func _ready():
+	generate_slots("player1")
+	generate_slots("player2")
+	print("Slots were generated!")
+	create_deck("player1",60,game_data_manager.p1_dc_slots,game_data_manager.p1_deck)
+	create_deck("player2",60,game_data_manager.p2_dc_slots,game_data_manager.p2_deck)
+	print("Decks were created!")
 	who_start()
-	on_start_game("player1")
-	on_start_game("player2")
+	on_start_game("player1",game_data_manager.p1_deck,game_data_manager.p1_hand)
+	on_start_game("player2",game_data_manager.p2_deck,game_data_manager.p2_hand)
+	print("Game is ready!")
 
 func who_start():
 	var num
@@ -29,58 +83,40 @@ func who_start():
 		game_data_manager.players_turn = "player2"
 		pass
 
-func on_start_game(player):
+func generate_slots(player):
+	node_holders()
+	for i in range(TYPE_ARRAY.size()):
+		create_slot(player,TYPE_ARRAY[i],TYPE_COUNT[i])
+
+func on_start_game(player, deck_array, hand_array):
 	card_barier.visible = false
 	game_data_manager.is_starting = true
-	node_holders()
-	create_slot(player,"grave",1)
-	create_slot(player,"deck",1)
-	create_slot(player,"action",1)
-	create_slot(player,"artefact",2)
-	create_slot(player,"attack",4)
-	create_slot(player,"defense",4)
-	create_deck(player,60)
 	for c in range(8):
 		await get_tree().create_timer(.5).timeout
-		draw_card(player,1)
+		draw_card(player,1,deck_array,hand_array)
 	await get_tree().create_timer(1.0).timeout
 	game_data_manager.is_starting = false
 
 func _process(_delta):
-	p1_process()
-	p2_process()
+	if game_data_manager.players_turn == "player1":
+		game_process(game_data_manager.players_turn,game_data_manager.p1_deck,game_data_manager.p1_hand,game_data_manager.p1_graveyard)
+	elif game_data_manager.players_turn == "player2":
+		game_process(game_data_manager.players_turn,game_data_manager.p2_deck,game_data_manager.p2_hand,game_data_manager.p2_graveyard)
+	else:
+		print("This does not work: _process error!")
 
-func p1_process():
-	#create_slot_counter("player1")
+func game_process(player, deck_array, hand_array,grave_array):
 	if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false:
-		if game_data_manager.p1_hand.size() < 8:
+		if hand_array.size() < 8:
 			if Input.is_action_just_pressed("space key"):
-				draw_card(game_data_manager.players_turn,1)
-				await get_tree().create_timer(.5).timeout
-	if game_data_manager.p1_graveyard.size() > 0 or game_data_manager.p1_deck.size() > 0:
+				await get_tree().create_timer(.2).timeout
+				draw_card(player,1,deck_array,hand_array)
+				await get_tree().create_timer(.2).timeout
+	if grave_array.size() > 0 or deck_array.size() > 0:
 		if game_data_manager.is_grave_active == true or game_data_manager.is_deck_active == true:
 			game_data_manager.can_dragging = false
 			await get_tree().create_timer(.1).timeout
 			card_barier.z_index = 10
-			card_barier.visible = true
-		if game_data_manager.is_grave_active == false or game_data_manager.is_deck_active == false:
-			game_data_manager.can_dragging = true
-			await get_tree().create_timer(.1).timeout
-			card_barier.z_index = -1
-			card_barier.visible = false
-
-func p2_process():
-	#create_slot_counter("player2")
-	if game_data_manager.is_starting == false and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false:
-		if game_data_manager.p2_hand.size() < 8:
-			if Input.is_action_just_pressed("space key"):
-				draw_card("player2",1)
-				await get_tree().create_timer(.5).timeout
-	if game_data_manager.p2_graveyard.size() > 0 or game_data_manager.p2_deck.size() > 0:
-		if game_data_manager.is_grave_active == true or game_data_manager.is_deck_active == true:
-			game_data_manager.can_dragging = false
-			await get_tree().create_timer(.1).timeout
-			card_barier.z_index = 3
 			card_barier.visible = true
 		if game_data_manager.is_grave_active == false or game_data_manager.is_deck_active == false:
 			game_data_manager.can_dragging = true
@@ -96,124 +132,86 @@ func node_holders(): # Creates the necessary node holders for cards and slots.
 	add_child(slot_holder,true)
 	add_child(card_holder,true)
 
-func draw_card(player, num): # Draws cards from the deck to the player's hand.
-	if player == "player1":
-		if game_data_manager.p1_deck.size() > 0 and game_data_manager.is_dragging == false:
-			for c in range(num):
-				var clone = game_data_manager.p1_deck[c]
-				clone.id_in_slot = c
-				clone.slot_type = "hand"
-				game_data_manager.p1_hand.append(clone)
-				game_data_manager.p1_deck.remove_at(c)
-				clone.card_bg.visible = false
-				clone.card_trans.visible = true
-				clone.active_card.visible = true
-				from_deck_to_hand_anim("player1",clone,c)
-			await  get_tree().create_timer(.2).timeout
-			game_data_manager.reorganize_hand("player1")
-	if player == "player2":
-		if game_data_manager.p2_deck.size() > 0 and game_data_manager.is_dragging == false:
-			for c in range(num):
-				var clone = game_data_manager.p2_deck[c]
-				clone.id_in_slot = c
-				clone.slot_type = "hand"
-				game_data_manager.p2_hand.append(clone)
-				game_data_manager.p2_deck.remove_at(c)
-				clone.card_bg.visible = false
-				clone.card_trans.visible = true
-				clone.active_card.visible = true
-				from_deck_to_hand_anim("player2",clone,c)
-			await  get_tree().create_timer(.2).timeout
-			game_data_manager.reorganize_hand("player2")
+func draw_card(player, num, deck_array, hand_array): # Draws cards from the deck to the player's hand.
+	if deck_array.size() > 0 and game_data_manager.is_dragging == false:
+		for c in range(num):
+			var deck_clone = deck_array[c]
+			deck_clone.id_in_slot = c
+			deck_clone.slot_type = "hand"
+			hand_array.append(deck_clone)
+			deck_array.remove_at(c)
+			deck_clone.card_bg.visible = false
+			deck_clone.card_trans.visible = true
+			deck_clone.active_card.visible = true
+			from_deck_to_hand_anim(player,deck_clone,c)
+		await  get_tree().create_timer(.2).timeout
+		game_data_manager.reorganize_hand(player)
 
-func from_deck_to_hand_anim(player,clone,c): # Animates the transition of cards from the deck to the player's hand.
+func from_deck_to_hand_anim(player,clone,c): # Animates the transition of cards from the deck to the player's hand.,
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
+	var card_spacing = 150
+	var start_x = 1920
+	var start_y
 	if player == "player1":
-		var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
-		var card_spacing = 150
-		var start_x = 1920
 		clone.position.x = 3600
 		clone.position.y = 1300
-		tween.tween_property(clone, "position:x", start_x - (card_spacing * c), .5)
-		tween.tween_property(clone, "position:y", 1800, .5)
-	if player == "player2":
-		var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
-		var card_spacing = 150
-		var start_x = 1920
+		start_y = 1800
+	elif player == "player2":
 		clone.position.x = 220
 		clone.position.y = 825
-		tween.tween_property(clone, "position:x", start_x - (card_spacing * c), .5)
-		tween.tween_property(clone, "position:y", 300, .5)
+		start_y = 300
+	tween.tween_property(clone, "position:x", start_x - (card_spacing * c), .5)
+	tween.tween_property(clone, "position:y", start_y, .5)
 
-func create_deck(player,num): # Creates the player's deck with a specified number of cards.
-	if player == "player1":
-		for c in num:
-			var clone = CARD.instantiate()
-			clone.id = randi_range(0,3)
-			clone.id_in_slot = c
-			clone.slot_type = "deck"
-			clone.card_owner = "player1"
-			clone.position = game_data_manager.p1_dc_slots[0].position
-			game_data_manager.p1_deck.append(clone)
-			card_holder.add_child(clone,true)
-			clone.card_bg.visible = true
-			clone.card_trans.visible = false
-			clone.active_card.visible = false
-	if player == "player2":
-		for c in num:
-			var clone = CARD.instantiate()
-			clone.id = randi_range(0,3)
-			clone.id_in_slot = c
-			clone.slot_type = "deck"
-			clone.card_owner = "player2"
-			clone.position = game_data_manager.p2_dc_slots[0].position
-			game_data_manager.p2_deck.append(clone)
-			card_holder.add_child(clone,true)
-			clone.card_bg.visible = true
-			clone.card_trans.visible = false
-			clone.active_card.visible = false
+func create_deck(player,num, deck_slot, deck_array): # Creates the player's deck with a specified number of cards.
+	for c in num:
+		var clone = CARD.instantiate()
+		clone.id = randi_range(0,3)
+		clone.id_in_slot = c
+		clone.slot_type = "deck"
+		clone.card_owner = player
+		clone.position = deck_slot[0].position
+		deck_array.append(clone)
+		card_holder.add_child(clone,true)
+		clone.card_bg.visible = true
+		clone.card_trans.visible = false
+		clone.active_card.visible = false
 
 func create_slot(player,type,num): # Creates slots for different purposes (e.g., attack, defense, etc.) for the player.
 	var slot_type
 	if player == "player1":
 		if type == "attack":
 			slot_type = game_data_manager.p1_a_slots
-		if type == "defense":
-			slot_type= game_data_manager.p1_d_slots
-		if type == "artefact":
+		elif type == "defense":
+			slot_type = game_data_manager.p1_d_slots
+		elif type == "artefact":
 			slot_type = game_data_manager.p1_ar_slots
-		if type == "action":
+		elif type == "action":
 			slot_type = game_data_manager.p1_ac_slots
-		if type == "grave":
+		elif type == "grave":
 			slot_type = game_data_manager.p1_g_slots
-		if type == "deck":
+		elif type == "deck":
 			slot_type = game_data_manager.p1_dc_slots
-		for s in range(num):
-			var slot = SLOT.instantiate()
-			slot.id_slot = s
-			slot.slot = type
-			slot_type.append(slot)
-			slot_holder.add_child(slot,true)
-			organize(player,type,slot,s)
-	if player == "player2":
+	elif player == "player2":
 		if type == "attack":
 			slot_type = game_data_manager.p2_a_slots
-		if type == "defense":
-			slot_type= game_data_manager.p2_d_slots
-		if type == "artefact":
+		elif type == "defense":
+			slot_type = game_data_manager.p2_d_slots
+		elif type == "artefact":
 			slot_type = game_data_manager.p2_ar_slots
-		if type == "action":
+		elif type == "action":
 			slot_type = game_data_manager.p2_ac_slots
-		if type == "grave":
+		elif type == "grave":
 			slot_type = game_data_manager.p2_g_slots
-		if type == "deck":
+		elif type == "deck":
 			slot_type = game_data_manager.p2_dc_slots
-		for s in range(num):
-			var slot = SLOT.instantiate()
-			slot.id_slot = s
-			slot.slot = type
-			slot_type.append(slot)
-			slot_holder.add_child(slot,true)
-			organize(player,type,slot,s)
+	for s in range(num):
+		var slot = SLOT.instantiate()
+		slot.id_slot = s
+		slot.slot = type
+		slot_type.append(slot)
+		slot_holder.add_child(slot,true)
+		organize(player,type,slot,s)
 
 func create_slot_counter(player): # Updates the counters for the player's graveyard and deck slots.
 	if player == "player1":
@@ -221,11 +219,13 @@ func create_slot_counter(player): # Updates the counters for the player's gravey
 		game_data_manager.p1_g_slots[0].card_count.text = str(game_data_manager.p1_graveyard.size())
 		game_data_manager.p1_dc_slots[0].card_count.visible = true
 		game_data_manager.p1_dc_slots[0].card_count.text  = str(game_data_manager.p1_deck.size())
-	if player == "player2":
+	elif player == "player2":
 		game_data_manager.p2_g_slots[0].card_count.visible = true
 		game_data_manager.p2_g_slots[0].card_count.text = str(game_data_manager.p2_graveyard.size())
 		game_data_manager.p2_dc_slots[0].card_count.visible = true
 		game_data_manager.p2_dc_slots[0].card_count.text  = str(game_data_manager.p2_deck.size())
+	else:
+		print("problem: create_slot_counter")
 
 func organize(player,type,body,n): # Organizes the positions of slots based on their type and index.
 	if player == "player1":
@@ -267,10 +267,9 @@ func organize(player,type,body,n): # Organizes the positions of slots based on t
 			body.position.x = 220
 			body.position.y = 825
 
-
 func _on_next_turn_button_pressed():
 	if game_data_manager.players_turn == "player1":
 		game_data_manager.players_turn = "player2"
 	elif game_data_manager.players_turn == "player2":
 		game_data_manager.players_turn = "player1"
-	print(game_data_manager.players_turn)
+	print("Turn: ",game_data_manager.players_turn)
