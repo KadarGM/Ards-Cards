@@ -14,6 +14,7 @@ var is_selected = false
 var can_desselect = false
 var card_owner
 
+
 var game_data_manager = GameDataManager
 
 const CARDS_LIST: Array[CardDataResource] = [
@@ -29,6 +30,13 @@ const RACE_ARRAY = ["Forest", "Rusty", "Black", "Termite", "Yellow", "White"]
 const HERO_ARRAY = []
 const ELITE_ARRAY = []
 const SPEC_ARRAY = ["Fighter", "Archer", "Sorcerer", "Dark_wizard", "Necromancer", "Shaman", "Rider shooter", "Elite", "Rider"]
+
+const P1_TYPES_ARRAY = ["p1_attack","p1_defense","p1_artefact","p1_action"]
+const P2_TYPES_ARRAY = ["p2_attack","p2_defense","p2_artefact","p2_action"]
+const P1_SLOT_TYPES_ARRAY = ["p1_a_slots","p1_d_slots","p1_ar_slots","p1_ac_slots"]
+const P2_SLOT_TYPES_ARRAY = ["p2_a_slots","p2_d_slots","p2_ar_slots","p2_ac_slots"]
+const P1_SLOT_SELECTED_ARRAY = ["p1_a_selected","p1_d_selected","p1_ar_selected","p1_ac_selected"]
+const P2_SLOT_SELECTED_ARRAY = ["p2_a_selected","p2_d_selected","p2_ar_selected","p2_ac_selected"]
 
 const RACE_COLOR : Dictionary = {
 	0 : Color(0.11, 0.69, 0.09), #Forest
@@ -199,50 +207,65 @@ func set_stats():
 #endregion
 
 func select_card_in_slot(player):
+	var select
+	var selected_slot
+	var selected_type
+	var selected_slot_array
+	var selected_type_array
 	if player == "player1":
-		var card = game_data_manager.p1_selected[0]
-		var selected_slot
-		var selected_type
-		if card.is_selected == false:
-			if card.slot_type == "p1_attack":
-				selected_slot = game_data_manager.p1_a_selected
-				selected_type = game_data_manager.p1_attack
-			elif card.slot_type == "p1_defense":
-				selected_slot = game_data_manager.p1_d_selected
-				selected_type = game_data_manager.p1_defense
-			elif card.slot_type == "p1_artefact":
-				selected_slot = game_data_manager.p1_ar_selected
-				selected_type = game_data_manager.p1_artefact
-			elif card.slot_type == "p1_action":
-				selected_slot = game_data_manager.p1_ac_selected
-				selected_type = game_data_manager.p1_action
-			selected_slot.append(selected_type[card.id_in_slot])
-			for i in range(selected_slot.size()):
-				selected_slot[i].selected_id = i
-			selected_slot[card.selected_id].select_color.visible = true
-			card.is_selected = true
-	if player == "player2":
-		var card = game_data_manager.p2_selected[0]
-		var selected_slot
-		var selected_type
-		if card.is_selected == false:
-			if card.slot_type == "p2_attack":
-				selected_slot = game_data_manager.p2_a_selected
-				selected_type = game_data_manager.p2_attack
-			elif card.slot_type == "p2_defense":
-				selected_slot = game_data_manager.p2_d_selected
-				selected_type = game_data_manager.p2_defense
-			elif card.slot_type == "p2_artefact":
-				selected_slot = game_data_manager.p2_ar_selected
-				selected_type = game_data_manager.p2_artefact
-			elif card.slot_type == "p2_action":
-				selected_slot = game_data_manager.p2_ac_selected
-				selected_type = game_data_manager.p2_action
-			selected_slot.append(selected_type[card.id_in_slot])
-			for i in range(selected_slot.size()):
-				selected_slot[i].selected_id = i
-			selected_slot[card.selected_id].select_color.visible = true
-			card.is_selected = true
+		select = game_data_manager.p1_selected[0]
+		selected_slot_array = P1_SLOT_SELECTED_ARRAY
+		selected_type_array = P1_TYPES_ARRAY
+	elif player == "player2":
+		select = game_data_manager.p2_selected[0]
+		selected_slot_array = P2_SLOT_SELECTED_ARRAY
+		selected_type_array = P2_TYPES_ARRAY
+	if select.is_selected != true:
+		print("Body is not selected!")
+		
+	else:
+		for t in range(selected_type_array.size()):
+			if select.slot_type == selected_type_array[t]:
+				selected_slot = selected_slot_array[t]
+				selected_type = selected_type_array[t]
+				
+			#if select.slot_type == "p1_attack":
+				#selected_slot = game_data_manager.p1_a_selected
+				#selected_type = game_data_manager.p1_attack
+			#elif select.slot_type == "p1_defense":
+				#selected_slot = game_data_manager.p1_d_selected
+				#selected_type = game_data_manager.p1_defense
+			#elif select.slot_type == "p1_artefact":
+				#selected_slot = game_data_manager.p1_ar_selected
+				#selected_type = game_data_manager.p1_artefact
+			#elif select.slot_type == "p1_action":
+				#selected_slot = game_data_manager.p1_ac_selected
+				#selected_type = game_data_manager.p1_action
+		selected_slot.append(selected_type[select.id_in_slot])
+		for i in range(selected_slot.size()):
+			selected_slot[i].selected_id = i
+		selected_slot[select.selected_id].select_color.visible = true
+		select.is_selected = true
+	#if player == "player2":
+		#select = game_data_manager.p2_selected[0]
+		#if select.is_selected == false:
+			#if select.slot_type == "p2_attack":
+				#selected_slot = game_data_manager.p2_a_selected
+				#selected_type = game_data_manager.p2_attack
+			#elif select.slot_type == "p2_defense":
+				#selected_slot = game_data_manager.p2_d_selected
+				#selected_type = game_data_manager.p2_defense
+			#elif select.slot_type == "p2_artefact":
+				#selected_slot = game_data_manager.p2_ar_selected
+				#selected_type = game_data_manager.p2_artefact
+			#elif select.slot_type == "p2_action":
+				#selected_slot = game_data_manager.p2_ac_selected
+				#selected_type = game_data_manager.p2_action
+			#selected_slot.append(selected_type[select.id_in_slot])
+			#for i in range(selected_slot.size()):
+				#selected_slot[i].selected_id = i
+			#selected_slot[select.selected_id].select_color.visible = true
+			#select.is_selected = true
 
 func deselect_card_in_slot(player):
 	if player == "player1":
