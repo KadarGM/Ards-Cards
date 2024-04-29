@@ -461,21 +461,21 @@ func _process(_delta):
 				elif Input.is_action_just_released("left click"):
 					game_data_manager.is_dragging = false
 					if is_inside_drop == true:
-						var current_slots
-						var max_slots
+						var put_type
+						var put_slot_type
 						if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 0:
-							current_slots = game_data_manager.p1_attack.size()
-							max_slots = game_data_manager.p1_a_slots.size()
+							put_type = game_data_manager.p1_attack
+							put_slot_type = game_data_manager.p1_a_slots
 						if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 1:
-							current_slots = game_data_manager.p1_defense.size()
-							max_slots = game_data_manager.p1_d_slots.size()
+							put_type = game_data_manager.p1_defense
+							put_slot_type = game_data_manager.p1_d_slots
 						if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 2:
-							current_slots = game_data_manager.p1_artefact.size()
-							max_slots = game_data_manager.p1_ar_slots.size()
+							put_type = game_data_manager.p1_artefact
+							put_slot_type = game_data_manager.p1_ar_slots
 						if CARDS_LIST[game_data_manager.p1_selected[0].id].type == 3:
-							current_slots = game_data_manager.p1_action.size()
-							max_slots = game_data_manager.p1_ac_slots.size()
-						if current_slots < max_slots:
+							put_type = game_data_manager.p1_action
+							put_slot_type = game_data_manager.p1_ac_slots
+						if put_type.size() < put_slot_type.size():
 							game_data_manager.put("player1",game_data_manager.p1_selected[0])
 						else:
 							card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .2)
@@ -484,69 +484,4 @@ func _process(_delta):
 						if_dragged_release()
 					else:
 						card_animation(game_data_manager.p1_selected[0],"global_position",init_pos, .2)
-						if_dragged_release()
-		if game_data_manager.players_turn == "player2":
-			if (game_data_manager.p2_selected.size() > 0 and 
-			game_data_manager.p2_selected[0].slot_type != "hand" and 
-			game_data_manager.p2_selected[0].slot_type != "deck" and
-			game_data_manager.p2_selected[0].slot_type != "grave" and
-			game_data_manager.is_grave_active == false and
-			game_data_manager.is_deck_active == false):
-					if game_data_manager.p2_selected[0].can_desselect == false:
-						if Input.is_action_just_pressed("left click"):
-							select_card_in_slot("player2")
-							await get_tree().create_timer(.1).timeout
-							game_data_manager.p2_selected[0].can_desselect = true
-					if game_data_manager.p2_selected[0].can_desselect == true:
-						if Input.is_action_just_pressed("left click"):
-							deselect_card_in_slot("player2")
-							await get_tree().create_timer(.1).timeout
-							game_data_manager.p2_selected[0].can_desselect = false
-			if game_data_manager.is_detailed == true and is_on_card == true: #and game_data_manager.is_dragging == false:
-				if Input.is_action_pressed("right click"):
-					game_data_manager.is_max_detailed = true
-					card_animation(game_data_manager.p2_selected[0].card_trans,"scale",Vector2(max_card_scale,max_card_scale), .5)
-					card_animation(game_data_manager.p2_selected[0].card_stats,"scale",Vector2(1.2,1.2), .5)
-					game_data_manager.p2_selected[0].name_label.visible = true
-				elif Input.is_action_just_released("right click"):
-					game_data_manager.is_max_detailed = false
-					card_animation(game_data_manager.p2_selected[0].card_trans,"scale",Vector2(detailed_scale,detailed_scale), .5)
-					card_animation(game_data_manager.p2_selected[0].card_stats,"scale",Vector2(1.6,1.6), .5)
-					game_data_manager.p2_selected[0].name_label.visible = false
-			if draggable == true and game_data_manager.p2_selected.size() > 0 and game_data_manager.p2_selected[0].slot_type == "hand" and game_data_manager.can_dragging == true:
-				if Input.is_action_just_pressed("left click"):
-					init_pos = game_data_manager.p2_selected[0].global_position
-					offset = get_global_mouse_position() - game_data_manager.p2_selected[0].global_position
-					game_data_manager.is_dragging = true
-					game_data_manager.slot_visible("player2",true)
-					game_data_manager.is_searching = false
-					
-				if Input.is_action_pressed("left click"):
-					game_data_manager.p2_selected[0].global_position = get_global_mouse_position() - offset
-				elif Input.is_action_just_released("left click"):
-					game_data_manager.is_dragging = false
-					if is_inside_drop == true:
-						var current_slots
-						var max_slots
-						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 0:
-							current_slots = game_data_manager.p2_attack.size()
-							max_slots = game_data_manager.p2_a_slots.size()
-						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 1:
-							current_slots = game_data_manager.p2_defense.size()
-							max_slots = game_data_manager.p2_d_slots.size()
-						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 2:
-							current_slots = game_data_manager.p2_artefact.size()
-							max_slots = game_data_manager.p2_ar_slots.size()
-						if CARDS_LIST[game_data_manager.p2_selected[0].id].type == 3:
-							current_slots = game_data_manager.p2_action.size()
-							max_slots = game_data_manager.p2_ac_slots.size()
-						if current_slots < max_slots:
-							game_data_manager.put("player2",game_data_manager.p2_selected[0])
-						else:
-							card_animation(game_data_manager.p2_selected[0],"global_position",init_pos, .2)
-							if_dragged_release()
-						change_slots_size()
-						if_dragged_release()
-					else:
-						card_animation(game_data_manager.p2_selected[0],"global_position",init_pos, .2)
 						if_dragged_release()

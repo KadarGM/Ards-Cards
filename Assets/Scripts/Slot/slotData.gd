@@ -15,6 +15,6 @@ func _ready():
 
 func _process(_delta):
 	if is_empty == false:
-		color_rect.color = Color(1, 0.38, 0.38, 0.196)
+		color_rect.color = Color(1, 0.38, 0.38, 0.196) #red
 	if is_empty == true:
-		color_rect.color = Color(0.392, 1, 0.38, 0.196)
+		color_rect.color = Color(0.392, 1, 0.38, 0.196) #green
