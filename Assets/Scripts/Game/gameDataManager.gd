@@ -63,9 +63,11 @@ var p2_ar_slots = []
 #endregion
 
 var P1_TYPE_ARRAYS = [p1_attack,p1_defense,p1_artefact,p1_action]
-var P1_SLOT_TYPE_ARRAYS = [p1_a_slots,p1_d_slots,p1_ar_slots,p1_ac_slots]
 var P2_TYPE_ARRAYS = [p2_attack,p2_defense,p2_artefact,p2_action]
+var P1_SLOT_TYPE_ARRAYS = [p1_a_slots,p1_d_slots,p1_ar_slots,p1_ac_slots]
 var P2_SLOT_TYPE_ARRAYS = [p2_a_slots,p2_d_slots,p2_ar_slots,p2_ac_slots]
+var P1_SLOT_SELECTED_ARRAY = [p1_a_selected,p1_d_selected,p1_ar_selected,p1_ac_selected]
+var P2_SLOT_SELECTED_ARRAY = [p2_a_selected,p2_d_selected,p2_ar_selected,p2_ac_selected]
 
 const TYPE_ARRAY = [
 	"attack",
@@ -75,6 +77,8 @@ const TYPE_ARRAY = [
 	"grave",
 	"deck",
 	]
+
+const TYPE_COUNT = [4,4,2,1,1,1]
 
 func reset(): # Reset all player-related variables to their initial states.
 
@@ -153,7 +157,7 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 		type_arrays = P2_TYPE_ARRAYS
 		slot_types_arrays = P2_SLOT_TYPE_ARRAYS
 	for a in range(type_arrays.size()):
-		if card_body.CARDS_LIST[body.id].type == a:
+		if card_body.CARDS_LIST[card_body.id].type == a:
 			for s in range(slot_types_arrays[a].size()):
 				if slot_types_arrays[a][s].is_empty == true:
 					card_body.slot_type = TYPE_ARRAY[a]
@@ -162,13 +166,11 @@ func put(player,body): # Place a card into its corresponding slot based on its t
 					type_arrays[a][s].id_in_slot = s
 					slot_types_arrays[a][s].is_empty = false
 					card_animation(card_body, "position",slot_types_arrays[a][s].position)
-					print("card_body.id_in_slot: ", card_body.id_in_slot)
-					print("card_body.slot_type: ", card_body.slot_type)
 					break
 	if hand.size() > 0:
 		reorganize_hand(player)
 	await get_tree().create_timer(.3).timeout
-	body.release_searching_hand(player)
+	card_body.release_searching_hand()
 	is_searching = true
 
 func slot_visible(player,cond):
@@ -218,9 +220,8 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 			type_arrays[i].remove_at(card_body.id_in_slot)
 			card_body.slot_type = "grave"
 			reorganize_slot(type_arrays[i], slot_types_arrays[i])
-			print("card_body.slot_type ", card_body.slot_type)
-			print("card_body ", card_body)
 			card_animation(card_body, "position", grave_slot[0].position)
+			break
 	card_body.z_index = grave_slot.size()
 	card_body.card_bg.visible = true
 	card_body.card_trans.visible = false
@@ -229,8 +230,8 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 func reorganize_slot(type,slot_type): # Reorganize slots after a card is destroyed.
 	for c in range(type.size()):
 		type[c].id_in_slot = c
-		slot_type[c].is_empty = true
-		slot_type[type.size()].is_empty = false
+		slot_type[c].is_empty = false
+		slot_type[type.size()].is_empty = true
 		card_animation(type[c],"position:x",slot_type[c].position.x)
 
 func show_grave(player): # Show the graveyard for a player.
@@ -310,19 +311,19 @@ func reorganize_showed_grave(player): # Reorganize the displayed graveyard for a
 		grave = p2_graveyard
 	for c in range(grave.size()):
 		grave[c].z_index = c + 11
-		grave[c].release_searching_hand(player)
+		grave[c].release_searching_hand()
 
 func reorganize_showed_deck(player): # Reorganize the displayed graveyard for a player.
 	if player == "player1":
 		for c in range(p1_deck.size()):
 			p1_deck[c].z_index = 11
 			p1_deck[c].top_level = true
-			p1_deck[c].release_searching_hand("player1")
+			p1_deck[c].release_searching_hand()
 	elif player == "player2":
 		for c in range(p2_deck.size()):
 			p2_deck[c].z_index = 11
 			p2_deck[c].top_level = true
-			p2_deck[c].release_searching_hand("player2")
+			p2_deck[c].release_searching_hand()
 
 func hide_grave(player): # Hide the graveyard for a player.
 	var grave
@@ -334,7 +335,7 @@ func hide_grave(player): # Hide the graveyard for a player.
 		grave = p2_graveyard
 		grave_slot = p2_g_slots
 	for i in range(grave.size()):
-		grave[i].release_searching_hand(player)
+		grave[i].release_searching_hand()
 		grave[i].card_bg.visible = true
 		grave[i].card_trans.visible = false
 		grave[i].active_card.visible = false
@@ -351,7 +352,7 @@ func hide_deck(player): # Hide the graveyard for a player.
 		deck = p2_deck
 		deck_slot = p2_dc_slots
 	for i in range(deck.size()):
-		deck[i].release_searching_hand("player2")
+		deck[i].release_searching_hand()
 		deck[i].card_bg.visible = true
 		deck[i].card_trans.visible = false
 		deck[i].active_card.visible = false

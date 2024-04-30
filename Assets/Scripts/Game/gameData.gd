@@ -7,15 +7,7 @@ const SLOT = preload("res://Assets/Scenes/slot.tscn")
 var game_data_manager = GameDataManager
 var deck = DeckDataResource
 
-const TYPE_ARRAY = [
-	"attack",
-	"defense",
-	"artefact",
-	"action",
-	"grave",
-	"deck",
-	]
-const TYPE_COUNT = [4,4,2,1,1,1]
+
 
 @onready var card_barier = $CardBarier
 
@@ -48,8 +40,8 @@ func who_start():
 
 func generate_slots(player):
 	node_holders()
-	for i in range(TYPE_ARRAY.size()):
-		create_slot(player, TYPE_ARRAY[i], TYPE_COUNT[i])
+	for i in range(game_data_manager.TYPE_ARRAY.size()):
+		create_slot(player, game_data_manager.TYPE_ARRAY[i], game_data_manager.TYPE_COUNT[i])
 
 func on_start_game(player, deck_array, hand_array):
 	card_barier.visible = false

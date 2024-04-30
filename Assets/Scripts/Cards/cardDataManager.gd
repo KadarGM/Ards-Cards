@@ -14,7 +14,6 @@ var is_selected = false
 var can_desselect = false
 var card_owner
 
-
 var game_data_manager = GameDataManager
 
 const CARDS_LIST: Array[CardDataResource] = [
@@ -30,13 +29,6 @@ const RACE_ARRAY = ["Forest", "Rusty", "Black", "Termite", "Yellow", "White"]
 const HERO_ARRAY = []
 const ELITE_ARRAY = []
 const SPEC_ARRAY = ["Fighter", "Archer", "Sorcerer", "Dark_wizard", "Necromancer", "Shaman", "Rider shooter", "Elite", "Rider"]
-
-const P1_TYPES_ARRAY = ["p1_attack","p1_defense","p1_artefact","p1_action"]
-const P2_TYPES_ARRAY = ["p2_attack","p2_defense","p2_artefact","p2_action"]
-const P1_SLOT_TYPES_ARRAY = ["p1_a_slots","p1_d_slots","p1_ar_slots","p1_ac_slots"]
-const P2_SLOT_TYPES_ARRAY = ["p2_a_slots","p2_d_slots","p2_ar_slots","p2_ac_slots"]
-const P1_SLOT_SELECTED_ARRAY = ["p1_a_selected","p1_d_selected","p1_ar_selected","p1_ac_selected"]
-const P2_SLOT_SELECTED_ARRAY = ["p2_a_selected","p2_d_selected","p2_ar_selected","p2_ac_selected"]
 
 const RACE_COLOR : Dictionary = {
 	0 : Color(0.11, 0.69, 0.09), #Forest
@@ -214,104 +206,51 @@ func select_card_in_slot(player):
 	var selected_type_array
 	if player == "player1":
 		select = game_data_manager.p1_selected[0]
-		selected_slot_array = P1_SLOT_SELECTED_ARRAY
-		selected_type_array = P1_TYPES_ARRAY
+		selected_slot_array = game_data_manager.P1_SLOT_SELECTED_ARRAY
+		selected_type_array = game_data_manager.P1_TYPE_ARRAYS
 	elif player == "player2":
 		select = game_data_manager.p2_selected[0]
-		selected_slot_array = P2_SLOT_SELECTED_ARRAY
-		selected_type_array = P2_TYPES_ARRAY
-	if select.is_selected != true:
-		print("Body is not selected!")
-		
-	else:
+		selected_slot_array = game_data_manager.P2_SLOT_SELECTED_ARRAY
+		selected_type_array = game_data_manager.P2_TYPE_ARRAYS
+	if select.is_selected == false:
 		for t in range(selected_type_array.size()):
-			if select.slot_type == selected_type_array[t]:
+			if select.slot_type == game_data_manager.TYPE_ARRAY[t]:
 				selected_slot = selected_slot_array[t]
 				selected_type = selected_type_array[t]
-				
-			#if select.slot_type == "p1_attack":
-				#selected_slot = game_data_manager.p1_a_selected
-				#selected_type = game_data_manager.p1_attack
-			#elif select.slot_type == "p1_defense":
-				#selected_slot = game_data_manager.p1_d_selected
-				#selected_type = game_data_manager.p1_defense
-			#elif select.slot_type == "p1_artefact":
-				#selected_slot = game_data_manager.p1_ar_selected
-				#selected_type = game_data_manager.p1_artefact
-			#elif select.slot_type == "p1_action":
-				#selected_slot = game_data_manager.p1_ac_selected
-				#selected_type = game_data_manager.p1_action
+				break
 		selected_slot.append(selected_type[select.id_in_slot])
-		for i in range(selected_slot.size()):
-			selected_slot[i].selected_id = i
+		re_id_select(selected_slot)
 		selected_slot[select.selected_id].select_color.visible = true
 		select.is_selected = true
-	#if player == "player2":
-		#select = game_data_manager.p2_selected[0]
-		#if select.is_selected == false:
-			#if select.slot_type == "p2_attack":
-				#selected_slot = game_data_manager.p2_a_selected
-				#selected_type = game_data_manager.p2_attack
-			#elif select.slot_type == "p2_defense":
-				#selected_slot = game_data_manager.p2_d_selected
-				#selected_type = game_data_manager.p2_defense
-			#elif select.slot_type == "p2_artefact":
-				#selected_slot = game_data_manager.p2_ar_selected
-				#selected_type = game_data_manager.p2_artefact
-			#elif select.slot_type == "p2_action":
-				#selected_slot = game_data_manager.p2_ac_selected
-				#selected_type = game_data_manager.p2_action
-			#selected_slot.append(selected_type[select.id_in_slot])
-			#for i in range(selected_slot.size()):
-				#selected_slot[i].selected_id = i
-			#selected_slot[select.selected_id].select_color.visible = true
-			#select.is_selected = true
 
 func deselect_card_in_slot(player):
+	var select
+	var selected_slot
+	var selected_type
+	var selected_slot_array
+	var selected_type_array
 	if player == "player1":
-		var card = game_data_manager.p1_selected[0]
-		var selected_slot
-		var selected_type
-		if card.is_selected == true:
-			if card.slot_type == "p1_attack":
-				selected_slot = game_data_manager.p1_a_selected
-				selected_type = game_data_manager.p1_attack
-			elif card.slot_type == "p1_defense":
-				selected_slot = game_data_manager.p1_d_selected
-				selected_type = game_data_manager.p1_defense
-			elif card.slot_type == "p1_artefact":
-				selected_slot = game_data_manager.p1_ar_selected
-				selected_type = game_data_manager.p1_artefact
-			elif card.slot_type == "p1_action":
-				selected_slot = game_data_manager.p1_ac_selected
-				selected_type = game_data_manager.p1_action
-			selected_type[card.id_in_slot].select_color.visible = false
-			card.is_selected = false
-			selected_slot.remove_at(card.selected_id)
-			for i in range(selected_slot.size()):
-				selected_slot[i].selected_id = i
-	if player == "player2":
-		var card = game_data_manager.p2_selected[0]
-		var selected_slot
-		var selected_type
-		if card.is_selected == true:
-			if card.slot_type == "p2_attack":
-				selected_slot = game_data_manager.p2_a_selected
-				selected_type = game_data_manager.p2_attack
-			elif card.slot_type == "p2_defense":
-				selected_slot = game_data_manager.p2_d_selected
-				selected_type = game_data_manager.p2_defense
-			elif card.slot_type == "p2_artefact":
-				selected_slot = game_data_manager.p2_ar_selected
-				selected_type = game_data_manager.p2_artefact
-			elif card.slot_type == "p2_action":
-				selected_slot = game_data_manager.p2_ac_selected
-				selected_type = game_data_manager.p2_action
-			selected_type[card.id_in_slot].select_color.visible = false
-			card.is_selected = false
-			selected_slot.remove_at(card.selected_id)
-			for i in range(selected_slot.size()):
-				selected_slot[i].selected_id = i
+		select = game_data_manager.p1_selected[0]
+		selected_slot_array = game_data_manager.P1_SLOT_SELECTED_ARRAY
+		selected_type_array = game_data_manager.P1_TYPE_ARRAYS
+	elif player == "player2":
+		select = game_data_manager.p2_selected[0]
+		selected_slot_array = game_data_manager.P2_SLOT_SELECTED_ARRAY
+		selected_type_array = game_data_manager.P2_TYPE_ARRAYS
+	if select.is_selected == true:
+		for t in range(selected_type_array.size()):
+			if select.slot_type == game_data_manager.TYPE_ARRAY[t]:
+				selected_slot = selected_slot_array[t]
+				selected_type = selected_type_array[t]
+				break
+		selected_type[select.id_in_slot].select_color.visible = false
+		select.is_selected = false
+		selected_slot.remove_at(select.selected_id)
+		re_id_select(selected_slot)
+
+func re_id_select(selected_slot):
+	for i in range(selected_slot.size()):
+			selected_slot[i].selected_id = i
 
 #region UI
 func set_stats_visible(cond): # Sets the visibility of various UI elements related to card statistics.
@@ -324,37 +263,22 @@ func change_slots_size(): # Updates the count of cards in the player's deck and 
 #endregion
 
 #region Searching Cards
-func searching_hand(player): # Enlarges the card when it is being searched for.
-	if player == "player1":
-		game_data_manager.is_detailed = true
-		card_animation(card_trans,"scale",Vector2(detailed_scale,detailed_scale), .5)
-		game_data_manager.p1_selected[0].card_stats.visible = true
-		card_animation(card_stats,"scale",Vector2(1.6,1.6), .5)
-		top_level = true
-		await get_tree().create_timer(.1).timeout
-		top_level = true
-	if player == "player2":
-		game_data_manager.is_detailed = true
-		card_animation(card_trans,"scale",Vector2(detailed_scale,detailed_scale), .5)
-		game_data_manager.p2_selected[0].card_stats.visible = true
-		card_animation(card_stats,"scale",Vector2(1.6,1.6), .5)
-		top_level = true
-		await get_tree().create_timer(.1).timeout
-		top_level = true
+func searching_hand(): # Enlarges the card when it is being searched for.
+	game_data_manager.is_detailed = true
+	card_animation(card_trans,"scale",Vector2(detailed_scale,detailed_scale), .5)
+	card_stats.visible = true
+	card_animation(card_stats,"scale",Vector2(1.6,1.6), .5)
+	top_level = true
+	await get_tree().create_timer(.1).timeout
+	top_level = true
 
-func release_searching_hand(player): # Restores the card to its original size after it has been searched for.
-	if player == "player1":
-		game_data_manager.is_detailed = false
-		card_animation(card_trans,"scale",Vector2(min_card_scale,min_card_scale), .5)
-		card_stats.visible = false
-		await get_tree().create_timer(.1).timeout
-		top_level = false
-	if player == "player2":
-		game_data_manager.is_detailed = false
-		card_animation(card_trans,"scale",Vector2(min_card_scale,min_card_scale), .5)
-		card_stats.visible = false
-		await get_tree().create_timer(.1).timeout
-		top_level = false
+func release_searching_hand(): # Restores the card to its original size after it has been searched for.
+	game_data_manager.is_detailed = true
+	card_animation(card_trans,"scale",Vector2(min_card_scale,min_card_scale), .5)
+	card_stats.visible = false
+	top_level = false
+	await get_tree().create_timer(.1).timeout
+	top_level = false
 #endregion
 
 func card_animation(body,parametr,how_many, time):
@@ -370,7 +294,7 @@ func _on_active_card_mouse_entered(): # Handles mouse entering the active card a
 				game_data_manager.p1_selected.append(self)
 				draggable = true
 			if game_data_manager.is_searching == true:
-				searching_hand("player1")
+				searching_hand()
 				self.top_level = true
 	if game_data_manager.players_turn == "player2":
 		#if game_data_manager.p2_selected[0].card_owner == "player2":
@@ -379,7 +303,7 @@ func _on_active_card_mouse_entered(): # Handles mouse entering the active card a
 				game_data_manager.p2_selected.append(self)
 				draggable = true
 			if game_data_manager.is_searching == true:
-				searching_hand("player2")
+				searching_hand()
 				self.top_level = true
 	
 func _on_active_card_mouse_exited(): # Handles mouse exiting the active card area.
@@ -390,7 +314,7 @@ func _on_active_card_mouse_exited(): # Handles mouse exiting the active card are
 			game_data_manager.p1_selected = []
 			draggable = false
 		if game_data_manager.is_searching == true:
-			release_searching_hand("player1")
+			release_searching_hand()
 			self.top_level = false
 	if game_data_manager.players_turn == "player2":
 		game_data_manager.p2_selected[0].name_label.visible = false
@@ -398,7 +322,7 @@ func _on_active_card_mouse_exited(): # Handles mouse exiting the active card are
 			game_data_manager.p2_selected = []
 			draggable = false
 		if game_data_manager.is_searching == true:
-			release_searching_hand("player2")
+			release_searching_hand()
 			self.top_level = false
 
 func _on_drag_area_body_entered(body):
@@ -413,7 +337,7 @@ func if_dragged_release():
 	game_data_manager.slot_visible(game_data_manager.players_turn,false)
 	await get_tree().create_timer(.05).timeout
 	if self.is_on_card == false:
-		release_searching_hand(game_data_manager.players_turn)
+		release_searching_hand()
 		game_data_manager.is_searching = true
 	if self.is_on_card == true:
 		game_data_manager.is_searching = true
