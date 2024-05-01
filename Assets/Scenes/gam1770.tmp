@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="5_gohys"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h54g7"]
-size = Vector2(3849, 720)
+size = Vector2(3849, 354)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xxvuu"]
 size = Vector2(1443, 633)
@@ -309,15 +309,11 @@ color = Color(0, 0, 0, 0.470588)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlotsArea"]
-position = Vector2(1921.5, 1080)
+position = Vector2(1921.5, 1263)
 shape = SubResource("RectangleShape2D_h54g7")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="SlotsArea"]
 position = Vector2(3125.5, 1756.5)
-shape = SubResource("RectangleShape2D_xxvuu")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="SlotsArea"]
-position = Vector2(726, 403)
 shape = SubResource("RectangleShape2D_xxvuu")
 
 [node name="NextTurnButton" type="Button" parent="."]

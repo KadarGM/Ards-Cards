@@ -12,6 +12,7 @@ var can_dragging = true
 var is_dragging = false
 var players_turn
 
+
 #region Player 1 arrays
 var p1_selected = []
 var p1_dc_selected = []
@@ -143,59 +144,48 @@ func reset(): # Reset all player-related variables to their initial states.
 
 
 
-func put(player,body): # Place a card into its corresponding slot based on its type.
-	var hand
-	var card_body = body
-	var type_arrays
-	var slot_types_arrays
+func put(player,body,hand,type_arrays,slot_types_arrays): # Place a card into its corresponding slot based on its type.
+	var spacing
+	var x
+	var y
 	if player == "player1":
-		hand = p1_hand
-		type_arrays = P1_TYPE_ARRAYS
-		slot_types_arrays = P1_SLOT_TYPE_ARRAYS
+		spacing = -150
+		x = 1920
+		y = 1800
 	elif player == "player2":
-		hand = p2_hand
-		type_arrays = P2_TYPE_ARRAYS
-		slot_types_arrays = P2_SLOT_TYPE_ARRAYS
+		spacing = 150
+		x = 1920
+		y = 300
 	for a in range(type_arrays.size()):
-		if card_body.CARDS_LIST[card_body.id].type == a:
+		if body.CARDS_LIST[body.id].type == a:
 			for s in range(slot_types_arrays[a].size()):
 				if slot_types_arrays[a][s].is_empty == true:
-					card_body.slot_type = TYPE_ARRAY[a]
-					type_arrays[a].append(card_body)
-					hand.remove_at(card_body.id_in_slot)
+					body.slot_type = TYPE_ARRAY[a]
+					type_arrays[a].append(body)
+					hand.remove_at(body.id_in_slot)
 					type_arrays[a][s].id_in_slot = s
 					slot_types_arrays[a][s].is_empty = false
-					card_animation(card_body, "position",slot_types_arrays[a][s].position)
+					card_animation(body, "position",slot_types_arrays[a][s].position)
 					break
 	if hand.size() > 0:
-		reorganize_hand(player)
+		reorganize_hand(player,hand,spacing,x,y)
 	await get_tree().create_timer(.3).timeout
-	card_body.release_searching_hand()
+	body.release_searching_hand()
 	is_searching = true
 
-func slot_visible(player,cond):
-	var select
-	var slot_type
-	var slot_types_arrays
-	if is_starting == false:
-		if player == "player1":
-			slot_types_arrays = P1_SLOT_TYPE_ARRAYS
-			select = p1_selected
-		elif player == "player2":
-			slot_types_arrays = P2_SLOT_TYPE_ARRAYS
-			select = p2_selected
-		if cond == true:
-			slot_type = slot_types_arrays[select[0].id]
-			for i in range(slot_type.size()):
-				if slot_type[i].is_empty == true:
-					slot_type[i].color_rect.visible = true
-				if slot_type[i].is_empty == false:
-					slot_type[i].color_rect.visible = false
-		elif cond == false:
-			for i in range(slot_types_arrays.size()):
-				slot_type = slot_types_arrays[i]
-				for j in range(slot_type.size()):
-					slot_type[j].color_rect.visible = false
+func slot_visible(_player,cond,slot_type,select,slot_types_arrays):
+	if cond == true:
+		slot_type = slot_types_arrays[select[0].id]
+		for i in range(slot_type.size()):
+			if slot_type[i].is_empty == true:
+				slot_type[i].color_rect.visible = true
+			if slot_type[i].is_empty == false:
+				slot_type[i].color_rect.visible = false
+	elif cond == false:
+		for i in range(slot_types_arrays.size()):
+			slot_type = slot_types_arrays[i]
+			for j in range(slot_type.size()):
+				slot_type[j].color_rect.visible = false
 
 func destroy(player,body): # Destroy a card and move it to the graveyard.
 	var grave
@@ -359,19 +349,7 @@ func hide_deck(player): # Hide the graveyard for a player.
 		card_animation(deck[i],"position", deck_slot[0].position)
 		await get_tree().create_timer(0.01).timeout
 
-func reorganize_hand(player): # Reorganize the hand of a player.
-	var hand
-	var card_spacing
-	var start_x = 1920
-	var y_pos
-	if player == "player1":
-		hand = p1_hand
-		card_spacing = -150
-		y_pos = 1800
-	elif player == "player2":
-		hand = p2_hand
-		card_spacing = 150
-		y_pos = 300
+func reorganize_hand(_player,hand,card_spacing,start_x,y_pos): # Reorganize the hand of a player.
 	for c in range(hand.size()):
 		hand[c].id_in_slot = c
 		card_animation(hand[c],"position:x",start_x + (card_spacing * c))
@@ -383,38 +361,15 @@ func card_animation(who,what,where): # Perform animations for card movements.
 	await get_tree().create_timer(.5).timeout
 
 func _process(_delta):
-	if players_turn == "player1":
-		process(players_turn)
-	elif players_turn == "player2":
-		process(players_turn)
-
-func process(player):
-	var select
-	var type_arrays
-	var slot_types_arrays
-	var grave
-	var grave_slot
-	var hand
-	var deck
 	if is_starting == false:
-		if player == "player1":
-			select = p1_selected
-			type_arrays = P1_TYPE_ARRAYS
-			slot_types_arrays = P1_SLOT_TYPE_ARRAYS
-			grave = p1_graveyard
-			grave_slot = p1_g_slots
-			hand = p1_hand
-			deck = p1_deck
-		elif player == "player2":
-			select = p2_selected
-			type_arrays = P2_TYPE_ARRAYS
-			slot_types_arrays = P2_SLOT_TYPE_ARRAYS
-			grave = p2_graveyard
-			grave_slot = p2_g_slots
-			hand = p2_hand
-			deck = p2_deck
+		if players_turn == "player1":
+			process(players_turn,p1_selected,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,p1_graveyard,p1_g_slots,p1_hand,p1_deck,-150,1920,1800)
+		elif players_turn == "player2":
+			process(players_turn,p2_selected,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,p2_graveyard,p2_g_slots,p2_hand,p2_deck,150,1920,300)
 		else:
 			print("No player selected!")
+
+func process(player,select,type_arrays,slot_types_arrays,grave,grave_slot,hand,deck,card_spacing,start_x,y_pos):
 		if is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and select.size() > 0 and select[0].card_owner == player:
 			if Input.is_action_just_pressed("e key"):
 				if select[0].slot_type == "hand":
@@ -425,7 +380,7 @@ func process(player):
 							current_slots = type_arrays[i].size()
 							max_slots = slot_types_arrays[i].size()
 					if current_slots < max_slots:
-						put("player1",select[0])
+						put(player,select[0],hand,type_arrays,slot_types_arrays)
 						select[0].use_button.visible = false 
 					else:
 						print("no_size")
@@ -441,7 +396,7 @@ func process(player):
 					grave.append(select[0])
 					hand.remove_at(select[0].id_in_slot)
 					select[0].slot_type = "grave"
-					reorganize_hand(player)
+					reorganize_hand(player,hand,card_spacing,start_x,y_pos)
 					card_animation(select[0],"position", grave_slot[0].position)
 					select[0].z_index = grave_slot.size()
 					select[0].card_bg.visible = true
