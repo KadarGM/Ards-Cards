@@ -8,7 +8,6 @@ var game_data_manager = GameDataManager
 var deck = DeckDataResource
 
 
-
 @onready var card_barier = $CardBarier
 
 # Holders
@@ -17,8 +16,10 @@ var slot_holder
 #endregion
 
 func _ready():
-	generate_slots("player1")
-	generate_slots("player2")
+	var P1_SLOT_TYPE_ARRAYS = [game_data_manager.p1_a_slots,game_data_manager.p1_d_slots,game_data_manager.p1_ar_slots,game_data_manager.p1_ac_slots,game_data_manager.p1_g_slots,game_data_manager.p1_dc_slots]
+	var P2_SLOT_TYPE_ARRAYS = [game_data_manager.p2_a_slots,game_data_manager.p2_d_slots,game_data_manager.p2_ar_slots,game_data_manager.p2_ac_slots,game_data_manager.p2_g_slots,game_data_manager.p2_dc_slots]
+	generate_slots("player1",P1_SLOT_TYPE_ARRAYS)
+	generate_slots("player2",P2_SLOT_TYPE_ARRAYS)
 	print("Slots were generated!")
 	create_deck("player1",60,game_data_manager.p1_dc_slots,game_data_manager.p1_deck)
 	create_deck("player2",60,game_data_manager.p2_dc_slots,game_data_manager.p2_deck)
@@ -38,10 +39,10 @@ func who_start():
 		game_data_manager.players_turn = "player2"
 	return game_data_manager.players_turn
 
-func generate_slots(player):
+func generate_slots(player,slot_type_array):
 	node_holders()
 	for i in range(game_data_manager.TYPE_ARRAY.size()):
-		create_slot(player, game_data_manager.TYPE_ARRAY[i], game_data_manager.TYPE_COUNT[i])
+		create_slot(player,slot_type_array, game_data_manager.TYPE_ARRAY[i], game_data_manager.TYPE_COUNT[i])
 
 func on_start_game(player, deck_array,hand,card_spacing,start_x,y_pos):
 	card_barier.visible = false
@@ -133,35 +134,13 @@ func create_deck(player,num, deck_slot, deck_array): # Creates the player's deck
 		clone.card_trans.visible = false
 		clone.active_card.visible = false
 
-func create_slot(player,type,num): # Creates slots for different purposes (e.g., attack, defense, etc.) for the player.
+func create_slot(player,slot_type_array,type,num): # Creates slots for different purposes (e.g., attack, defense, etc.) for the player.
 	var slot_type = null
 	var type_array = game_data_manager.TYPE_ARRAY
-	if player == "player1":
-		if type == type_array[0]:
-			slot_type = game_data_manager.p1_a_slots
-		if type == type_array[1]:
-			slot_type = game_data_manager.p1_d_slots
-		if type == type_array[2]:
-			slot_type = game_data_manager.p1_ar_slots
-		if type == type_array[3]:
-			slot_type = game_data_manager.p1_ac_slots
-		if type == type_array[4]:
-			slot_type = game_data_manager.p1_g_slots
-		if type == type_array[5]:
-			slot_type = game_data_manager.p1_dc_slots
-	elif player == "player2":
-		if type == type_array[0]:
-			slot_type = game_data_manager.p2_a_slots
-		if type == type_array[1]:
-			slot_type = game_data_manager.p2_d_slots
-		if type == type_array[2]:
-			slot_type = game_data_manager.p2_ar_slots
-		if type == type_array[3]:
-			slot_type = game_data_manager.p2_ac_slots
-		if type == type_array[4]:
-			slot_type = game_data_manager.p2_g_slots
-		if type == type_array[5]:
-			slot_type = game_data_manager.p2_dc_slots
+	for i in range(slot_type_array.size()):
+			if type == type_array[i]:
+				slot_type = slot_type_array[i]
+				break
 	if slot_type == null:
 		print("Erorr: Slot type does not exist.")
 		return
@@ -230,7 +209,9 @@ func organize(player,type,body,n): # Organizes the positions of slots based on t
 
 func _on_next_turn_button_pressed():
 	if game_data_manager.players_turn == "player1":
+		game_data_manager.reset_board_next_turn(game_data_manager.P1_SLOT_SELECTED_ARRAY,game_data_manager.P1_TYPE_ARRAYS)
 		game_data_manager.players_turn = "player2"
 	elif game_data_manager.players_turn == "player2":
+		game_data_manager.reset_board_next_turn(game_data_manager.P2_SLOT_SELECTED_ARRAY,game_data_manager.P2_TYPE_ARRAYS)
 		game_data_manager.players_turn = "player1"
 	print("Turn: ",game_data_manager.players_turn)

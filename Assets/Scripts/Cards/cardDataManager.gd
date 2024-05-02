@@ -211,6 +211,8 @@ func select_card_in_slot(_player,select,selected_slot_array,selected_type_array)
 		re_id_select(selected_slot)
 		selected_slot[select.selected_id].select_color.visible = true
 		select.is_selected = true
+	else:
+		return
 
 func deselect_card_in_slot(_player,select,selected_slot_array,selected_type_array):
 	var selected_slot
@@ -225,6 +227,8 @@ func deselect_card_in_slot(_player,select,selected_slot_array,selected_type_arra
 		select.is_selected = false
 		selected_slot.remove_at(select.selected_id)
 		re_id_select(selected_slot)
+	else:
+		return
 
 func re_id_select(selected_slot):
 	for i in range(selected_slot.size()):
@@ -321,12 +325,12 @@ func if_dragged_release(select,slot_type_array):
 func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
 	if game_data_manager.is_starting == false:
 		if (select.size() > 0 and select[0].slot_type != "hand" and select[0].slot_type != "deck" and select[0].slot_type != "grave" and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false):
-				if select[0].can_desselect == false:
+				if select[0].can_desselect == false and select[0].card_owner == game_data_manager.players_turn:
 					if Input.is_action_just_pressed("left click"):
 						select_card_in_slot(player,select[0],selected_slot_array,type_array)
 						await get_tree().create_timer(.1).timeout
 						select[0].can_desselect = true
-				if select[0].can_desselect == true:
+				if select[0].can_desselect == true and select[0].card_owner == game_data_manager.players_turn:
 					if Input.is_action_just_pressed("left click"):
 						deselect_card_in_slot(player,select[0],selected_slot_array,type_array)
 						await get_tree().create_timer(.1).timeout
@@ -383,7 +387,7 @@ func _process(_delta):
 	var P1_SLOT_SELECTED_ARRAY = [game_data_manager.p1_a_selected,game_data_manager.p1_d_selected,game_data_manager.p1_ar_selected,game_data_manager.p1_ac_selected]
 	var P2_SLOT_SELECTED_ARRAY = [game_data_manager.p2_a_selected,game_data_manager.p2_d_selected,game_data_manager.p2_ar_selected,game_data_manager.p2_ac_selected]
 	if game_data_manager.players_turn == "player1":
-		process("player1",game_data_manager.p1_selected,P1_SLOT_SELECTED_ARRAY,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,game_data_manager.p1_hand)
+		process(game_data_manager.players_turn,game_data_manager.p1_selected,P1_SLOT_SELECTED_ARRAY,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,game_data_manager.p1_hand)
 	elif game_data_manager.players_turn == "player2":
-		process("player2",game_data_manager.p2_selected,P2_SLOT_SELECTED_ARRAY,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,game_data_manager.p2_hand)
+		process(game_data_manager.players_turn,game_data_manager.p2_selected,P2_SLOT_SELECTED_ARRAY,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,game_data_manager.p2_hand)
 	

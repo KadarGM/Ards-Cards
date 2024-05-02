@@ -142,7 +142,13 @@ func reset(): # Reset all player-related variables to their initial states.
 	p2_ar_slots = []
 #endregion
 
-
+func reset_board_next_turn(selected_slot_array,selected_type_array):
+	for i in range(selected_slot_array.size()):
+		for s in range (selected_slot_array[i].size()):
+			selected_type_array[i][s].select_color.visible = false
+			selected_type_array[i][s].is_selected = false
+			selected_type_array[i][s].can_desselect = false
+		selected_slot_array[i] = []
 
 func put(player,body,hand,type_arrays,slot_types_arrays): # Place a card into its corresponding slot based on its type.
 	var spacing
