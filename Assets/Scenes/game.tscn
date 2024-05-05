@@ -329,4 +329,15 @@ theme = SubResource("Theme_v3l7u")
 theme_override_font_sizes/font_size = 48
 text = "Next turn"
 
+[node name="TurnName" type="Label" parent="."]
+offset_left = 1537.0
+offset_top = 1029.0
+offset_right = 2300.0
+offset_bottom = 1130.0
+theme_override_fonts/font = ExtResource("4_snqhv")
+theme_override_font_sizes/font_size = 64
+text = "TEST"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="NextTurnButton" to="." method="_on_next_turn_button_pressed"]

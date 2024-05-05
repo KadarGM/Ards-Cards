@@ -10,8 +10,17 @@ var is_max_detailed = false
 var is_starting = false
 var can_dragging = true
 var is_dragging = false
-var players_turn
 
+
+var who_is_starting
+var who_is_attacking
+var who_is_defending
+var who_is_ending
+var who_can_cast
+
+var players_turn
+var count_round = 0
+var turn_count = 0
 
 #region Player 1 arrays
 var p1_selected = []
@@ -61,6 +70,7 @@ var p2_a_slots = []
 var p2_ac_slots = []
 var p2_d_slots = []
 var p2_ar_slots = []
+
 #endregion
 
 var P1_TYPE_ARRAYS = [p1_attack,p1_defense,p1_artefact,p1_action]
@@ -81,6 +91,9 @@ const TYPE_ARRAY = [
 
 const TYPE_COUNT = [4,4,2,1,1,1]
 
+const TURN_TYPE_ARRAY = [" attack!", " defend!", " ending!"]
+const PLAYER_TEXT_ARRAY = ["player1", "player2"]
+
 func reset(): # Reset all player-related variables to their initial states.
 
 	is_searching = true
@@ -91,6 +104,8 @@ func reset(): # Reset all player-related variables to their initial states.
 	is_starting = false
 	can_dragging = true
 	is_dragging = false
+	turn_count = 0
+	count_round = 0
 
 	#region Player 1 arrays
 	p1_selected = []
@@ -115,6 +130,7 @@ func reset(): # Reset all player-related variables to their initial states.
 	p1_ac_slots = []
 	p1_d_slots = []
 	p1_ar_slots = []
+	
 	#endregion
 
 	#region Player 2 arrays
@@ -140,15 +156,16 @@ func reset(): # Reset all player-related variables to their initial states.
 	p2_ac_slots = []
 	p2_d_slots = []
 	p2_ar_slots = []
+	
 #endregion
 
 func reset_board_next_turn(selected_slot_array,selected_type_array):
-	for i in range(selected_slot_array.size()):
-		for s in range (selected_slot_array[i].size()):
+	for i in range(selected_type_array.size()):
+		for s in range (selected_type_array[i].size()):
 			selected_type_array[i][s].select_color.visible = false
 			selected_type_array[i][s].is_selected = false
 			selected_type_array[i][s].can_desselect = false
-		selected_slot_array[i] = []
+			selected_slot_array[i] = []
 
 func put(player,body,hand,type_arrays,slot_types_arrays): # Place a card into its corresponding slot based on its type.
 	var spacing
@@ -213,6 +230,9 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 		if card_body.slot_type == TYPE_ARRAY[i]:
 			slot_types_arrays[i][card_body.id_in_slot].is_empty = true
 			grave.append(card_body)
+			if slot_types_arrays[i][card_body.id_in_slot].is_selected == true:
+				slot_types_arrays[i][card_body.id_in_slot].select_color.visible = false
+				slot_types_arrays[i][card_body.id_in_slot].is_selected = false
 			type_arrays[i].remove_at(card_body.id_in_slot)
 			card_body.slot_type = "grave"
 			reorganize_slot(type_arrays[i], slot_types_arrays[i])
@@ -366,81 +386,81 @@ func card_animation(who,what,where): # Perform animations for card movements.
 	tween.tween_property(who, what, where, .5)
 	await get_tree().create_timer(.5).timeout
 
-func _process(_delta):
-	if is_starting == false:
-		if players_turn == "player1":
-			process(players_turn,p1_selected,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,p1_graveyard,p1_g_slots,p1_hand,p1_deck,-150,1920,1800)
-		elif players_turn == "player2":
-			process(players_turn,p2_selected,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,p2_graveyard,p2_g_slots,p2_hand,p2_deck,150,1920,300)
-		else:
-			print("No player selected!")
-
-func process(player,select,type_arrays,slot_types_arrays,grave,grave_slot,hand,deck,card_spacing,start_x,y_pos):
-		if is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and select.size() > 0 and select[0].card_owner == player:
-			if Input.is_action_just_pressed("e key"):
-				if select[0].slot_type == "hand":
-					var current_slots
-					var max_slots
-					for i in range(type_arrays.size()):
-						if select[0].CARDS_LIST[select[0].id].type == i:
-							current_slots = type_arrays[i].size()
-							max_slots = slot_types_arrays[i].size()
-					if current_slots < max_slots:
-						put(player,select[0],hand,type_arrays,slot_types_arrays)
-						select[0].use_button.visible = false 
-					else:
-						print("no_size")
-					select[0].change_slots_size()
-				select[0].active_card.button_pressed = false
-			if Input.is_action_just_pressed("r key"):
-				is_searching = true
-				if select[0].slot_type != "hand" and select[0].slot_type != "grave" and select[0].slot_type != "deck":
-					select[0].change_slots_size()
-					select[0].active_card.button_pressed = false
-					destroy(player,select[0])
-				elif select[0].slot_type == "hand":
-					grave.append(select[0])
-					hand.remove_at(select[0].id_in_slot)
-					select[0].slot_type = "grave"
-					reorganize_hand(player,hand,card_spacing,start_x,y_pos)
-					card_animation(select[0],"position", grave_slot[0].position)
-					select[0].z_index = grave_slot.size()
-					select[0].card_bg.visible = true
-					select[0].card_trans.visible = false
-		if Input.is_action_just_pressed("g key"):
-			if grave.size() > 0 and is_dragging == false and is_grave_active == false:
-				if is_detailed == true:
-					is_searching = true
-				if is_grave_active == false:
-					show_grave(player)
-					is_grave_active = true
-					reorganize_showed_grave(player)
-			elif is_grave_active == true:
-				hide_grave(player)
-				is_grave_active = false
-		if Input.is_action_just_pressed("d key"):
-			if deck.size() > 0 and is_dragging == false and is_deck_active == false:
-				if is_detailed == true:
-					is_searching = true
-				if is_deck_active == false:
-					show_deck(player)
-					is_deck_active = true
-					reorganize_showed_deck(player)
-			elif is_deck_active == true:
-				hide_deck(player)
-				is_deck_active = false
-		if select.size() > 0 and select[0].card_owner == player:
-			if select[0].slot_type == "grave":
-				if is_grave_active == true:
-					for i in range(grave.size()):
-						grave[i].z_index = i + 5
-					select[0].z_index = p1_graveyard.size() + 4
-				if is_grave_active == false:
-					reorganize_showed_grave(player)
-			elif select[0].slot_type == "deck":
-				if is_grave_active == true:
-					for i in range(deck.size()):
-						deck[i].z_index = i + 5
-					select[0].z_index = deck.size() + 4
-				if is_deck_active == false:
-					reorganize_showed_deck(player)
+#func _process(_delta):
+	#if is_starting == false:
+		#if players_turn == "player1":
+			#process(players_turn,p1_selected,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,p1_graveyard,p1_g_slots,p1_hand,p1_deck,-150,1920,1800,p1_is_attacking,p1_is_defending,p1_is_ending)
+		#elif players_turn == "player2":
+			#process(players_turn,p2_selected,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,p2_graveyard,p2_g_slots,p2_hand,p2_deck,150,1920,300,p2_is_attacking,p2_is_defending,p2_is_ending)
+		#else:
+			#print("No player selected!")
+#
+#func process(player,select,type_arrays,slot_types_arrays,grave,grave_slot,hand,deck,card_spacing,start_x,y_pos,attack,defend,ending):
+		#if is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and select.size() > 0 and select[0].card_owner == player:
+			#if Input.is_action_just_pressed("e key"):
+				#if select[0].slot_type == "hand":
+					#var current_slots
+					#var max_slots
+					#for i in range(type_arrays.size()):
+						#if select[0].CARDS_LIST[select[0].id].type == i:
+							#current_slots = type_arrays[i].size()
+							#max_slots = slot_types_arrays[i].size()
+					#if current_slots < max_slots:
+						#put(player,select[0],hand,type_arrays,slot_types_arrays)
+						#select[0].use_button.visible = false 
+					#else:
+						#print("no_size")
+					#select[0].change_slots_size()
+				#select[0].active_card.button_pressed = false
+			#if Input.is_action_just_pressed("r key"):
+				#is_searching = true
+				#if select[0].slot_type != "hand" and select[0].slot_type != "grave" and select[0].slot_type != "deck":
+					#select[0].change_slots_size()
+					#select[0].active_card.button_pressed = false
+					#destroy(player,select[0])
+				#elif select[0].slot_type == "hand":
+					#grave.append(select[0])
+					#hand.remove_at(select[0].id_in_slot)
+					#select[0].slot_type = "grave"
+					#reorganize_hand(player,hand,card_spacing,start_x,y_pos)
+					#card_animation(select[0],"position", grave_slot[0].position)
+					#select[0].z_index = grave_slot.size()
+					#select[0].card_bg.visible = true
+					#select[0].card_trans.visible = false
+		#if Input.is_action_just_pressed("g key"):
+			#if grave.size() > 0 and is_dragging == false and is_grave_active == false:
+				#if is_detailed == true:
+					#is_searching = true
+				#if is_grave_active == false:
+					#show_grave(player)
+					#is_grave_active = true
+					#reorganize_showed_grave(player)
+			#elif is_grave_active == true:
+				#hide_grave(player)
+				#is_grave_active = false
+		#if Input.is_action_just_pressed("d key"):
+			#if deck.size() > 0 and is_dragging == false and is_deck_active == false:
+				#if is_detailed == true:
+					#is_searching = true
+				#if is_deck_active == false:
+					#show_deck(player)
+					#is_deck_active = true
+					#reorganize_showed_deck(player)
+			#elif is_deck_active == true:
+				#hide_deck(player)
+				#is_deck_active = false
+		#if select.size() > 0 and select[0].card_owner == player:
+			#if select[0].slot_type == "grave":
+				#if is_grave_active == true:
+					#for i in range(grave.size()):
+						#grave[i].z_index = i + 5
+					#select[0].z_index = p1_graveyard.size() + 4
+				#if is_grave_active == false:
+					#reorganize_showed_grave(player)
+			#elif select[0].slot_type == "deck":
+				#if is_grave_active == true:
+					#for i in range(deck.size()):
+						#deck[i].z_index = i + 5
+					#select[0].z_index = deck.size() + 4
+				#if is_deck_active == false:
+					#reorganize_showed_deck(player)

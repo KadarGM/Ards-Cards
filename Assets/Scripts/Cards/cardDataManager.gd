@@ -386,6 +386,8 @@ func _process(_delta):
 	var P2_SLOT_TYPE_ARRAYS = [game_data_manager.p2_a_slots,game_data_manager.p2_d_slots,game_data_manager.p2_ar_slots,game_data_manager.p2_ac_slots]
 	var P1_SLOT_SELECTED_ARRAY = [game_data_manager.p1_a_selected,game_data_manager.p1_d_selected,game_data_manager.p1_ar_selected,game_data_manager.p1_ac_selected]
 	var P2_SLOT_SELECTED_ARRAY = [game_data_manager.p2_a_selected,game_data_manager.p2_d_selected,game_data_manager.p2_ar_selected,game_data_manager.p2_ac_selected]
+	#var P1_TURN_TYPE_ARRAY = [game_data_manager.p1_is_attacking,game_data_manager.p1_is_defending,game_data_manager.p1_is_ending]
+	#var P2_TURN_TYPE_ARRAY = [game_data_manager.p2_is_attacking,game_data_manager.p2_is_defending,game_data_manager.p2_is_ending]
 	if game_data_manager.players_turn == "player1":
 		process(game_data_manager.players_turn,game_data_manager.p1_selected,P1_SLOT_SELECTED_ARRAY,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,game_data_manager.p1_hand)
 	elif game_data_manager.players_turn == "player2":
