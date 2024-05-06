@@ -216,28 +216,38 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 	var card_body = body
 	var type_arrays
 	var slot_types_arrays
+	var deck
 	if player == "player1":
 		grave = p1_graveyard
 		grave_slot = p1_g_slots
 		type_arrays = P1_TYPE_ARRAYS
 		slot_types_arrays = P1_SLOT_TYPE_ARRAYS
+		deck = p1_deck
 	elif player == "player2":
 		grave = p2_graveyard
 		grave_slot = p2_g_slots
 		type_arrays = P2_TYPE_ARRAYS
 		slot_types_arrays = P2_SLOT_TYPE_ARRAYS
-	for i in range(type_arrays.size()):
-		if card_body.slot_type == TYPE_ARRAY[i]:
-			slot_types_arrays[i][card_body.id_in_slot].is_empty = true
-			grave.append(card_body)
-			if slot_types_arrays[i][card_body.id_in_slot].is_selected == true:
-				slot_types_arrays[i][card_body.id_in_slot].select_color.visible = false
-				slot_types_arrays[i][card_body.id_in_slot].is_selected = false
-			type_arrays[i].remove_at(card_body.id_in_slot)
-			card_body.slot_type = "grave"
-			reorganize_slot(type_arrays[i], slot_types_arrays[i])
-			card_animation(card_body, "position", grave_slot[0].position)
-			break
+		deck = p2_deck
+	if card_body.slot_type == "deck":
+		grave.append(card_body)
+		deck.remove_at(card_body.id_in_slot)
+		card_body.slot_type = "grave"
+		card_animation(card_body, "position", grave_slot[0].position)
+		print("works?")
+	elif card_body.slot_type != "deck":
+		for i in range(type_arrays.size()):
+			if card_body.slot_type == TYPE_ARRAY[i]:
+				slot_types_arrays[i][card_body.id_in_slot].is_empty = true
+				grave.append(card_body)
+				if slot_types_arrays[i][card_body.id_in_slot].is_selected == true:
+					slot_types_arrays[i][card_body.id_in_slot].select_color.visible = false
+					slot_types_arrays[i][card_body.id_in_slot].is_selected = false
+				type_arrays[i].remove_at(card_body.id_in_slot)
+				card_body.slot_type = "grave"
+				reorganize_slot(type_arrays[i], slot_types_arrays[i])
+				card_animation(card_body, "position", grave_slot[0].position)
+				break
 	card_body.z_index = grave_slot.size()
 	card_body.card_bg.visible = true
 	card_body.card_trans.visible = false
