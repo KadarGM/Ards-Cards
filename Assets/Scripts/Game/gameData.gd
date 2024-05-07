@@ -34,11 +34,9 @@ func _ready():
 
 func who_start():
 	var num
-	num = randi_range(1,2)
-	if num == 1:
-		game_data_manager.players_turn = "player1"
-	if num == 2:
-		game_data_manager.players_turn = "player2"
+	num = randi_range(0,1)
+	game_data_manager.players_turn = game_data_manager.PLAYER_TEXT_ARRAY[num]
+	game_data_manager.who_is_starting = game_data_manager.players_turn
 
 func generate_slots(player,slot_type_array):
 	node_holders()
@@ -57,19 +55,13 @@ func on_start_game(player, deck_array,hand,card_spacing,start_x,y_pos,start_card
 func _process(_delta):
 	if game_data_manager.is_starting == false:
 		if game_data_manager.players_turn == "player1":
-			game_process(game_data_manager.players_turn,game_data_manager.p1_deck,game_data_manager.p1_hand,game_data_manager.p1_graveyard,-150,1920,1800)
+			game_process(game_data_manager.players_turn,game_data_manager.p1_deck,game_data_manager.p1_graveyard)
 		elif game_data_manager.players_turn == "player2":
-			game_process(game_data_manager.players_turn,game_data_manager.p2_deck,game_data_manager.p2_hand,game_data_manager.p2_graveyard,150,1920,300)
+			game_process(game_data_manager.players_turn,game_data_manager.p2_deck,game_data_manager.p2_graveyard)
 		else:
 			print("This does not work: _process error!")
 
-func game_process(player, deck_array, hand_array,grave_array,card_spacing,start_x,y_pos):
-	#if game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false:
-		#if hand_array.size() < 8:
-			#if Input.is_action_just_pressed("space key"):
-				#await get_tree().create_timer(.2).timeout
-				#draw_card(player,1,deck_array,hand_array,card_spacing,start_x,y_pos)
-				#await get_tree().create_timer(.2).timeout
+func game_process(_player, deck_array,grave_array):
 	if grave_array.size() > 0 or deck_array.size() > 0:
 		if game_data_manager.is_grave_active == true or game_data_manager.is_deck_active == true:
 			game_data_manager.can_dragging = false
@@ -102,6 +94,7 @@ func draw_card(player, num, deck_array, hand_array,card_spacing,start_x,y_pos): 
 			deck_clone.card_trans.visible = true
 			deck_clone.active_card.visible = true
 			from_deck_to_hand_anim(player,deck_clone,c)
+			print(player," draw ", deck_clone.name_label.text)
 		await  get_tree().create_timer(.2).timeout
 		game_data_manager.reorganize_hand(player,hand_array,card_spacing,start_x,y_pos)
 
@@ -124,7 +117,7 @@ func from_deck_to_hand_anim(player,clone,c): # Animates the transition of cards 
 func create_deck(player,num, deck_slot, deck_array): # Creates the player's deck with a specified number of cards.
 	for c in num:
 		var clone = CARD.instantiate()
-		clone.id = randi_range(0,3)
+		clone.id = randi_range(0,1)
 		clone.id_in_slot = c
 		clone.slot_type = "deck"
 		clone.card_owner = player
@@ -249,11 +242,14 @@ func _on_next_turn_button_pressed():
 		if game_data_manager.turn_count == 0 and game_data_manager.count_round >= 1:
 			if hand.size() < 8:
 				draw_card(player,1,deck_1,hand,card_sapcing,start_x,y_pos)
-			elif hand.size() >= 8:
+			else:
 				game_data_manager.destroy(player,deck_1[0])
+				print(player," hand is full!")
 		for i in range(game_data_manager.TURN_TYPE_ARRAY.size()):
 			if game_data_manager.turn_count == i:
 				turn_name.text = (game_data_manager.players_turn + game_data_manager.TURN_TYPE_ARRAY[i])
+				game_data_manager.WHO_IS_ARRAY[i] = game_data_manager.players_turn
+				print(game_data_manager.WHO_IS_TEXT_ARRAY[i],game_data_manager.WHO_IS_ARRAY[i])
 
 		print("Round: ",game_data_manager.count_round," Turn: ", game_data_manager.turn_count)
 		

@@ -359,18 +359,14 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
 				elif Input.is_action_just_released("left click"):
 					game_data_manager.is_dragging = false
 					if is_inside_drop == true:
-						var put_type
-						var put_slot_type
 						for i in range(type_array.size()):
-							if select[0].type == i:
-								put_type = type_array[i]
-								put_slot_type = slot_type_array[i]
-								break
-						if put_type.size() < put_slot_type.size():
-							game_data_manager.put(player,select[0],hand,type_array,slot_type_array)
-						else:
-							card_animation(select[0],"global_position",init_pos, .2)
-							if_dragged_release(select,slot_type_array)
+							if CARDS_LIST[select[0].id].type == i:
+								if type_array[i].size() < slot_type_array[i].size():
+									game_data_manager.put(player,select[0],hand,type_array,slot_type_array)
+								else:
+									card_animation(select[0],"global_position",init_pos, .2)
+									if_dragged_release(select,slot_type_array)
+									break
 						change_slots_size()
 						if_dragged_release(select,slot_type_array)
 					else:
@@ -386,8 +382,6 @@ func _process(_delta):
 	var P2_SLOT_TYPE_ARRAYS = [game_data_manager.p2_a_slots,game_data_manager.p2_d_slots,game_data_manager.p2_ar_slots,game_data_manager.p2_ac_slots]
 	var P1_SLOT_SELECTED_ARRAY = [game_data_manager.p1_a_selected,game_data_manager.p1_d_selected,game_data_manager.p1_ar_selected,game_data_manager.p1_ac_selected]
 	var P2_SLOT_SELECTED_ARRAY = [game_data_manager.p2_a_selected,game_data_manager.p2_d_selected,game_data_manager.p2_ar_selected,game_data_manager.p2_ac_selected]
-	#var P1_TURN_TYPE_ARRAY = [game_data_manager.p1_is_attacking,game_data_manager.p1_is_defending,game_data_manager.p1_is_ending]
-	#var P2_TURN_TYPE_ARRAY = [game_data_manager.p2_is_attacking,game_data_manager.p2_is_defending,game_data_manager.p2_is_ending]
 	if game_data_manager.players_turn == "player1":
 		process(game_data_manager.players_turn,game_data_manager.p1_selected,P1_SLOT_SELECTED_ARRAY,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,game_data_manager.p1_hand)
 	elif game_data_manager.players_turn == "player2":

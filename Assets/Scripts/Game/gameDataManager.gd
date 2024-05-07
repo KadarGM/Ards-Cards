@@ -80,14 +80,10 @@ var P2_SLOT_TYPE_ARRAYS = [p2_a_slots,p2_d_slots,p2_ar_slots,p2_ac_slots]
 var P1_SLOT_SELECTED_ARRAY = [p1_a_selected,p1_d_selected,p1_ar_selected,p1_ac_selected]
 var P2_SLOT_SELECTED_ARRAY = [p2_a_selected,p2_d_selected,p2_ar_selected,p2_ac_selected]
 
-const TYPE_ARRAY = [
-	"attack",
-	"defense",
-	"artefact",
-	"action",
-	"grave",
-	"deck",
-	]
+var WHO_IS_ARRAY = [who_is_attacking,who_is_defending,who_is_ending]
+const WHO_IS_TEXT_ARRAY = ["Attack: ","Defend: ","End: "]
+
+const TYPE_ARRAY = ["attack","defense","artefact","action","grave","deck"]
 
 const TYPE_COUNT = [4,4,2,1,1,1]
 
@@ -231,10 +227,9 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 		deck = p2_deck
 	if card_body.slot_type == "deck":
 		grave.append(card_body)
-		deck.remove_at(card_body.id_in_slot)
+		deck.remove_at(0)
 		card_body.slot_type = "grave"
 		card_animation(card_body, "position", grave_slot[0].position)
-		print("works?")
 	elif card_body.slot_type != "deck":
 		for i in range(type_arrays.size()):
 			if card_body.slot_type == TYPE_ARRAY[i]:
@@ -252,6 +247,7 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 	card_body.card_bg.visible = true
 	card_body.card_trans.visible = false
 	is_searching = true
+	print(card_body.name_label.text," was destoy!")
 
 func reorganize_slot(type,slot_type): # Reorganize slots after a card is destroyed.
 	for c in range(type.size()):
@@ -399,13 +395,13 @@ func card_animation(who,what,where): # Perform animations for card movements.
 #func _process(_delta):
 	#if is_starting == false:
 		#if players_turn == "player1":
-			#process(players_turn,p1_selected,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,p1_graveyard,p1_g_slots,p1_hand,p1_deck,-150,1920,1800,p1_is_attacking,p1_is_defending,p1_is_ending)
+			#process(players_turn,p1_selected,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,p1_graveyard,p1_g_slots,p1_hand,p1_deck,-150,1920,1800)
 		#elif players_turn == "player2":
-			#process(players_turn,p2_selected,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,p2_graveyard,p2_g_slots,p2_hand,p2_deck,150,1920,300,p2_is_attacking,p2_is_defending,p2_is_ending)
+			#process(players_turn,p2_selected,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,p2_graveyard,p2_g_slots,p2_hand,p2_deck,150,1920,300)
 		#else:
 			#print("No player selected!")
 #
-#func process(player,select,type_arrays,slot_types_arrays,grave,grave_slot,hand,deck,card_spacing,start_x,y_pos,attack,defend,ending):
+#func process(player,select,type_arrays,slot_types_arrays,grave,grave_slot,hand,deck,card_spacing,start_x,y_pos):
 		#if is_detailed == true and is_grave_active == false and is_dragging == false and is_deck_active == false and select.size() > 0 and select[0].card_owner == player:
 			#if Input.is_action_just_pressed("e key"):
 				#if select[0].slot_type == "hand":
