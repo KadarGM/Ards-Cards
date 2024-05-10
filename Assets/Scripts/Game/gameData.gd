@@ -117,7 +117,7 @@ func from_deck_to_hand_anim(player,clone,c): # Animates the transition of cards 
 func create_deck(player,num, deck_slot, deck_array): # Creates the player's deck with a specified number of cards.
 	for c in num:
 		var clone = CARD.instantiate()
-		clone.id = randi_range(0,1)
+		clone.id = randi_range(0,3)
 		clone.id_in_slot = c
 		clone.slot_type = "deck"
 		clone.card_owner = player
@@ -211,6 +211,8 @@ func _on_next_turn_button_pressed():
 	var card_sapcing
 	var start_x
 	var y_pos
+	var grave
+	#var WHO_IS_ARRAY = [game_data_manager.who_is_attacking,game_data_manager.who_is_defending,game_data_manager.who_is_ending]
 	if game_data_manager.players_turn == "player1":
 		player = "player1"
 		next_player = "player2"
@@ -221,6 +223,7 @@ func _on_next_turn_button_pressed():
 		card_sapcing = -150
 		start_x = 1920
 		y_pos = 1800
+		grave = game_data_manager.p1_graveyard
 	elif game_data_manager.players_turn == "player2":
 		player = "player2"
 		next_player = "player1"
@@ -231,6 +234,7 @@ func _on_next_turn_button_pressed():
 		card_sapcing = 150
 		start_x = 1920
 		y_pos = 300
+		grave = game_data_manager.p2_graveyard
 	if game_data_manager.is_starting == false:
 		if game_data_manager.turn_count <= 3:
 			game_data_manager.players_turn = next_player
@@ -244,12 +248,15 @@ func _on_next_turn_button_pressed():
 				draw_card(player,1,deck_1,hand,card_sapcing,start_x,y_pos)
 			else:
 				game_data_manager.destroy(player,deck_1[0])
-				print(player," hand is full!")
+				print(game_data_manager.players_turn," hand is full!")
 		for i in range(game_data_manager.TURN_TYPE_ARRAY.size()):
 			if game_data_manager.turn_count == i:
 				turn_name.text = (game_data_manager.players_turn + game_data_manager.TURN_TYPE_ARRAY[i])
 				game_data_manager.WHO_IS_ARRAY[i] = game_data_manager.players_turn
+				print("-------------")
 				print(game_data_manager.WHO_IS_TEXT_ARRAY[i],game_data_manager.WHO_IS_ARRAY[i])
-
 		print("Round: ",game_data_manager.count_round," Turn: ", game_data_manager.turn_count)
+		print(game_data_manager.players_turn, " has ",grave.size()," cards in grave!")
+		print(game_data_manager.players_turn, " has ",hand.size()," cards in hand!")
+		print(game_data_manager.players_turn, " has ",deck_1.size()," cards in deck!")
 		

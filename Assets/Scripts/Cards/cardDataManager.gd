@@ -347,7 +347,7 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
 				card_animation(select[0].card_stats,"scale",Vector2(1.6,1.6), .5)
 				select[0].name_label.visible = false
 		if draggable == true and select.size() > 0 and select[0].slot_type == "hand" and game_data_manager.can_dragging == true:
-			if player == select[0].card_owner:
+			if player == select[0].card_owner and (game_data_manager.turn_count == 0 or game_data_manager.turn_count == 2) == true:
 				if Input.is_action_just_pressed("left click"):
 					init_pos = select[0].global_position
 					offset = get_global_mouse_position() - select[0].global_position
@@ -374,6 +374,19 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
 						if_dragged_release(select,slot_type_array)
 			else:
 				return
+		else:
+			return
+		#if draggable == true and select.size() > 0 and select[0].slot_type == "hand" and select[0].type == 1 and game_data_manager.can_dragging == true and game_data_manager.turn_count == 1:
+				#if select[0].can_desselect == false and select[0].card_owner == game_data_manager.players_turn:
+					#if Input.is_action_just_pressed("left click"):
+						#select_card_in_slot(player,select[0],selected_slot_array,type_array)
+						#await get_tree().create_timer(.1).timeout
+						#select[0].can_desselect = true
+				#if select[0].can_desselect == true and select[0].card_owner == game_data_manager.players_turn:
+					#if Input.is_action_just_pressed("left click"):
+						#deselect_card_in_slot(player,select[0],selected_slot_array,type_array)
+						#await get_tree().create_timer(.1).timeout
+						#select[0].can_desselect = false
 
 func _process(_delta):
 	var P1_TYPE_ARRAYS = [game_data_manager.p1_attack,game_data_manager.p1_defense,game_data_manager.p1_artefact,game_data_manager.p1_action]

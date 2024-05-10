@@ -185,6 +185,9 @@ func put(player,body,hand,type_arrays,slot_types_arrays): # Place a card into it
 					type_arrays[a][s].id_in_slot = s
 					slot_types_arrays[a][s].is_empty = false
 					card_animation(body, "position",slot_types_arrays[a][s].position)
+					print("-------------")
+					print(players_turn," put ", body.name_label.text, " to ",body.slot_type, " slot!")
+					print(players_turn,"'s ", body.slot_type, " slot has ", slot_types_arrays[a].size() - type_arrays[a].size(), " free and ",type_arrays[a].size(), " full slots!")
 					break
 	if hand.size() > 0:
 		reorganize_hand(player,hand,spacing,x,y)
@@ -247,7 +250,8 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 	card_body.card_bg.visible = true
 	card_body.card_trans.visible = false
 	is_searching = true
-	print(card_body.name_label.text," was destoy!")
+	print("-------------")
+	print(player,"' ",card_body.name_label.text," was destoy!")
 
 func reorganize_slot(type,slot_type): # Reorganize slots after a card is destroyed.
 	for c in range(type.size()):
