@@ -25,6 +25,7 @@ func _ready():
 	create_deck("player2",50,game_data_manager.p2_dc_slots,game_data_manager.p2_deck)
 	print("Decks were created!")
 	who_start()
+	add_mana(game_data_manager.players_turn,2)
 	on_start_game("player1",game_data_manager.p1_deck,game_data_manager.p1_hand,-150,1920,1800,5)
 	on_start_game("player2",game_data_manager.p2_deck,game_data_manager.p2_hand,150,1920,300,5)
 	print("Game is ready!")
@@ -43,9 +44,28 @@ func generate_slots(player,slot_type_array):
 	for i in range(game_data_manager.TYPE_ARRAY.size()):
 		create_slot(player,slot_type_array, game_data_manager.TYPE_ARRAY[i], game_data_manager.TYPE_COUNT[i])
 
+func init_mana(player):
+	if player == "player1":
+		game_data_manager.p1_init_hero_mana = game_data_manager.p1_hero_mana
+	if player == "player2":
+		game_data_manager.p2_init_hero_mana = game_data_manager.p2_hero_mana
+
+func reinit_mana(player):
+	if player == "player1":
+		game_data_manager.p1_hero_mana = game_data_manager.p1_init_hero_mana
+	if player == "player2":
+		game_data_manager.p2_hero_mana = game_data_manager.p2_init_hero_mana
+
+func add_mana(player,value):
+	if player == "player1":
+		game_data_manager.p1_hero_mana += value
+	if player == "player2":
+		game_data_manager.p2_hero_mana += value
+
 func on_start_game(player, deck_array,hand,card_spacing,start_x,y_pos,start_card):
 	card_barier.visible = false
 	game_data_manager.is_starting = true
+	init_mana(player)
 	for c in range(start_card):
 		await get_tree().create_timer(.5).timeout
 		draw_card(player,1,deck_array,hand,card_spacing,start_x,y_pos)
@@ -212,6 +232,8 @@ func _on_next_turn_button_pressed():
 	var start_x
 	var y_pos
 	var grave
+	var init_hero_mana
+	var hero_mana
 	#var WHO_IS_ARRAY = [game_data_manager.who_is_attacking,game_data_manager.who_is_defending,game_data_manager.who_is_ending]
 	if game_data_manager.players_turn == "player1":
 		player = "player1"
@@ -224,6 +246,8 @@ func _on_next_turn_button_pressed():
 		start_x = 1920
 		y_pos = 1800
 		grave = game_data_manager.p1_graveyard
+		init_hero_mana = game_data_manager.p1_init_hero_mana
+		hero_mana = game_data_manager.p1_hero_mana
 	elif game_data_manager.players_turn == "player2":
 		player = "player2"
 		next_player = "player1"
@@ -235,6 +259,8 @@ func _on_next_turn_button_pressed():
 		start_x = 1920
 		y_pos = 300
 		grave = game_data_manager.p2_graveyard
+		init_hero_mana = game_data_manager.p2_init_hero_mana
+		hero_mana = game_data_manager.p2_hero_mana
 	if game_data_manager.is_starting == false:
 		if game_data_manager.turn_count <= 3:
 			game_data_manager.players_turn = next_player
@@ -243,6 +269,10 @@ func _on_next_turn_button_pressed():
 			game_data_manager.turn_count = 0
 			game_data_manager.count_round += 1
 			game_data_manager.reset_board_next_turn(slot_selected_array,type_array)
+		if game_data_manager.turn_count == 0 and hero_mana < 16 and init_hero_mana < 16:
+			reinit_mana(next_player)
+			add_mana(next_player,2)
+			init_mana(next_player)
 		if game_data_manager.turn_count == 0 and game_data_manager.count_round >= 1:
 			if hand.size() < 8:
 				draw_card(player,1,deck_1,hand,card_sapcing,start_x,y_pos)

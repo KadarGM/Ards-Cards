@@ -322,7 +322,7 @@ func if_dragged_release(select,slot_type_array):
 	if self.is_on_card == true:
 		game_data_manager.is_searching = true
 
-func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
+func process(player,select,selected_slot_array,type_array,slot_type_array,hand,hero_mana):
 	if game_data_manager.is_starting == false:
 		if (select.size() > 0 and select[0].slot_type != "hand" and select[0].slot_type != "deck" and select[0].slot_type != "grave" and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false):
 				if select[0].can_desselect == false and select[0].card_owner == game_data_manager.players_turn:
@@ -347,7 +347,7 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
 				card_animation(select[0].card_stats,"scale",Vector2(1.6,1.6), .5)
 				select[0].name_label.visible = false
 		if draggable == true and select.size() > 0 and select[0].slot_type == "hand" and game_data_manager.can_dragging == true:
-			if player == select[0].card_owner and (game_data_manager.turn_count == 0 or game_data_manager.turn_count == 2) == true:
+			if player == select[0].card_owner and (game_data_manager.turn_count == 0 or game_data_manager.turn_count == 2) == true and CARDS_LIST[id].mana_cost <= hero_mana:
 				if Input.is_action_just_pressed("left click"):
 					init_pos = select[0].global_position
 					offset = get_global_mouse_position() - select[0].global_position
@@ -363,6 +363,10 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand):
 							if CARDS_LIST[select[0].id].type == i:
 								if type_array[i].size() < slot_type_array[i].size():
 									game_data_manager.put(player,select[0],hand,type_array,slot_type_array)
+									if player == "player1":
+										game_data_manager.p1_hero_mana -= CARDS_LIST[id].mana_cost
+									elif player == "player2":
+										game_data_manager.p2_hero_mana -= CARDS_LIST[id].mana_cost
 								else:
 									card_animation(select[0],"global_position",init_pos, .2)
 									if_dragged_release(select,slot_type_array)
@@ -396,7 +400,7 @@ func _process(_delta):
 	var P1_SLOT_SELECTED_ARRAY = [game_data_manager.p1_a_selected,game_data_manager.p1_d_selected,game_data_manager.p1_ar_selected,game_data_manager.p1_ac_selected]
 	var P2_SLOT_SELECTED_ARRAY = [game_data_manager.p2_a_selected,game_data_manager.p2_d_selected,game_data_manager.p2_ar_selected,game_data_manager.p2_ac_selected]
 	if game_data_manager.players_turn == "player1":
-		process(game_data_manager.players_turn,game_data_manager.p1_selected,P1_SLOT_SELECTED_ARRAY,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,game_data_manager.p1_hand)
+		process(game_data_manager.players_turn,game_data_manager.p1_selected,P1_SLOT_SELECTED_ARRAY,P1_TYPE_ARRAYS,P1_SLOT_TYPE_ARRAYS,game_data_manager.p1_hand,game_data_manager.p1_hero_mana)
 	elif game_data_manager.players_turn == "player2":
-		process(game_data_manager.players_turn,game_data_manager.p2_selected,P2_SLOT_SELECTED_ARRAY,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,game_data_manager.p2_hand)
+		process(game_data_manager.players_turn,game_data_manager.p2_selected,P2_SLOT_SELECTED_ARRAY,P2_TYPE_ARRAYS,P2_SLOT_TYPE_ARRAYS,game_data_manager.p2_hand,game_data_manager.p2_hero_mana)
 	

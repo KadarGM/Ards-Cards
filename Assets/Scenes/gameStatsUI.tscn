@@ -1,0 +1,309 @@
+[gd_scene load_steps=7 format=3 uid="uid://uevqybsj81hv"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Hero/heroDataManager.gd" id="1_bseuh"]
+[ext_resource type="Texture2D" uid="uid://bukgcmswnvo1i" path="res://Assets/Graphics/Export/HEALTH.png" id="1_wrtnn"]
+[ext_resource type="FontFile" uid="uid://h8cq4acmo5w3" path="res://Assets/Graphics/Font/gomarice_no_continue.ttf" id="2_4sonc"]
+[ext_resource type="Texture2D" uid="uid://b6y87c66ci18q" path="res://Assets/Graphics/Export/DEFFENSE.png" id="3_c5ghy"]
+[ext_resource type="Texture2D" uid="uid://esdtipib6mdj" path="res://Assets/Graphics/Export/ATTACK.png" id="4_dnc2r"]
+[ext_resource type="Texture2D" uid="uid://7ou2nkhneqvl" path="res://Assets/Graphics/Export/MANA_POINT.png" id="5_funsn"]
+
+[node name="gameStatsUI" type="CanvasLayer"]
+script = ExtResource("1_bseuh")
+
+[node name="player1UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -50.0
+offset_right = 960.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="player1UI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.27451)
+
+[node name="MarginContainer" type="MarginContainer" parent="player1UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="player1UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+alignment = 1
+
+[node name="p1NameLabel" type="Label" parent="player1UI/MarginContainer/HBoxContainer1"]
+modulate = Color(1, 0.301961, 0.301961, 1)
+custom_minimum_size = Vector2(1000, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "Edvard Houfelward"
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="player1UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+
+[node name="p1HealthSprite" type="TextureRect" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.301961, 0.301961, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_wrtnn")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p1HealthLabel" type="Label" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.301961, 0.301961, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Split1" type="HSplitContainer" parent="player1UI/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="p1DefenseSprite" type="TextureRect" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.788235, 1, 0.301961, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_c5ghy")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p1DefenseLabel" type="Label" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.788235, 1, 0.301961, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Split2" type="HSplitContainer" parent="player1UI/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="p1AttackSprite" type="TextureRect" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.847059, 0.301961, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("4_dnc2r")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p1AttackLabel" type="Label" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.847059, 0.301961, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Split3" type="HSplitContainer" parent="player1UI/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="p1ManaSprite" type="TextureRect" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.301961, 1, 1, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("5_funsn")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p1ManaLabel" type="Label" parent="player1UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.301961, 1, 1, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="player2UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="player2UI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.27451)
+
+[node name="MarginContainer" type="MarginContainer" parent="player2UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="player2UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+alignment = 1
+
+[node name="p2NameLabel" type="Label" parent="player2UI/MarginContainer/HBoxContainer1"]
+modulate = Color(1, 0.301961, 0.301961, 1)
+custom_minimum_size = Vector2(1000, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "Edvard Houfelward"
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="player2UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+
+[node name="p2HealthSprite" type="TextureRect" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.301961, 0.301961, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_wrtnn")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p2HealthLabel" type="Label" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.301961, 0.301961, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Split1" type="HSplitContainer" parent="player2UI/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="p2DefenseSprite" type="TextureRect" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.788235, 1, 0.301961, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_c5ghy")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p2DefenseLabel" type="Label" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.788235, 1, 0.301961, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Split2" type="HSplitContainer" parent="player2UI/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="p2AttackSprite" type="TextureRect" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.847059, 0.301961, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("4_dnc2r")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p2AttackLabel" type="Label" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(1, 0.847059, 0.301961, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Split3" type="HSplitContainer" parent="player2UI/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="p2ManaSprite" type="TextureRect" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.301961, 1, 1, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("5_funsn")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="p2ManaLabel" type="Label" parent="player2UI/MarginContainer/HBoxContainer2"]
+modulate = Color(0.301961, 1, 1, 1)
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4sonc")
+theme_override_font_sizes/font_size = 48
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1

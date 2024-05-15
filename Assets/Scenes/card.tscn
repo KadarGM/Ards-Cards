@@ -429,7 +429,7 @@ size_flags_horizontal = 3
 color = Color(0.0823529, 0.278431, 0.278431, 1)
 
 [node name="ManaSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/ManaRect"]
-modulate = Color(0.3, 1, 1, 1)
+modulate = Color(0.301961, 1, 1, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
@@ -475,7 +475,7 @@ size_flags_horizontal = 3
 color = Color(0.219608, 0.0666667, 0.0666667, 1)
 
 [node name="HealthSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/HealthRect"]
-modulate = Color(1, 0.3, 0.3, 1)
+modulate = Color(1, 0.301961, 0.301961, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
@@ -521,7 +521,7 @@ size_flags_horizontal = 3
 color = Color(0.172549, 0.219608, 0.0666667, 1)
 
 [node name="DeffenseSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/DeffenseRect"]
-modulate = Color(0.79, 1, 0.3, 1)
+modulate = Color(0.788235, 1, 0.301961, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
@@ -568,7 +568,7 @@ size_flags_horizontal = 3
 color = Color(0.270588, 0.227451, 0.0823529, 1)
 
 [node name="AttackSprite" type="TextureRect" parent="cardTrans/CardStats/LeftContainer/GridContainer/AttackRect"]
-modulate = Color(1, 0.848333, 0.3, 1)
+modulate = Color(1, 0.847059, 0.301961, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1

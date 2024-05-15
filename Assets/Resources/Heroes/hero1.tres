@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1_41w0w")
 hero_id = 1
-name = "Nohac"
+name = "Babica"
 description = "velky typek"
 race = 0
-prize = 0
+prize = 16
 picture = null
 when_cast = 0
 when_repeat = 0

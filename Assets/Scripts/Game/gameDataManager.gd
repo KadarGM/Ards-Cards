@@ -71,6 +71,20 @@ var p2_ac_slots = []
 var p2_d_slots = []
 var p2_ar_slots = []
 
+var p1_hero_name
+var p1_hero_health
+var p1_hero_defense
+var p1_hero_attack
+var p1_hero_mana
+var p1_init_hero_mana
+
+var p2_hero_name
+var p2_hero_health
+var p2_hero_defense
+var p2_hero_attack
+var p2_hero_mana
+var p2_init_hero_mana
+
 #endregion
 
 var P1_TYPE_ARRAYS = [p1_attack,p1_defense,p1_artefact,p1_action]

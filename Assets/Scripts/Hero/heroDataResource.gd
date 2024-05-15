@@ -29,6 +29,7 @@ enum WhomCast {
 @export_multiline var description: String
 @export var race : Race
 @export var prize: int
+@export var mana: int
 @export_node_path("Sprite2D") var picture
 
 @export_subgroup("Creature Cast Data")

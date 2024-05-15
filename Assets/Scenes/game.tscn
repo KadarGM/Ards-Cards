@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://d10udb1sre1ok"]
+[gd_scene load_steps=40 format=3 uid="uid://d10udb1sre1ok"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Game/gameData.gd" id="1_15lvp"]
 [ext_resource type="PackedScene" uid="uid://drmp5mnwikfmw" path="res://Assets/Scenes/gameUI.tscn" id="2_t44m0"]
 [ext_resource type="PackedScene" uid="uid://t1yewwigw1d0" path="res://Assets/Scenes/board.tscn" id="3_0cuqm"]
+[ext_resource type="PackedScene" uid="uid://uevqybsj81hv" path="res://Assets/Scenes/gameStatsUI.tscn" id="3_uebdr"]
 [ext_resource type="FontFile" uid="uid://h8cq4acmo5w3" path="res://Assets/Graphics/Font/gomarice_no_continue.ttf" id="4_snqhv"]
 [ext_resource type="FontFile" uid="uid://cmtjmmt0xb1l5" path="res://Assets/Graphics/Font/ThaleahFat.ttf" id="5_gohys"]
 
@@ -280,6 +281,8 @@ script = ExtResource("1_15lvp")
 
 [node name="gameUI" parent="." instance=ExtResource("2_t44m0")]
 layer = 5
+
+[node name="gameStatsUI" parent="." instance=ExtResource("3_uebdr")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
