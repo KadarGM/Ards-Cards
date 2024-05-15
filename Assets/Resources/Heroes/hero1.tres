@@ -9,6 +9,7 @@ name = "Babica"
 description = "velky typek"
 race = 0
 prize = 16
+mana = 0
 picture = null
 when_cast = 0
 when_repeat = 0
