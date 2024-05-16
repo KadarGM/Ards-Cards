@@ -365,7 +365,7 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand,h
 									game_data_manager.put(player,select[0],hand,type_array,slot_type_array)
 									if player == "player1":
 										game_data_manager.p1_hero_mana -= CARDS_LIST[id].mana_cost
-									elif player == "player2":
+									if player == "player2":
 										game_data_manager.p2_hero_mana -= CARDS_LIST[id].mana_cost
 								else:
 									card_animation(select[0],"global_position",init_pos, .2)

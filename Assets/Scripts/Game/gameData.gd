@@ -57,10 +57,14 @@ func reinit_mana(player):
 		game_data_manager.p2_hero_mana = game_data_manager.p2_init_hero_mana
 
 func add_mana(player,value):
-	if player == "player1":
-		game_data_manager.p1_hero_mana += value
-	if player == "player2":
-		game_data_manager.p2_hero_mana += value
+	 #and hero_mana < 16 and init_hero_mana < 16
+	if game_data_manager.p1_hero_mana < 16:
+		if player == "player1":
+			if game_data_manager.p1_hero_mana < 16:
+				game_data_manager.p1_hero_mana += value
+		if player == "player2":
+			if game_data_manager.p2_hero_mana < 16:
+				game_data_manager.p2_hero_mana += value
 
 func on_start_game(player, deck_array,hand,card_spacing,start_x,y_pos,start_card):
 	card_barier.visible = false
@@ -232,8 +236,6 @@ func _on_next_turn_button_pressed():
 	var start_x
 	var y_pos
 	var grave
-	var init_hero_mana
-	var hero_mana
 	#var WHO_IS_ARRAY = [game_data_manager.who_is_attacking,game_data_manager.who_is_defending,game_data_manager.who_is_ending]
 	if game_data_manager.players_turn == "player1":
 		player = "player1"
@@ -246,8 +248,6 @@ func _on_next_turn_button_pressed():
 		start_x = 1920
 		y_pos = 1800
 		grave = game_data_manager.p1_graveyard
-		init_hero_mana = game_data_manager.p1_init_hero_mana
-		hero_mana = game_data_manager.p1_hero_mana
 	elif game_data_manager.players_turn == "player2":
 		player = "player2"
 		next_player = "player1"
@@ -259,8 +259,6 @@ func _on_next_turn_button_pressed():
 		start_x = 1920
 		y_pos = 300
 		grave = game_data_manager.p2_graveyard
-		init_hero_mana = game_data_manager.p2_init_hero_mana
-		hero_mana = game_data_manager.p2_hero_mana
 	if game_data_manager.is_starting == false:
 		if game_data_manager.turn_count <= 3:
 			game_data_manager.players_turn = next_player
@@ -269,7 +267,7 @@ func _on_next_turn_button_pressed():
 			game_data_manager.turn_count = 0
 			game_data_manager.count_round += 1
 			game_data_manager.reset_board_next_turn(slot_selected_array,type_array)
-		if game_data_manager.turn_count == 0 and hero_mana < 16 and init_hero_mana < 16:
+		if game_data_manager.turn_count == 0:
 			reinit_mana(next_player)
 			add_mana(next_player,2)
 			init_mana(next_player)

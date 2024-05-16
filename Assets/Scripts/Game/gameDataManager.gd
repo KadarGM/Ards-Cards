@@ -274,6 +274,14 @@ func reorganize_slot(type,slot_type): # Reorganize slots after a card is destroy
 		slot_type[type.size()].is_empty = true
 		card_animation(type[c],"position:x",slot_type[c].position.x)
 
+func clear_spell_slot(player):
+	if player == "player1":
+		if p1_action.size() > 0:
+			destroy(player,p1_action[0])
+	if player == "player2":
+		if p2_action.size() > 0:
+			destroy(player,p2_action[0])
+
 func show_grave(player): # Show the graveyard for a player.
 	var grave
 	var card_spacing_x
@@ -409,6 +417,8 @@ func card_animation(who,what,where): # Perform animations for card movements.
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tween.tween_property(who, what, where, .5)
 	await get_tree().create_timer(.5).timeout
+
+
 
 #func _process(_delta):
 	#if is_starting == false:
