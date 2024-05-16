@@ -94,6 +94,8 @@ var P2_SLOT_TYPE_ARRAYS = [p2_a_slots,p2_d_slots,p2_ar_slots,p2_ac_slots]
 var P1_SLOT_SELECTED_ARRAY = [p1_a_selected,p1_d_selected,p1_ar_selected,p1_ac_selected]
 var P2_SLOT_SELECTED_ARRAY = [p2_a_selected,p2_d_selected,p2_ar_selected,p2_ac_selected]
 
+const SLOT_TYPE_MAX = [4,4,2,1]
+
 var WHO_IS_ARRAY = [who_is_attacking,who_is_defending,who_is_ending]
 const WHO_IS_TEXT_ARRAY = ["Attack: ","Defend: ","End: "]
 
@@ -273,14 +275,6 @@ func reorganize_slot(type,slot_type): # Reorganize slots after a card is destroy
 		slot_type[c].is_empty = false
 		slot_type[type.size()].is_empty = true
 		card_animation(type[c],"position:x",slot_type[c].position.x)
-
-func clear_spell_slot(player):
-	if player == "player1":
-		if p1_action.size() > 0:
-			destroy(player,p1_action[0])
-	if player == "player2":
-		if p2_action.size() > 0:
-			destroy(player,p2_action[0])
 
 func show_grave(player): # Show the graveyard for a player.
 	var grave

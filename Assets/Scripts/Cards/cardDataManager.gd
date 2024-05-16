@@ -347,7 +347,7 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand,h
 				card_animation(select[0].card_stats,"scale",Vector2(1.6,1.6), .5)
 				select[0].name_label.visible = false
 		if draggable == true and select.size() > 0 and select[0].slot_type == "hand" and game_data_manager.can_dragging == true:
-			if player == select[0].card_owner and (game_data_manager.turn_count == 0 or game_data_manager.turn_count == 2) == true and CARDS_LIST[id].mana_cost <= hero_mana:
+			if player == select[0].card_owner and (game_data_manager.turn_count == 0 or game_data_manager.turn_count == 2) == true and CARDS_LIST[id].mana_cost <= hero_mana and type_array[id].size() < game_data_manager.SLOT_TYPE_MAX[id]:
 				if Input.is_action_just_pressed("left click"):
 					init_pos = select[0].global_position
 					offset = get_global_mouse_position() - select[0].global_position
