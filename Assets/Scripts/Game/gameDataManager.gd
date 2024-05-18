@@ -211,6 +211,18 @@ func put(player,body,hand,type_arrays,slot_types_arrays): # Place a card into it
 	body.release_searching_hand()
 	is_searching = true
 
+func dealing_damage_attack_board(player):
+	var attack_sum
+	var selected
+	if player == "player1":
+		selected = p1_a_selected
+	if player == "player2":
+		selected = p2_a_selected
+	if selected.size() > 0:
+		for i in range(selected.size()):
+			attack_sum += int(selected[i].attack_label.text)
+	print("attack_sum: ",attack_sum)
+
 func slot_visible(_player,cond,slot_type,select,slot_types_arrays):
 	if cond == true:
 		slot_type = slot_types_arrays[select[0].id]
@@ -254,9 +266,14 @@ func destroy(player,body): # Destroy a card and move it to the graveyard.
 			if card_body.slot_type == TYPE_ARRAY[i]:
 				slot_types_arrays[i][card_body.id_in_slot].is_empty = true
 				grave.append(card_body)
-				if slot_types_arrays[i][card_body.id_in_slot].is_selected == true:
-					slot_types_arrays[i][card_body.id_in_slot].select_color.visible = false
-					slot_types_arrays[i][card_body.id_in_slot].is_selected = false
+				#if slot_types_arrays[i].size() > 0:
+					#if slot_types_arrays[i][card_body.id_in_slot].is_selected != true:
+						#return
+					#elif slot_types_arrays[i][card_body.id_in_slot].is_selected == true:
+						#slot_types_arrays[i][card_body.id_in_slot].select_color.visible = false
+						#slot_types_arrays[i][card_body.id_in_slot].is_selected = false
+				#else:
+					#return
 				type_arrays[i].remove_at(card_body.id_in_slot)
 				card_body.slot_type = "grave"
 				reorganize_slot(type_arrays[i], slot_types_arrays[i])

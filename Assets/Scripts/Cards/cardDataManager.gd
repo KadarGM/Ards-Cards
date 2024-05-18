@@ -198,15 +198,34 @@ func set_stats():
 		deffense_rect.visible = false
 #endregion
 
+#func select_card_in_slot(_player,select,selected_slot_array,selected_type_array):
+	#var selected_slot
+	#var selected_type
+	#if select.is_selected == false:
+		#for t in range(selected_type_array.size()):
+			#if select.slot_type == game_data_manager.TYPE_ARRAY[t]:
+				#selected_slot = selected_slot_array[t]
+				#selected_type = selected_type_array[t]
+				#break
+		#selected_slot.append(selected_type[select.id_in_slot])
+		#re_id_select(selected_slot)
+		#selected_slot[select.selected_id].select_color.visible = true
+		#select.is_selected = true
+	#else:
+		#return
+
 func select_card_in_slot(_player,select,selected_slot_array,selected_type_array):
 	var selected_slot
 	var selected_type
 	if select.is_selected == false:
-		for t in range(selected_type_array.size()):
-			if select.slot_type == game_data_manager.TYPE_ARRAY[t]:
-				selected_slot = selected_slot_array[t]
-				selected_type = selected_type_array[t]
-				break
+		for i in range(2):
+			if game_data_manager.turn_count == i:
+				if select.slot_type == game_data_manager.TYPE_ARRAY[i]:
+					selected_slot = selected_slot_array[i]
+					selected_type = selected_type_array[i]
+					break
+				else:
+					return
 		selected_slot.append(selected_type[select.id_in_slot])
 		re_id_select(selected_slot)
 		selected_slot[select.selected_id].select_color.visible = true
@@ -325,16 +344,17 @@ func if_dragged_release(select,slot_type_array):
 func process(player,select,selected_slot_array,type_array,slot_type_array,hand,hero_mana):
 	if game_data_manager.is_starting == false:
 		if (select.size() > 0 and select[0].slot_type != "hand" and select[0].slot_type != "deck" and select[0].slot_type != "grave" and game_data_manager.is_grave_active == false and game_data_manager.is_deck_active == false):
-				if select[0].can_desselect == false and select[0].card_owner == game_data_manager.players_turn:
-					if Input.is_action_just_pressed("left click"):
-						select_card_in_slot(player,select[0],selected_slot_array,type_array)
-						await get_tree().create_timer(.1).timeout
-						select[0].can_desselect = true
-				if select[0].can_desselect == true and select[0].card_owner == game_data_manager.players_turn:
-					if Input.is_action_just_pressed("left click"):
-						deselect_card_in_slot(player,select[0],selected_slot_array,type_array)
-						await get_tree().create_timer(.1).timeout
-						select[0].can_desselect = false
+			if select[0].can_desselect == false and select[0].card_owner == game_data_manager.players_turn:
+				if Input.is_action_just_pressed("left click"):
+					select_card_in_slot(player,select[0],selected_slot_array,type_array)
+					#select_card_in_slot(player,select[0],selected_slot_array,type_array)
+					await get_tree().create_timer(.1).timeout
+					select[0].can_desselect = true
+			if select[0].can_desselect == true and select[0].card_owner == game_data_manager.players_turn:
+				if Input.is_action_just_pressed("left click"):
+					deselect_card_in_slot(player,select[0],selected_slot_array,type_array)
+					await get_tree().create_timer(.1).timeout
+					select[0].can_desselect = false
 		if game_data_manager.is_detailed == true and is_on_card == true: #and game_data_manager.is_dragging == false:
 			if Input.is_action_pressed("right click"):
 				game_data_manager.is_max_detailed = true
@@ -367,6 +387,10 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand,h
 										game_data_manager.p1_hero_mana -= CARDS_LIST[id].mana_cost
 									if player == "player2":
 										game_data_manager.p2_hero_mana -= CARDS_LIST[id].mana_cost
+									if type_array[3].size() > 0:
+										await get_tree().create_timer(2.0).timeout
+										type_array[3][0].active_card.button_pressed = false
+										game_data_manager.destroy(player,type_array[3][0])
 								else:
 									card_animation(select[0],"global_position",init_pos, .2)
 									if_dragged_release(select,slot_type_array)
@@ -378,6 +402,7 @@ func process(player,select,selected_slot_array,type_array,slot_type_array,hand,h
 						if_dragged_release(select,slot_type_array)
 			else:
 				return
+		
 		else:
 			return
 		#if draggable == true and select.size() > 0 and select[0].slot_type == "hand" and select[0].type == 1 and game_data_manager.can_dragging == true and game_data_manager.turn_count == 1:
