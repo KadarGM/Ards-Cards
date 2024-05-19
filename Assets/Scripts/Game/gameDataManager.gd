@@ -220,7 +220,7 @@ func dealing_damage_attack_board(player):
 		selected = p2_a_selected
 	if selected.size() > 0:
 		for i in range(selected.size()):
-			attack_sum += int(selected[i].attack_label.text)
+			attack_sum += selected[i].attack
 	print("attack_sum: ",attack_sum)
 
 func slot_visible(_player,cond,slot_type,select,slot_types_arrays):

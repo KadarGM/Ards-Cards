@@ -268,7 +268,7 @@ func _on_next_turn_button_pressed():
 			game_data_manager.count_round += 1
 			game_data_manager.reset_board_next_turn(slot_selected_array,type_array)
 		if game_data_manager.turn_count == 1:
-			game_data_manager.dealing_damage_attack_board(player)
+			game_data_manager.dealing_damage_attack_board(next_player)
 		if game_data_manager.turn_count == 0:
 			reinit_mana(next_player)
 			add_mana(next_player,2)
