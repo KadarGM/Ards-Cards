@@ -21,6 +21,7 @@ var who_can_cast
 var players_turn
 var count_round = 0
 var turn_count = 0
+var attack
 
 #region Player 1 arrays
 var p1_selected = []
@@ -220,7 +221,7 @@ func dealing_damage_attack_board(player):
 		selected = p2_a_selected
 	if selected.size() > 0:
 		for i in range(selected.size()):
-			attack_sum += selected[i].attack
+			attack_sum += attack
 	print("attack_sum: ",attack_sum)
 
 func slot_visible(_player,cond,slot_type,select,slot_types_arrays):

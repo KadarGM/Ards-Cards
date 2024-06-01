@@ -14,8 +14,6 @@ var is_selected = false
 var can_desselect = false
 var card_owner
 
-var attack
-
 var game_data_manager = GameDataManager
 
 const CARDS_LIST: Array[CardDataResource] = [
@@ -127,7 +125,7 @@ func set_stats():
 		deffense_rect.visible = false
 		#CARDS_LIST[id].attack
 		attack_label.text = str(CARDS_LIST[id].attack)
-		attack = CARDS_LIST[id].attack
+		game_data_manager.attack = CARDS_LIST[id].attack
 		attack_rect.visible = true
 		#CARDS_LIST[id].specialization
 		#specialization_label.text = str(SPEC_ARRAY[CARDS_LIST[id].specialization])
